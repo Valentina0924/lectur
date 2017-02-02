@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<head>
+<link href="{% static "css/style.css" %}" rel="stylesheet" />
+</head>
+
+Holi
+<br>
+
+{% for u in usuarios %}
+   <b>{{u.username}}:</b> {{u.first_name}} {{u.last_name}} <br>
+{% endfor %}
+
+<div class="" style="
+
+{% if estado > 13 %}
+background-color:red;
+{% elif estado > 8 %}
+background-color:blue;
+{% else %}
+background-color:yellow;
+{% endif %}
+
+">
+<b>Estado: </b>{{estado}}
+</div>
