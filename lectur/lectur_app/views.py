@@ -11,8 +11,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout
 
 from django.views.generic import View, FormView, UpdateView, CreateView, DetailView, ListView, TemplateView
-from forms import UserForm, LectorForm;
-from models import Lector
+from lectur_app.forms import UserForm, LectorForm;
+from lectur_app.models import Lector
 
 from django.conf import settings
 
@@ -72,11 +72,11 @@ class RegisterProfile(CreateView):
     model = User
 
     def form_valid(self, form):
-    	lector = form.save(commit=False);
-    	lector.user = self.request.user;
+        lector = form.save(commit=False);
+        lector.user = self.request.user;
         if not lector.codigo:
             lector.codigo=get_codigo_nuevo_usuario();
-    	lector.save();
+        lector.save();
         form.save_m2m();
         return HttpResponseRedirect('/prueba');
 
@@ -88,7 +88,7 @@ class UpdateProfile(UpdateView):
     state=False
 
     def get_state(self):
-		return state
+    	return state
 
     def get_object(self, queryset=None):
     	user = self.request.user;
@@ -96,7 +96,7 @@ class UpdateProfile(UpdateView):
     	return obj
 
     def form_valid(self, form):
-    	lector = form.save();
+        lector = form.save();
         #dir='7perfil/'+lector.codigo
         return HttpResponseRedirect('/prueba');
 

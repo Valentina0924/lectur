@@ -4,7 +4,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, MultiField, Field, HTML, Column, Div
 from django.contrib.auth.models import User
-from models import Lector, Taller, Libro, Trabajo_Escrito, Espacio, Evento, Biblioteca, Comunidad
+from lectur_app.models import Lector, Taller, Libro, Trabajo_Escrito, Espacio, Evento, Biblioteca, Comunidad
 from django.contrib.auth.forms import AuthenticationForm
 
 

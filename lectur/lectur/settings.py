@@ -25,7 +25,7 @@ SECRET_KEY = '3173q1$so4iw65j^8t4^fffemb@%h#!a)$w(fw*)h7o^qpab13'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['lectur.pythonanywhere.com']
+ALLOWED_HOSTS = ['lectur.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition

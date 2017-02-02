@@ -17,8 +17,8 @@ from django.conf.urls import include,  url
 
 from django.conf import settings
 from django.contrib import admin
-from lecturapp import views;
-from lecturapp.views import Home, Register,RegisterProfile, UpdateProfile , Prueba;
+from lectur_app import views;
+from lectur_app.views import Home, Register,RegisterProfile, UpdateProfile , Prueba;
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
