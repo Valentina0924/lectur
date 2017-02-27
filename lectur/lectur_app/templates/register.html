@@ -1,6 +1,9 @@
 <!-- { extends "base.html" %} -->
-{% load crispy_forms_tags %}
+{% extends 'base.html' %}
+{% block content %}
+
 {% block base_body %}
+{% load crispy_forms_tags %}
 <!-- TOP BANNER DETAILS -->
 <div class="bkg-blue-main" style="padding:50px">
   <div class="row">
@@ -12,3 +15,5 @@
   $("form").validate();
 </script>
 {% endblock base_body %}
+
+{% endblock content %}

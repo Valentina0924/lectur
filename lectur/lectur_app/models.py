@@ -49,18 +49,6 @@ class Taller(models.Model):
     def __unicode__(self):
         return unicode(self.nombre+" "+self.organizador.user.username);
 
-class Libro(models.Model):
-    """docstring for Libro."""
-    titulo = models.CharField(max_length=128);
-    autor = models.CharField(max_length=128);
-    portada = models.ImageField(upload_to='libros_images/');
-    descripcion = models.TextField(max_length=400);
-    generos = models.ManyToManyField(Genero, related_name='generos_libro');
-    likes = models.ManyToManyField(User, related_name='likes_libro');
-    valoraciones= models.ManyToManyField(Valoracion, related_name='valoraciones_libro');
-    url = models.URLField(blank=True, null=True);
-    def __unicode__(self):
-        return unicode(self.titulo+" "+self.autor);
 
 class Trabajo_Escrito(models.Model):
     """docstring for Libro."""
@@ -96,31 +84,62 @@ class Evento(models.Model):
     def __unicode__(self):
         return unicode(self.nombre+" "+self.dias);
 
-class Info_Libro(models.Model):
-    libro = models.ForeignKey(Libro);
-    cantidad_total = models.IntegerField(default = 1);
-    cantidad_disponible = models.IntegerField(default = 1);
-    lectuales = models.ManyToManyField(Lector, related_name = 'lectores_actuales');
+class Respuesta(models.Model):
+    autor = models.CharField(max_length=22);
+    mensaje = models.CharField(max_length=200);
+    fecha =  models.DateTimeField(auto_now_add=True);
+    tipo_respuesta = models.IntegerField(default=-1); #menor a 0 dirigido al foro, mayor a 0 dirigido a otra respuesta
     def __unicode__(self):
-        return unicode(self.libro);
+        return unicode(self.autor);
 
-class Biblioteca(models.Model):
-    nombre = models.CharField(max_length=20);
-    ubicacion = models.ForeignKey(Espacio);
-    programacion = models.ManyToManyField(Evento, related_name = 'programacion_biblioteca');
-    administradores = models.ManyToManyField(Lector, related_name = 'administradores_biblioteca');
-    libros = models.ManyToManyField(Info_Libro, related_name = 'libros_biblioteca');
-    espacios = models.ManyToManyField(Espacio, related_name = 'espacios_bibliotecas');
+class Tema(models.Model):
+    autor =  models.ForeignKey(Lector);
+    fecha_publicacion =  models.DateTimeField(auto_now_add=True);
+    respuesta = models.ManyToManyField(Respuesta, related_name = 'respuesta_tema');
+    valoracion = models.ManyToManyField(Valoracion, related_name = 'valoracion_tema');
     def __unicode__(self):
-        return unicode(self.nombre);
+        return unicode(self.autor+" "+self.fecha_publicacion);
+
+
+class Categoria(models.Model):
+    titulo = models.CharField(max_length=22);
+    tema = models.ManyToManyField(Tema, related_name='tema_foro');
+    descripcion = models.CharField(max_length=52);
+    def __unicode__(self):
+        return unicode(self.autor+" "+self.fecha_publicacion);
+
+class Foro(models.Model):
+    categoria = models.ManyToManyField(Categoria, related_name='categoria_foro');
+    titulo = models.CharField(max_length=22);
+    contenido = models.CharField(max_length=52);
+    def __unicode__(self):
+        return unicode(self.titulo);
+
+
+
 
 class Comunidad(models.Model):
     administradores = models.ManyToManyField(Lector, related_name = 'administradores_comunidad');
     participantes = models.ManyToManyField(Lector, related_name = 'participantes_comunidad');
     nombre = models.CharField(max_length=20);
     lugares_encuentro = models.ManyToManyField(Espacio, related_name = 'lugares_encuentro');
-    libros = models.ManyToManyField(Info_Libro, related_name = 'libros_comunidad');
-    bibliotecas_amigas = models.ManyToManyField(Biblioteca, related_name = 'biblioteca_amiga');
+    #libros = models.ManyToManyField(Info_Libro, related_name = 'libros_comunidad');
+    #bibliotecas_amigas = models.ManyToManyField(Biblioteca, related_name = 'biblioteca_amiga');
     talleres = models.ManyToManyField(Taller, related_name = 'talleres_comunidad');
     def __unicode__(self):
         return unicode(self.nombre);
+
+class Reto(models.Model):
+    titulo = models.CharField(max_length=30);
+    descripcion = models.CharField(max_length=200);
+    nivel = models.IntegerField(default=0);
+    def __unicode__(self):
+        return unicode(self.titulo);
+
+class Premio(models.Model):
+    reto = models.ForeignKey(Reto);
+    titulo = models.CharField(max_length=30);
+    lista_ganadores = models.ManyToManyField(Lector, related_name ='ganadores_premio');
+    imagen = models.ImageField(upload_to='premio_images/');
+    def __unicode__(self):
+        return unicode(self.titulo+" ("+self.reto);
