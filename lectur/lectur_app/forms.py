@@ -44,7 +44,7 @@ class UserForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
               HTML("<div></div>"),
-               HTML("<h3 class='custom-header'>Registrate en Troca</h3> <h4> Registrate, publica, colabora, crea.</h4>"),
+               HTML("<h3 class='custom-header'>Registrate en Tulia</h3>"),
               HTML("<div class='elemento_formulario'>"),
                 'username',
               HTML("</div><div class='elemento_formulario'>"),
@@ -94,7 +94,7 @@ class UserLoginForm(AuthenticationForm):
         self.helper.layout = Layout(
             Fieldset(
               HTML("<div></div>"),
-               HTML("<h3 class='custom-header'>Iniciar sesión</h3> <h4>¡Que bueno tenerte de vuelta!</h4>"),
+               HTML("<h3 class='custom-header'>Iniciar sesión</h3> <h4>¡En Tulia hay tertulias!</h4>"),
               HTML("<div class='elemento_formulario'>"),
                 'username',
               HTML("</div><div class='elemento_formulario'>"),

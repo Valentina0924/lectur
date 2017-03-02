@@ -1,10 +1,5 @@
 
-@font-face {
-    font-family: 'base4';
-    src: url('../fonts/base4.ttf');
-    font-weight: 700;
-    font-style: normal;
-}
+
 body{
 	margin: 0px;
 }
@@ -30,7 +25,7 @@ header {
  line-height: 13px;
  padding-right: 1em;
 
- 
+
 /* padding-top: 1em;*/
 }
 
@@ -40,7 +35,7 @@ header {
  height: 80px;
  padding-left: 80px;
  padding-top: 20px;
-  
+
 /* padding-top: 1em;*/
 }
 
@@ -71,7 +66,7 @@ list-style-type: none;
 	height: 70px;
 	border-bottom-style: solid;
 	border-bottom-color: white;
-	border-bottom-width: 1px; 
+	border-bottom-width: 1px;
 	text-align: center;
 	 margin-top: 50px;
 	 padding-right: 20px;
@@ -81,7 +76,7 @@ list-style-type: none;
 .submenu a{
 
 	color:white;
- font-family: "base4";
+ font-family: "roboto";
 }
 
 /******************** Registro ********************/
@@ -93,12 +88,31 @@ list-style-type: none;
 	margin-bottom: 0;
 	margin-left: 50px;
 	padding-top: 20px;
-	  
+
 }
 .navR li a{
 	color:white;
-	font-family: "base4";
+	font-family: "roboto";
 }
+
+.navIndex{
+  float: right;
+  margin-right: 50px;
+}
+.navIndex li{
+  display: inline-block;
+
+	font-size: 1em;
+	font-weight: 19em;
+	margin-bottom: 0;
+	margin-left: 15px;
+	padding-top: 20px
+}
+.navIndex li a{
+
+  	color:white;
+  	font-family: "roboto";
+   }
 
 .cregistro { /*Caracteristicas registro*/
 

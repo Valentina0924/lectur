@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% load staticfiles %}
+
+      <p>Hi there!</p>
+      {{aaa}}
+      <p>It works!</p>
+      {%if img %}
+
+      <img src="{{img.url}}" alt="">
+    
+      {{img.url}}
+      <hr>
+      {% endif %}
+
+{% endblock content %}
