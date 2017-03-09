@@ -4,14 +4,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Lectur | Web Page</title>
+  <title>Tulia | Web Page</title>
 
   <link href="{% static "bootstrap-3.3.7/css/bootstrap.min.css" %}" rel="stylesheet" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="{% static "css/fonts.css" %}">
 	<link rel="stylesheet"  href="{% static "css/estilosContacto.css" %}" >
 	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto|Roboto+Mono|Roboto+Slab' rel='stylesheet' type='text/css'>
-
+	<link rel="stylesheet" href="{% static "font-awesome-4.7.0/css/font-awesome.min.css" %}">
 
   <link href="{% static "css/style.css" %}" rel="stylesheet" />
 
@@ -19,51 +19,53 @@
 
 <body>
   <div class="container-fluid fijo" >
-		<div class="row verde cregistro">
-			<div class="content col-md-2 barra-menu">
-
+		<div class="row verde">
+		<div class="col-md-2">
+		<a href="/">
 				<div class=" logo-header">
-					<img class="img-responsive center-block" src="{% static "imagenes/loguito.png"%}" align="left" alt="">
+					<img class="img-responsive center-block" src="{% static "imagenes/marca.png"%}" align="left" alt="">
 				</div>
-
-				<nav>
-					<ul class="lista-menu">
-
-
-
-						<li class="submenu" ><a href="#">
-				<div class="col-md-9">
-						Red
-						de Bibliotecas
-						Públicas
-						</div>
-
-						<img class="img-responsive center-block" src="{% static "imagenes/biblioteca.png"%}" align="right" ></a>
-
-
-						</li>
-						<li class="submenu"><a href="#">Comunidades lectoras
-						<img class="img-responsive center-block" src="{% static "imagenes/comunidad.png"%}" align="right" ></a>
-
-					</li>
-
-
-					<li class="submenu"><a href="#">Encuentra un libro
-					<img class="img-responsive center-block" src="{% static "imagenes/libro.png" %}" align="right" ></a>
-
-					</li>
-
-
-
-				</ul>
-			</nav>
+		</a>
 		</div>
-		<div class="col-md10 col-md-offset-2">
-			<ul class="navR">
-				<li><a href="#">Iniciar sesión </a></li>
+
+		<div class="col-md-7" >
+
+
+<div class="col-md-4 seccion-header 
+{%if seccion_header == 'Explora' %}
+seccion-seleccionada
+{% endif %}
+" >
+<a href="#">
+	Explora	
+</a>
+	</div>
+
+
+<div class="col-md-4 seccion-header 
+{%if seccion_header == 'Comunidades' %}
+seccion-seleccionada
+{% endif %}" > 
+<a href="/comunidades">
+Mis comunidades	
+</a>
+</div>
+<div class="col-md-4 seccion-header 
+{%if seccion_header == 'Destacados' %}
+seccion-seleccionada
+{% endif %}" >	
+<a href="#">
+Destacados	
+</a>
+</div>
+		</div>
+		<div class="col-md-3" >
+			<ul class="navIndex">
+				<li><a href="#">Regístrate </a></li>
 				<li><a href="#">|</a></li>
-					<li><a href="#"> Registrarse </a></li>
-				</ul><!-- Fin registro -->
+					<li><a href="#"> Ingresa </a></li>
+				</ul><!-- Fin registro -->				
+		<div style="clear: both;"></div>	
 			</div>
 		</div>
 	</div>
@@ -72,22 +74,19 @@
 	<div class="container-fluid" >
 
 
-		<div class="row">
 
-			<div class="content col-md-10 col-md-offset-2" style=" background-color: white; height: 800px; margin-top: 80px; z-index: 1;">
+			<div class="row content" style=" background-color: white; min-height: 800px; margin-top: 40px;">
 
 
-{% block content %}
-{% endblock %}
-
-			</div>
+			{% block content %}
+			{% endblock %}
 
 
 		</div>
 		<div class="row">
 			<!-- Footer -->
-			<div class="verde col-md-10 col-md-offset-2">
-				<p><center>Copyright Valentina Hoyos • Cali, Colombia • Tel: 310 8491453 </center>
+			<div class="verde col-md-12 texto-footer">
+				<p><center>Copyright V. Hoyos • Cali, Colombia • Tel: 310 8491453 </center>
 				</p>
 			</div><!-- Fin footer -->
 

@@ -20,29 +20,86 @@ header {
 }
 /*************** Contenedor verde ***************/
 .verde {
- background: #FFCB48;
- height: 80px;
+ background: #1B1239;
+ height: 60px;
  line-height: 13px;
  padding-right: 1em;
+ color: white;
+
 
 
 /* padding-top: 1em;*/
 }
 
+.header-index{
+  width: 100%;
+  height :410px;
+  background-size: cover;
+  text-align: center;
+}
 /*************** logo header ***************/
 .logo-header {
- background: #90BC9A;
- height: 80px;
- padding-left: 80px;
- padding-top: 20px;
-
+ /*background: #1B1239;*/
+ padding-left: 30px;
+ padding-top: 10px;
 /* padding-top: 1em;*/
 }
+
+.logo-header img {
+  height: 40px;
+  width: auto;
+}
+
+
+.imagen-logo{
+  height: 40px;
+  width:auto;
+}
+.logo-index{
+
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 90px;
+}
+
+.imagen-logo-index{
+  height: auto;
+  width: 150px;
+}
+.icono-figura{
+
+  width: 100px;
+  margin: 0 auto;
+  margin-top: 90px;
+}
+.imagen-icono{
+  height: auto;
+  width: 100px;
+}
+
+.imagen-bombilla{
+  width:150px;
+  margin: 20px auto;
+}
+.imagen-bombilla img{
+  width:100%; 
+  height:auto;
+    }
+
+.imagen-computador{
+  width:400px;
+  margin: 20px auto;
+}
+
+.imagen-computador img{
+  width:100%; 
+  height:auto;
+    }
 
 .fijo{
 position: fixed;
 width: 100%;
-height:100%;
+z-index: 1;
 }
 /*************** barra-menu ***************/
 .barra-menu {
@@ -79,6 +136,191 @@ list-style-type: none;
  font-family: "roboto";
 }
 
+.texto-header{
+  color: white;
+  font-family:"roboto";
+  font-size: 17px;
+}
+
+.texto-amarillo{
+  color:#ECC42F;
+  font-family:"roboto";
+  font-size: 17px;
+}
+
+.boton-registro{
+  text-decoration: none !important;
+  color: white !important;
+  font-family:"roboto";
+  font-size: 17px;
+  border-radius: 50px;
+  background-color: #1A98B0;
+  padding: 16px  20px;
+}
+
+.boton-registro:hover{
+  background-color: #3Ab8e0;
+
+ }
+
+ .texto-medio{
+   color: #271B4A;
+   font-family:"roboto";
+   font-size: 26px;
+ }
+
+  .texto-contenido{
+   color: white;
+   font-family:"roboto";
+   font-size: 17px;
+ }
+
+  .titulo-contenido{
+   color: #271B4A;
+   font-family:"roboto";
+   font-size: 17px;
+ }
+
+
+ /******************* Sección selecionado ********************/
+ .seccion-seleccionada{
+ border-bottom-style: solid;
+ border-bottom-width: 5px;
+ /*border-bottom-color: #3Ab8e0;*/
+
+ border-bottom-color: #dea13f; 
+ }
+ .seccion-header{
+  height: 60px;
+  text-align: center;
+  padding-top: 26px;
+ }
+  .seccion-header a{
+color: white;
+  }
+
+  .seccion-header a:hover{
+    text-decoration: none;
+    color: #dea13f; 
+  }
+
+ /******************* Sección mis comunidadea ********************/
+ .sobre-imagenes{
+  padding: 0px 1%; 
+  margin-top: 30px;
+  }
+
+.sobre-imagen{
+ position: absolute; 
+ bottom: 0px; 
+  background-color: rgba(27,18,57,0.7);
+ color: white;width: 94%; 
+ height: 100px; 
+ padding: 0px 8px; 
+  }
+
+
+ /******************* Sección mis comunidades ********************/
+ .submenu-comuni{
+  color:white;
+  padding-top: 10px;
+  font-family: roboto;
+  height: 40px;
+  background-color: rgba(27,18,57,0.3);
+ }
+ .submenu-comuni:hover {
+  background-color: rgba(27,18,57,0.6);
+ }
+ .submenu-comuni-selec {
+  background-color: rgb(27,18,57);
+ }
+
+ .submenu-comuni-selec:hover {
+  background-color: rgb(27,18,57);
+ }
+
+
+ .comunidad-fondo{
+  text-align: center;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  padding-top: 100px;
+
+ }
+
+ .comunidad-fondo .texto-medio h1{
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+  color: white;
+  font-size: 50px;
+  display: inline-block;
+ }
+
+.boton-comunidad{
+  color:white;
+  font-family:roboto;
+  font-weight:bolder;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  margin-left: 5px; 
+  background-color: rgb(222,161,63);
+  padding: 5px;
+  border-left-style: solid;
+  border-left-width: 3px;
+  border-left-color: white;
+  box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
+ }
+ .boton-comunidad:hover{
+  color:white;
+  text-decoration: none;
+
+  background-color: rgb(181,43,45);  
+ }
+
+.franja-comunidad{
+   background-color: rgb(27,18,57);
+   height: 60px;
+}
+
+.letra-submen h1{
+  color: white;
+  font-size: 20px;
+}
+
+
+
+/******************** Vista miembros de comunidades ********************/
+.circulo-perfil{
+  width: 100%;
+padding-top: 100%;
+background-size: cover;
+background-position: center;
+}
+.redondo{
+border-radius: 50%;
+}
+.circulo-perfil-borde{
+  padding: 10px; border-color: #1b1239; border-style: solid; border-width: 5px;
+
+}
+
+.circulo-perfil-admin{
+  background-color: #3Ab8e0; position: absolute; bottom: 20%; right: 5%; padding: 8px; color: white;
+}
+
+.contenedor-perfil{
+  margin-top: 20px; 
+  position: relative;
+}
+
+.nombre-usuario{
+  text-align: center; 
+  font-size: 17px; 
+  font-family: 'roboto'; 
+  color: #1b1239;
+  margin-top: 5px;
+}
+
 /******************** Registro ********************/
 .navR li {
 	display: inline-block;
@@ -98,6 +340,7 @@ list-style-type: none;
 .navIndex{
   float: right;
   margin-right: 50px;
+  margin-top: 5px;
 }
 .navIndex li{
   display: inline-block;
@@ -114,9 +357,29 @@ list-style-type: none;
   	font-family: "roboto";
    }
 
+   .imagen-medio{
+     width: 100%;
+     height :700px;
+     background-size: cover;
+     text-align: center;
+   }
+
+.elemento_formulario{
+  width:50%;
+
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+}
+
 .cregistro { /*Caracteristicas registro*/
 
 	padding-right: 15em;
+}
+
+.elemento_formulario input[type="text"],.elemento_formulario input[type="password"], .elemento_formulario input[type="email"]{
+  width: 100%;
+
 }
 
 .campo {
@@ -133,9 +396,14 @@ list-style-type: none;
 .cfooter{
 	position:  absolute;
 	bottom: 0;
-
 }
+
 footer {
 	background:#E9F679;
 	color:#fff;
+}
+
+.texto-footer{
+  padding-top: 14px;
+  font-family: "roboto";
 }

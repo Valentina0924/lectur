@@ -44,7 +44,7 @@ class UserForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
               HTML("<div></div>"),
-               HTML("<h3 class='custom-header'>Registrate en Tulia</h3>"),
+               HTML("<h3 class='custom-header'>Regístrate en Tulia</h3>"),
               HTML("<div class='elemento_formulario'>"),
                 'username',
               HTML("</div><div class='elemento_formulario'>"),
@@ -101,9 +101,9 @@ class UserLoginForm(AuthenticationForm):
                 'password',
               HTML("</div><div class='elemento_formulario'>"),
 
-                ButtonHolder(Submit('submit', 'Iniciar sesion', css_class='btn_enviar'), css_class=' text-center'),
+                ButtonHolder(Submit('submit', 'Iniciar sesión', css_class='btn_enviar'), css_class=' text-center'),
                 Div(
-                    HTML('<p>Eres nuevo en Troca? <a href="/register/">Registrate</a> <br> Has olvidado tu contrasena? <a href="#" data-reveal-id="firstModal">Recuperar</a></p>'),
+                    HTML('<p>Eres nuevo en Tulia? <a href="/register/">Registrate</a> <br> Has olvidado tu contrasena? <a href="#" data-reveal-id="firstModal">Recuperar</a></p>'),
                     css_class='field-bottom topborder padt15 text-center'
                 ),
                 css_class='large-4 medium-4 large-centered medium-centered columns',
@@ -116,7 +116,7 @@ class LectorForm(forms.ModelForm):
     helper.form_tag = False
 
     descripcion = forms.CharField(
-        label = "Cúentanos quíen eres :)",
+        label = "Sobre tí",
         required = True,
         max_length = 140,
         widget = forms.Textarea

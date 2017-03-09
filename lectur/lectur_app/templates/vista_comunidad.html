@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block content %}
+
+<div class="comunidad-fondo" style="position: relative; background-image: url('{{comunidad.imagen.url}}'); ">
+	<div class="texto-medio">
+		<h1>{{comunidad.nombre}}   </h1>
+		<a href="/registrate/" class="boton-comunidad" align="center">
+			UNIRME
+		</a>
+	</div>
+	<div class="col-md-4 col-xs-12" style=" position: absolute; bottom: 0px; height: 40px;" >
+		<div class="row" >
+			<div class="col-md-3 col-xs-3 submenu-comuni" > Actividades	</div>
+			<div class="col-md-3 col-xs-3 submenu-comuni" > Miembros </div>
+			<div class="col-md-3 col-xs-3 submenu-comuni" > Información	</div>
+			<div class="col-md-3 col-xs-3 submenu-comuni submenu-comuni-selec" > Foro	</div>
+		</div>
+	</div>
+	
+</div>
+
+
+<div>
+	<div class="franja-comunidad col-md-12 letra-submen"><h1>
+		Miembros pertenecientes a esta comunidad	
+	</h1></div>
+
+	
+<div class="container">
+
+
+
+{% for admin in admins%}
+	{% include "lector_vista_min.html" with lector=admin isAdmin=True %}
+{%endfor%}
+
+
+{% for participante in participantes%}
+	{% include "lector_vista_min.html" with lector=participante isAdmin=False %}
+{%endfor%}
+
+	
+
+	
+
+
+	
+
+
+	
+
+
+
+
+	
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+{% endblock content %}

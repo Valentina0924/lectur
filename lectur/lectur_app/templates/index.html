@@ -5,34 +5,123 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<title>Tulia | Web Page</title>
 
-  <link href="{% static "bootstrap-3.3.7/css/bootstrap.min.css" %}" rel="stylesheet" />
+	<link href="{% static "bootstrap-3.3.7/css/bootstrap.min.css" %}" rel="stylesheet" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="{% static "css/fonts.css" %}">
+	<link rel="stylesheet" href="{% static "css/fonts.css" %}">
 	<link rel="stylesheet"  href="{% static "css/estilosContacto.css" %}" >
 	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto|Roboto+Mono|Roboto+Slab' rel='stylesheet' type='text/css'>
 
 
-  <link href="{% static "css/style.css" %}" rel="stylesheet" />
+	<link href="{% static "css/style.css" %}" rel="stylesheet" />
 
 </head>
 <body>
 
-			
-<div style=" width: 100%; height :400px; background-size: cover; background-image: url('{% static 'imagenes/fondo_violeta.jpg' %}'); ">
+
+	<div class="header-index" style=" background-image: url('{% static 'imagenes/fondo_violeta.jpg' %}'); ">
 		<ul class="navIndex">
-				<li><a href="/registrate/">Regístrate </a></li>
-				<li><a href="#">|</a></li>
-					<li><a href="#"> Ingresa </a></li>
+			<li><a href="/registrate/">Regístrate </a></li>
+			<li><a href="#">|</a></li>
+			<li><a href="#"> Ingresa </a></li>
 		</ul><!-- Fin registro -->
-	
+		<div style="clear: both;"></div>	
+
+		<div class="logo-index">
+			<img class="imagen-logo-index" src='{% static 'imagenes/marca.png' %}' alt="Tulia">
+		</div>	
+
+		<div>
+			<br> <br> 
+			<H2 class="texto-header" align="center"> ¡Mejora tus habilidades de escritura! Descubre e interactúa con
+				<br><br>  las diferentes comunidades lectoras de la ciudad de Cali. </H2>
+
+			</div>
+			<br><br><br>
+			<a href="/registrate/" class="boton-registro" align="center">
+
+				REGÍSTRATE
+
+			</a>
+
+
+		</div>
 
 
 
+		<div class="container-fluid">
+
+			<div>
+				<br> <br> <br> <br> 
+
+				<H1 class="texto-medio" align="center">  ¿Qué encontrarás en <strong>Tulia</strong>?</H1>
+
+				<br> <br><br>
+			</div>
+
+			<div class="col-md-4 col-xs-12" > 
+				<div class="col-md-6">
+					<img src='{% static 'imagenes/icono_uno.png' %}' align="right">  
+				</div>
+				<div class="col-md-6">
+					<H3 class="titulo-contenido"> Explora comunidades</H3>
+				</div>
+			</div>
+
+			<div class="col-md-4 col-xs-12" > 
+				<div class="col-md-6">
+					<img src='{% static 'imagenes/icono_dos.png' %}' align="right">  
+				</div>
+				<div class="col-md-6">
+					<H3 class="titulo-contenido"> Da seguimiento a las comunidades</H3>
+				</div>
+			</div>
+			<div class="col-md-4 col-xs-12" > 
+				<div class="col-md-6">
+					<img src='{% static 'imagenes/icono_tres.png' %}' align="right"> 
+				</div>
+				<div class="col-md-6">
+					<H3 class="titulo-contenido"> Entérate de las publicaciones destacadas</H3>
+				</div>
+
+			</div>
+
+		</div>
+<br><br><br><br>
+
+		<div class="container-fluid" style=" background-size: cover; background-image: url('{% static 'imagenes/parte_fondo.jpg' %}'); ">
+          
+          <div class="col-md-4 col-xs-12 col-md-offset-7  col-xs-offset-0" >
+<br><br>
+          <div class="imagen-bombilla"> 
+					<img  src='{% static 'imagenes/bombilla.png' %}''> 
+				</div>
+
+
+<H1 class="texto-amarillo" align="center">  <strong>¡RETOS GRUPALES!</strong> </H1>
+<br>
+
+		<H1 class="texto-contenido" align="center">  ¡Participa en los retos de creación con tu comunidad <br><br>lectora y haz nuevos amigos al participar activamente! </H1>
+<br><br><br>
+				</div>
+
+		</div>
+
+
+<div>
+<br><br><br><br>
+<div class="col-md-4 col-xs-12 col-md-offset-1  col-xs-offset-0" >
+<div class="imagen-computador"> 
+					<img  src='{% static 'imagenes/computador.png' %}''> 
+				</div>
+</div>
+<H1 class="texto-amarillo" align="center">  <strong>¡RECIBE RECOMPENSAS POR TU ACTIVIDAD!</strong> </H1>
+<br>
+		<H1 class="titulo-contenido" align="center">  Participa activamente de las actividades y discusiones <br><br> de las comunidades que sigues para subir de rango y<br><br>  adquirir boniﬁcaciones redimibles en el mundo real.</H1>
 </div>
 
-				<!-- <img class="img-responsive center-block" src= "{% static "imagenes/fondo_violeta.jpg" %}" align="left" alt=""> -->
+
 		
-			</body>
+	</body>

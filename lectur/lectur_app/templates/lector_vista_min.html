@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+<div class="col-md-2 contenedor-perfil">
+		<div class="redondo circulo-perfil-borde">
+			<div class="circulo-perfil redondo" style="background-image: url('{{lector.imagen.url}}'); ">
+			</div>
+		</div>
+		
+		{% if isAdmin %}
+		<div class="redondo circulo-perfil-admin"> <i class="fa fa-key">	</i></div>
+		{% endif %}
+		<div class="nombre-usuario">{{lector.user.first_name}} {{lector.user.last_name}}</div>
+	</div>

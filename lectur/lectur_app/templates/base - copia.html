@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tulia | Web Page</title>
+
+  <link href="{% static "bootstrap-3.3.7/css/bootstrap.min.css" %}" rel="stylesheet" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="{% static "css/fonts.css" %}">
+	<link rel="stylesheet"  href="{% static "css/estilosContacto.css" %}" >
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto|Roboto+Mono|Roboto+Slab' rel='stylesheet' type='text/css'>
+
+
+  <link href="{% static "css/style.css" %}" rel="stylesheet" />
+
+</head>
+
+<body>
+  <div class="container-fluid fijo" >
+		<div class="row verde cregistro">
+			<div class="content col-md-2 barra-menu">
+
+				<div class=" logo-header">
+					<img class="img-responsive center-block" src="{% static "imagenes/loguito.png"%}" align="left" alt="">
+				</div>
+
+				<nav>
+					<ul class="lista-menu">
+
+
+
+						<li class="submenu" ><a href="#">
+				<div class="col-md-9">
+						Red
+						de Bibliotecas
+						Públicas
+						</div>
+
+						<img class="img-responsive center-block" src="{% static "imagenes/biblioteca.png"%}" align="right" ></a>
+
+
+						</li>
+						<li class="submenu"><a href="#">Comunidades lectoras
+						<img class="img-responsive center-block" src="{% static "imagenes/comunidad.png"%}" align="right" ></a>
+
+					</li>
+
+
+					<li class="submenu"><a href="#">Encuentra un libro
+					<img class="img-responsive center-block" src="{% static "imagenes/libro.png" %}" align="right" ></a>
+
+					</li>
+
+
+
+				</ul>
+			</nav>
+		</div>
+		<div class="col-md10 col-md-offset-2">
+			<ul class="navR">
+				<li><a href="#">Ingresa </a></li>
+				<li><a href="#">|</a></li>
+					<li><a href="#"> Regístrate </a></li>
+				</ul><!-- Fin registro -->
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container-fluid" >
+
+
+		<div class="row">
+
+			<div class="content col-md-10 col-md-offset-2" style=" background-color: white; height: 800px; margin-top: 80px; z-index: 1;">
+
+
+{% block content %}
+{% endblock %}
+
+			</div>
+
+
+		</div>
+		<div class="row">
+			<!-- Footer -->
+			<div class="verde col-md-10 col-md-offset-2">
+				<p><center>Copyright Valentina Hoyos • Cali, Colombia • Tel: 310 8491453 </center>
+				</p>
+			</div><!-- Fin footer -->
+
+		</div>
+	</div>
+
+
+
+  <script src="{% static "bootstrap-3.3.7/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "js/jquery-1.12.2.min.js" %}"></script>
+	<script src="{% static "js/bootstrap.min.js" %}"></script>
+  <script src="{% static "js/main.js" %}"></script>
+</body>
+
+</html>

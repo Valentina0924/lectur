@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block content %}
+
+
+
+
+
+<div class="container">
+<div class="col-md-12 texto-medio">
+<br>
+<h1>
+Comunidades a las que pertenezco	
+</h1></div>
+
+
+
+
+{% for c in comunidades %}
+{% include "comunidad_vista_min.html" with comunidad=c %}
+
+{% endfor %}
+
+
+
+
+
+</div>
+
+
+{% endblock content %}

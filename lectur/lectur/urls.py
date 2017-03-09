@@ -18,7 +18,7 @@ from django.conf.urls import include,  url
 from django.conf import settings
 from django.contrib import admin
 from lectur_app import views;
-from lectur_app.views import Home, Register,RegisterProfile, UpdateProfile , Prueba;
+from lectur_app.views import Home, Register,RegisterProfile, UpdateProfile , Prueba, Comunidades, VistaComunidad;
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^update/perfil/$', UpdateProfile.as_view(), name='actualizar_perfil'),
 
     url(r'^prueba/$', Prueba.as_view(), name='Prueba'),
-
+    url(r'^comunidades/$', Comunidades.as_view(), name='todas_comunidades'),
+    url(r'^comunidades/(?P<comunidad>[-_\w]+)/$', VistaComunidad.as_view(), name='comunidad'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

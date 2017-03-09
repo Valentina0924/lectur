@@ -12,7 +12,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout
 
 from django.views.generic import View, FormView, UpdateView, CreateView, DetailView, ListView, TemplateView
 from lectur_app.forms import UserForm, LectorForm;
-from lectur_app.models import Lector
+from lectur_app.models import Lector, Comunidad
 
 from django.conf import settings
 
@@ -28,21 +28,49 @@ class Home(TemplateView):
         return context
 
 class Register(CreateView):
-	""" Vista de la página de formulario donde se registra un nuevo usuario """
-	template_name = 'register.html'
-	form_class = UserForm
-	model = User
+    """ Vista de la página de formulario donde se registra un nuevo usuario """
+    template_name = 'register.html'
+    form_class = UserForm
+    model = User
+    def get_context_data(self, **kwargs):
+        context = super(Register, self).get_context_data(**kwargs)
+        context["seccion_header"]="Destacados";
+        return context;
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.username = user.username.lower()
+        user.set_password(user.password)
+        user.save()
+        p=form.data["password"]
+        u= auth.authenticate(username=user.username, password=p)
+        if u is not None and u.is_active:
+            auth.login(request=self.request, user=u)
+        return HttpResponseRedirect('/register/perfil/')
 
-	def form_valid(self, form):
-		user = form.save(commit=False)
-		user.username = user.username.lower()
-		user.set_password(user.password)
-		user.save()
-		p=form.data["password"]
-		u= auth.authenticate(username=user.username, password=p)
-		if u is not None and u.is_active:
-			auth.login(request=self.request, user=u)
-		return HttpResponseRedirect('/register/perfil/')
+class Comunidades(TemplateView):
+    template_name = 'explora_comunidades.html'
+    def get_context_data(self, **kwargs):
+        context = super(Comunidades, self).get_context_data(**kwargs)
+        context["seccion_header"]="Comunidades";
+
+        comunidades = Comunidad.objects.all();
+        context["comunidades"]=comunidades;
+        return context
+
+class VistaComunidad(TemplateView):
+    template_name = 'vista_comunidad.html'
+    def get_context_data(self, **kwargs):
+        context = super(VistaComunidad, self).get_context_data(**kwargs)
+        context["seccion_header"]="Comunidades";
+        comuNombre=self.kwargs["comunidad"];
+        comunidad = Comunidad.objects.all().get(slug=comuNombre);
+        context["comunidad"]=comunidad;
+        if comunidad:
+            admins=comunidad.administradores.all();
+            context["admins"]=admins;
+            participantes=comunidad.participantes.all();
+            context["participantes"]=participantes;
+        return context
 
 
 def get_codigo_nuevo_usuario():
