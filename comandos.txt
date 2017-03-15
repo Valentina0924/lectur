@@ -1,0 +1,17 @@
+
+// abrir consola normal
+cd desktop/lectur_PDG
+lecturvenv\Scripts\activate
+cd lectur
+python manage.py runserver
+
+
+// actualizar git
+git status
+git add --all
+git commit -m "Comentario"
+git push
+
+// sincronizar desde pythonanywhere con github
+cd temporio_web
+git pull

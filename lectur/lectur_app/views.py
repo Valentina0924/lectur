@@ -70,7 +70,11 @@ class VistaComunidad(TemplateView):
             context["admins"]=admins;
             participantes=comunidad.participantes.all();
             context["participantes"]=participantes;
+            talleres=comunidad.talleres.all();
+            context["talleres"]=talleres;
         return context
+
+
 
 
 def get_codigo_nuevo_usuario():
@@ -98,6 +102,13 @@ class RegisterProfile(CreateView):
     template_name = 'register.html'
     form_class = LectorForm
     model = User
+
+    def get_context_data(self, **kwargs):
+        context = super(RegisterProfile, self).get_context_data(**kwargs)
+        context["titulo1"]="Regístrate en Tulia";
+        context["titulo2"]="¡Ya estás a un paso de pertenecer a nuestra comunidad!";
+        context["titulo3"]="Paso 2: Acerca de tí ";
+        return context;
 
     def form_valid(self, form):
         lector = form.save(commit=False);

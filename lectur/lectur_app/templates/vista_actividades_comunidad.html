@@ -1,0 +1,31 @@
+{% load staticfiles %}
+
+<div class="col-md-6 seccion-actividad ">
+
+<div class="row texto-actividad" style="background-color: rgb(222,161,63); color: white;"><p> {{taller.nombre}} </p></div>
+<div class="row" style="background-color: rgba(222,161,63,0.4); color: rgb(222,161,63);">
+	
+	<div class="col-md-4 no-padding"><div class="imagen-actividad" style="background-image: url('{{taller.imagen.url}}')">
+ </div>
+
+  </div>
+ <div class="col-md-8 texto-medio-acti">
+ 	
+<p><strong>Fecha y hora:</strong> {{taller.fecha}} </p>
+<p><strong>Lugar:</strong> {{taller.lugar}} </p>
+<p><strong>Descripción de la actividad:</strong> <br> {{taller.descripcion}} </p>
+
+ </div>
+
+</div>
+<div class="row texto-medio-acti" style="background-color: rgb(222,161,63);  color: white;"><p>Asistentes: 
+
+{% for par in taller.participantes.all  %} 
+
+<div class="col-md-1" style="padding: 3px;">
+	<div class="imagen-actividad redondo" style="background-image: url('{{par.imagen.url}}');"></div>
+</div>
+{% endfor %}
+</p></div>
+
+</div>

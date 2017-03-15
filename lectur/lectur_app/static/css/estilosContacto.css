@@ -204,7 +204,7 @@ color: white;
     color: #dea13f; 
   }
 
- /******************* Sección mis comunidadea ********************/
+ /******************* Sección mis comunidades ********************/
  .sobre-imagenes{
   padding: 0px 1%; 
   margin-top: 30px;
@@ -219,6 +219,37 @@ color: white;
  padding: 0px 8px; 
   }
 
+/******************* Seccion actividades ********************/
+.seccion-actividad{
+  padding: 25px;
+   margin-top: 5px;
+   color: white;
+   margin-bottom: 5px;
+  }
+
+.texto-actividad{
+  font-family: roboto;
+  color:red;
+  font-size:17px;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.imagen-actividad{
+  width: 100%;
+  padding-top: 100%;
+  background-color: pink;
+  background-position: center; background-size: cover; 
+
+}
+.no-padding{
+  padding: 0px;
+}
+
+.texto-medio-acti{
+  padding-left: 13px;
+  padding-top: 10px;
+}
 
  /******************* Sección mis comunidades ********************/
  .submenu-comuni{
@@ -242,7 +273,7 @@ color: white;
 
  .comunidad-fondo{
   text-align: center;
-  min-height: 400px;
+  min-height: 270px;
   background-size: cover;
   background-position: center;
   padding-top: 100px;
@@ -364,22 +395,60 @@ border-radius: 50%;
      text-align: center;
    }
 
-.elemento_formulario{
-  width:50%;
+.header-formulario{
+font-family: "roboto";
+margin-bottom: 20px;
+  } 
 
+h3.header-formulario{
+color: red;
+}
+h4.header-formulario{
+  color: blue;
+}
+.elemento_formulario{
+  width:100%;
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
+  font-family: "roboto";
 }
 
+.boton-formulario{
+
+  text-decoration: none !important;
+  color: white !important;
+  font-family:"roboto";
+  font-size: 17px;
+  background-color: #1A98B0;
+  padding: 8px  15px;
+  margin-top: 10px;
+}
+
+.boton-formulario:hover{
+  background-color: #3Ab8e0;
+
+ }
 .cregistro { /*Caracteristicas registro*/
 
 	padding-right: 15em;
 }
+.elemento_formulario img{
+  width: 50%;
+  height: auto;
+  margin: auto;
+}
 
-.elemento_formulario input[type="text"],.elemento_formulario input[type="password"], .elemento_formulario input[type="email"]{
+.elemento_formulario input[type="text"],.elemento_formulario input[type="password"], .elemento_formulario input[type="email"], .elemento_formulario input[type="url"], .elemento_formulario textarea{
   width: 100%;
+  padding-left: 5px;
 
+}
+.campo-incorrecto{
+  background-color: red;
+}
+.campo-correcto{
+  background-color: green;
 }
 
 .campo {

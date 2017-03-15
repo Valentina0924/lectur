@@ -12,61 +12,84 @@
 	</div>
 	<div class="col-md-4 col-xs-12" style=" position: absolute; bottom: 0px; height: 40px;" >
 		<div class="row" >
-			<div class="col-md-3 col-xs-3 submenu-comuni" > Actividades	</div>
-			<div class="col-md-3 col-xs-3 submenu-comuni" > Miembros </div>
-			<div class="col-md-3 col-xs-3 submenu-comuni" > Información	</div>
-			<div class="col-md-3 col-xs-3 submenu-comuni submenu-comuni-selec" > Foro	</div>
+			<div id="pestana_actividades" class="col-md-3 col-xs-3 submenu-comuni" onclick="cambiar_pestana('actividades')"> Actividades	</div>
+			<div id="pestana_miembros" class="col-md-3 col-xs-3 submenu-comuni" onclick="cambiar_pestana('miembros')"> Miembros </div>
+			<div id="pestana_informacion" class="col-md-3 col-xs-3 submenu-comuni submenu-comuni-selec" onclick="cambiar_pestana('informacion')" > Información	</div>
+			<div id="pestana_foro" class="col-md-3 col-xs-3 submenu-comuni " onclick="cambiar_pestana('foro')"> Foro	</div>
 		</div>
 	</div>
 	
 </div>
 
-
-<div>
+<div id="miembros" class="hidden">
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
 		Miembros pertenecientes a esta comunidad	
 	</h1></div>
+	<div class="container">
+			{% for admin in admins%}
+				{% include "lector_vista_min.html" with lector=admin isAdmin=True %}
+			{%endfor%}
+			{% for participante in participantes%}
+				{% include "lector_vista_min.html" with lector=participante isAdmin=False %}
+			{%endfor%}
+	</div>
+</div>
 
+<div id="actividades" class="hidden">
+	<div class="franja-comunidad col-md-12 letra-submen"><h1>
+		Actividades programadas por esta comunidad	
+	</h1></div>
+	<div class="container">
+	{% for taller in talleres%}
+				{% include "vista_actividades_comunidad.html" with taller=taller %}
+			{%endfor%}
+
+	</div>
+</div>
+
+<div id="foro" class="hidden">
+	<div class="franja-comunidad col-md-12 letra-submen"><h1>
+		Foro de esta comunidad	
+	</h1></div>
+	<div class="container">
+	{% for taller in talleres%}
+				{% include "vista_foro_comunidad.html" with taller=taller %}
+			{%endfor%}
+
+	</div>
+</div>
+
+<div id="informacion" class="">
+	<div class="franja-comunidad col-md-12 letra-submen"><h1>
+		Acerca de esta comunidad	
+	</h1></div>
+	<div class="container">
 	
-<div class="container">
-
-
-
-{% for admin in admins%}
-	{% include "lector_vista_min.html" with lector=admin isAdmin=True %}
-{%endfor%}
-
-
-{% for participante in participantes%}
-	{% include "lector_vista_min.html" with lector=participante isAdmin=False %}
-{%endfor%}
-
-	
-
-	
-
-
-	
-
-
-	
-
-
-
-
-	
-
-
-
-
-
+				{% include "vista_informacion_comunidad.html" %}
+		
+	</div>
 </div>
 
 
+<script ">
+var anterior="informacion"
+	function cambiar_pestana (id){
+	if(id!= anterior){
+
+		
+
+		$("#pestana_"+anterior).removeClass("submenu-comuni-selec");
+		$("#"+anterior).addClass("hidden");  
+
+		$("#"+id).removeClass("hidden");  
+		$("#pestana_"+id).addClass("submenu-comuni-selec");
+
+		
+		anterior=id;
+	}
+}
 
 
-
-</div>
-
+</script>
 
 {% endblock content %}

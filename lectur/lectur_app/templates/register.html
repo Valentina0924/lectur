@@ -5,15 +5,45 @@
 {% block base_body %}
 {% load crispy_forms_tags %}
 <!-- TOP BANNER DETAILS -->
-<div class="bkg-blue-main" style="padding:50px">
-  <div class="row">
+<div class="" style="padding:50px;">
+  <div class="row" >
+	<div class="col-lg-4 col-md-6 col-xs-12 col-lg-offset-4 col-md-offset-3 col-xs-offset-0">
     {% csrf_token %}
     {% crispy form %}
+    </div>
+
   </div>
 </div>
 <script>
   $("form").validate();
 </script>
+
+<script>
+	function nombreUsuario() {
+		var x = document.getElementById("id_username").value;
+		if(x=="holi"){
+			$("#id_username").addClass("campo-incorrecto");
+			$("#id_username").removeClass("campo-correcto");
+		}else{
+			$("#id_username").addClass("campo-correcto");	
+			$("#id_username").removeClass("campo-incorrecto");
+		}
+	}
+
+		function correoUsuario() {
+		var x = document.getElementById("id_email").value;
+		if(x.includes("@") & x.includes(".com")){
+			$("#id_email").addClass("campo-correcto");	
+			$("#id_email").removeClass("campo-incorrecto");
+		}else{
+			
+			$("#id_email").addClass("campo-incorrecto");
+			$("#id_email").removeClass("campo-correcto");
+		}
+	}
+    
+</script>
+
 {% endblock base_body %}
 
 {% endblock content %}

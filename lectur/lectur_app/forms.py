@@ -14,20 +14,25 @@ class UserForm(forms.ModelForm):
     helper = FormHelper()
     helper.form_tag = False
     username = forms.CharField(
-        label = "Nombre de Usuario | minusculas",
+        label = "Nombre de Usuario | minúsculas",
         required = True,
+         widget=forms.TextInput(attrs={'placeholder': 'pepito-perez','onchange':'nombreUsuario()'}),
     )
     first_name = forms.CharField(
         label = "Nombre",
         required = True,
+
+         widget=forms.TextInput(attrs={'placeholder': 'Pepito'}),
     )
     last_name = forms.CharField(
         label = "Apellido",
         required = True,
+         widget=forms.TextInput(attrs={'placeholder': 'Peréz'}),
     )
     email = forms.EmailField(
         label = "Correo electrónico",
         required = True,
+         widget=forms.TextInput(attrs={'placeholder': 'pepitoperez@tulia.com','onchange':'correoUsuario()'}),
     )
     password = forms.CharField(
         widget=forms.PasswordInput(),
@@ -44,7 +49,9 @@ class UserForm(forms.ModelForm):
         self.helper.layout = Layout(
             Fieldset(
               HTML("<div></div>"),
-               HTML("<h3 class='custom-header'>Regístrate en Tulia</h3>"),
+              HTML("<h3 class='header-formulario'>Regístrate en Tulia</h3>"),
+              HTML("<h4 class='header-formulario'>Para formar parte de nuestra comunidad debes estar registrado. Sólo debes completar los 2 formularios que se mostrarán a continuación. </h4>"),
+              HTML("<h3 class='header-formulario'>Paso 1: Información de contacto </h3>"),
               HTML("<div class='elemento_formulario'>"),
                 'username',
               HTML("</div><div class='elemento_formulario'>"),
@@ -55,11 +62,13 @@ class UserForm(forms.ModelForm):
                 'email',
               HTML("</div><div class='elemento_formulario'>"),
                 'password',
+                HTML("</div><div class='elemento_formulario'>"),
+                  HTML(' <label for="id_password" class="control-label requiredField"> Confirma tu contraseña<span class="asteriskField">*</span> </label>  <input type="password" name="confirmacion">'),
               HTML("</div><div class='elemento_formulario'>"),
-                ButtonHolder(Submit('submit', 'Registrarse', css_class='btn_enviar'),  css_class=' text-center'),
+                ButtonHolder(Submit('submit', 'Continuar', css_class='boton-formulario'),  css_class=' text-center'),
               HTML("</div><div class='elemento_formulario'>"),
                 Div(
-                    HTML('<div class="elemento_formulario"> <label>¿Ya eres miembro? <br> <a class="enlace_rojo" href="/login/">Inicia sesion</a></label> <br>Conoce los <a href="#" class="enlace_negro">términos de servicio</a> </div>'),
+                    HTML('<div class="elemento_formulario"> <label>¿Ya eres miembro? <br> <a class="enlace_rojo" href="/login/">Inicia sesion</a></label>  </div>'),
                     css_class='field-bottom topborder padt15 text-center'
                 ),
               HTML("</div>"),
@@ -101,7 +110,7 @@ class UserLoginForm(AuthenticationForm):
                 'password',
               HTML("</div><div class='elemento_formulario'>"),
 
-                ButtonHolder(Submit('submit', 'Iniciar sesión', css_class='btn_enviar'), css_class=' text-center'),
+                ButtonHolder(Submit('submit', 'Iniciar sesión', css_class='boton-comunidad'), css_class=' text-center'),
                 Div(
                     HTML('<p>Eres nuevo en Tulia? <a href="/register/">Registrate</a> <br> Has olvidado tu contrasena? <a href="#" data-reveal-id="firstModal">Recuperar</a></p>'),
                     css_class='field-bottom topborder padt15 text-center'
@@ -119,7 +128,7 @@ class LectorForm(forms.ModelForm):
         label = "Sobre tí",
         required = True,
         max_length = 140,
-        widget = forms.Textarea
+        widget = forms.Textarea(attrs={'placeholder': 'cuentanos que te gusta.','onchange':'descripcionUsuario()','rows':'4'}),
     )
 
     imagen = forms.ImageField(
@@ -131,13 +140,13 @@ class LectorForm(forms.ModelForm):
     facebook = forms.CharField(
         label = "Facebook (Opcional)",
         required=False,
-        widget=forms.URLInput
+        widget=forms.URLInput(attrs={'placeholder': 'https://www.facebook.com/pepito.perez' }),
     )
 
     twitter = forms.CharField(
         label = "Twitter (Opcional)",
         required=False,
-        widget=forms.URLInput
+        widget=forms.URLInput(attrs={'placeholder': 'https://twitter.com/pepitoperez' }),
     )
 
     class Meta:
@@ -152,9 +161,13 @@ class LectorForm(forms.ModelForm):
         self.helper.form_action ='#'
         self.helper.layout = Layout(
             Fieldset(
-              "",
-              HTML("<div class='large-2 medium-2 columns elemento_formulario'> "),
-              HTML("<img class='img-container-user-profile  circular' src= {% if user.userprofile.avatar_url %}'{{ user.userprofile.avatar_url.url_700x700 }}' {% else %} 'http://s22.postimg.org/sgwv8z7kx/url.jpg'{% endif %} style='width:100%;'> <div class='img_oculto'>"),
+              HTML("<div></div>"),
+              HTML("<h3 class='header-formulario'>{{titulo1}}</h3>"),
+              HTML("<h4 class='header-formulario'>{{titulo2}} </h4>"),
+              HTML("<h3 class='header-formulario'>{{titulo3}}</h3>"),
+              HTML("<div class='elemento_formulario'>"),
+
+              HTML("<img class='' src= {% if user.userprofile.avatar_url %}'{{ user.userprofile.avatar_url.url_700x700 }}' {% else %} {% load staticfiles %} '{% static 'imagenes/imagen_defecto.png' %}'{% endif %} > <div class='img_oculto'>"),
               'imagen',
               HTML("</div></div>"),
               Fieldset(

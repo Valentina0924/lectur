@@ -46,6 +46,7 @@ class Taller(models.Model):
     slug = models.SlugField(max_length=100, unique=True) # Nombre del taller sin carácteres espeiales
     cupos = models.IntegerField(default=0)
     participantes = models.ManyToManyField(Lector, related_name='participantes_taller');
+    
     def __unicode__(self):
         return unicode(self.nombre+" "+self.organizador.user.username);
 
