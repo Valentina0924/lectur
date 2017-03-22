@@ -3,18 +3,24 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="comunidad-fondo" style="position: relative; background-image: url('{{comunidad.imagen.url}}'); ">
-	<div class="texto-medio">
+<div class="comunidad-fondo" style="position: relative; /*background-image: url('{{comunidad.imagen.url}}');*/background-color: #187774; ">
+	<div class="texto-medio" >
 		<h1>{{comunidad.nombre}}   </h1>
-		<a href="/registrate/" class="boton-comunidad" align="center">
-			UNIRME
-		</a>
+		
+<div class="sobre-boton-registro"  style="padding-bottom: 120px;">
+				<a href="" class="boton-registro " align="center">
+			
+					UNIRME
+
+				</a>
+			</div>	
+
 	</div>
 	<div class="col-md-4 col-xs-12" style=" position: absolute; bottom: 0px; height: 40px;" >
 		<div class="row" >
-			<div id="pestana_actividades" class="col-md-3 col-xs-3 submenu-comuni" onclick="cambiar_pestana('actividades')"> Actividades	</div>
+			<div id="pestana_actividades" class="col-md-3 col-xs-3 submenu-comuni submenu-comuni-selec" onclick="cambiar_pestana('actividades')"> Actividades	</div>
 			<div id="pestana_miembros" class="col-md-3 col-xs-3 submenu-comuni" onclick="cambiar_pestana('miembros')"> Miembros </div>
-			<div id="pestana_informacion" class="col-md-3 col-xs-3 submenu-comuni submenu-comuni-selec" onclick="cambiar_pestana('informacion')" > Información	</div>
+			<div id="pestana_informacion" class="col-md-3 col-xs-3 submenu-comuni " onclick="cambiar_pestana('informacion')" > Información	</div>
 			<div id="pestana_foro" class="col-md-3 col-xs-3 submenu-comuni " onclick="cambiar_pestana('foro')"> Foro	</div>
 		</div>
 	</div>
@@ -23,7 +29,7 @@
 
 <div id="miembros" class="hidden">
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
-		Miembros pertenecientes a esta comunidad	
+		Participantes de esta comunidad	
 	</h1></div>
 	<div class="container">
 			{% for admin in admins%}
@@ -35,9 +41,9 @@
 	</div>
 </div>
 
-<div id="actividades" class="hidden">
+<div id="actividades" class="">
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
-		Actividades programadas por esta comunidad	
+		Encuentros programados por esta comunidad	
 	</h1></div>
 	<div class="container">
 	{% for taller in talleres%}
@@ -49,17 +55,29 @@
 
 <div id="foro" class="hidden">
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
-		Foro de esta comunidad	
+		{{foro.titulo}}	
 	</h1></div>
 	<div class="container">
-	{% for taller in talleres%}
-				{% include "vista_foro_comunidad.html" with taller=taller %}
-			{%endfor%}
 
+<div class="col-md-12 ">
+<div class="row seccion-rec-pop">
+<div class="col-md-6">Entradas más recientes </div>
+ <div class="col-md-6">Entradas más populares </div>
+</div> 
+	{% for cate in foro.categoria.all%}
+	{% for tema in cate.tema.all%}
+		<div class="hidden">
+				{% cycle 'rgba(243,247,248,1)' 'rgba(243,247,248,1)' 'rgba(243,247,248,1)' as color%}
+		</div>
+				{% include "vista_foro_comunidad.html" with categoria=cate tema=tema color=color %}
+			{%endfor%}
+	{%endfor%}		
+
+</div>
 	</div>
 </div>
 
-<div id="informacion" class="">
+<div id="informacion" class="hidden">
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
 		Acerca de esta comunidad	
 	</h1></div>
@@ -72,7 +90,7 @@
 
 
 <script ">
-var anterior="informacion"
+var anterior="actividades"
 	function cambiar_pestana (id){
 	if(id!= anterior){
 

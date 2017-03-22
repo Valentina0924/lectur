@@ -13,7 +13,8 @@
 	<link rel="stylesheet" href="{% static "css/fonts.css" %}">
 	<link rel="stylesheet"  href="{% static "css/estilosContacto.css" %}" >
 	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto|Roboto+Mono|Roboto+Slab' rel='stylesheet' type='text/css'>
-
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Yantramanav:100" rel="stylesheet">
 
 	<link href="{% static "css/style.css" %}" rel="stylesheet" />
 
@@ -25,73 +26,102 @@
 		<ul class="navIndex">
 			<li><a href="/registrate/">Regístrate </a></li>
 			<li><a href="#">|</a></li>
-			<li><a href="#"> Ingresa </a></li>
+			<li><a href="/inicia_sesion"> Ingresa </a></li>
 		</ul><!-- Fin registro -->
 		<div style="clear: both;"></div>	
 
 		<div class="logo-index">
-			<img class="imagen-logo-index" src='{% static 'imagenes/marca.png' %}' alt="Tulia">
+			<img class="imagen-logo-index"  src='{% static 'imagenes/marca.png' %}' alt="Tulia">
 		</div>	
 
 		<div>
-			<br> <br> 
-			<H2 class="texto-header" align="center"> ¡Mejora tus habilidades de escritura! Descubre e interactúa con
-				<br><br>  las diferentes comunidades lectoras de la ciudad de Cali. </H2>
+			
+			<H2 class="texto-header " align="center"> <p>¡Ven a tertuliar en Tulia Tertulia!</p>  </H2>
 
 			</div>
-			<br><br><br>
-			<a href="/registrate/" class="boton-registro" align="center">
+			<div class="sobre-boton-registro">
+				<a href="/registrate/" class="boton-registro" align="center">
+			
+					REGÍSTRATE
 
-				REGÍSTRATE
-
-			</a>
-
+				</a>
+			</div>	
 
 		</div>
+
+
+
+
+
 
 
 
 		<div class="container-fluid">
 
 			<div>
-				<br> <br> <br> <br> 
+				
 
-				<H1 class="texto-medio" align="center">  ¿Qué encontrarás en <strong>Tulia</strong>?</H1>
+				<H1 class="texto-medio-ind" align="center"> ¿QUÉ ES TULIA?</H1></div>
 
-				<br> <br><br>
+				<hr class="linea"> </hr>
+<div class=" col-md-6 col-md-push-3 col-sm-12 texto-par-dos" align="center" style ="padding-bottom: 30px;">
+<p style="font-weight: lighter; font-size: 25px; font-family: 'Yantramanav', sans-serif; color: black;">Tulia es una plataforma web que te ayuda a mejorar tus habilidades de escritura al mismo tiempo que descubres e interactúas con las comunidades lectoras que se encuentran en la ciudad.</p>
+
+
+</div>
+
+</div>
+
+
+
+<!-- <div class="franja-index"></div>
+
+ -->
+
+<div class="container-fluid" style="position: relative; background-attachment: fixed; background-size: cover; background-image: url('{% static 'imagenes/banner1b.jpg' %}'); ">
+
+<div style="position: absolute; top: 0px; border-style: solid; border-width: 40px; border-color: white rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0); width: 5%; left: 47.5%; padding: 0px; "> </div>
+
+
+<div style="position: absolute; bottom: 0px; border-style: solid; border-width: 40px; border-color:  rgba(0,0,0,0) rgba(0,0,0,0) #f4f8f9 rgba(0,0,0,0) ; width: 5%; left: 47.5%; padding: 0px; "> </div>
+
+
+			<div><H1 class="texto-medio-indb" align="center"> EXPLORA, DESCUBRE, ENTÉRATE</H1></div>
+
+				<hr class="linea"> </hr>
+
+
+			<div class="row" style="padding-top: 30px">
+
+			<div class="col-md-4 col-xs-12" style="padding-bottom: 100px;" > 
+				<div class="col-md-8 col-md-offset-2" align="center">
+					<img src='{% static 'imagenes/icono_uno.png' %}'  style="margin: 10px auto;">  
+					<H3 class="titulo-contenido" style="text-align: center;">Explora comunidades</H3>
+					<H3 class="texto-par-dosb" style="text-align: center;">Encuentra fácilmente las comunidades lectoras de la ciudad</H3>
+				</div>
 			</div>
 
-			<div class="col-md-4 col-xs-12" > 
-				<div class="col-md-6">
-					<img src='{% static 'imagenes/icono_uno.png' %}' align="right">  
-				</div>
-				<div class="col-md-6">
-					<H3 class="titulo-contenido"> Explora comunidades</H3>
+			<div class="col-md-4 col-xs-12" style="padding-bottom: 100px;"> 
+				<div class="col-md-8 col-md-offset-2" align= "center">
+					<img src='{% static 'imagenes/icono_dos.png' %}'  style="margin: 10px auto;">   
+					<H3 class="titulo-contenido" style="text-align: center;">Últimas actividades</H3>
+					<H3 class="texto-par-dosb" style="text-align: center;">Entérate de los diferentes talleres que realizan las comunidades</H3>
 				</div>
 			</div>
 
-			<div class="col-md-4 col-xs-12" > 
-				<div class="col-md-6">
-					<img src='{% static 'imagenes/icono_dos.png' %}' align="right">  
-				</div>
-				<div class="col-md-6">
-					<H3 class="titulo-contenido"> Da seguimiento a las comunidades</H3>
-				</div>
-			</div>
-			<div class="col-md-4 col-xs-12" > 
-				<div class="col-md-6">
-					<img src='{% static 'imagenes/icono_tres.png' %}' align="right"> 
-				</div>
-				<div class="col-md-6">
-					<H3 class="titulo-contenido"> Entérate de las publicaciones destacadas</H3>
+			<div class="col-md-4 col-xs-12" style="padding-bottom: 100px;"> 
+				<div class="col-md-8 col-md-offset-2" align= "center">
+					<img src='{% static 'imagenes/icono_tres.png' %}' style="margin: 10px auto;">    
+					<H3 class="titulo-contenido"  style="text-align: center;"> Participación activa</H3>
+					<H3 class="texto-par-dosb" style="text-align: center;">Interviene en los foros de las comunidades y crea nuevos contenidos</H3>
 				</div>
 
 			</div>
 
-		</div>
-<br><br><br><br>
+		</div></div>
 
-		<div class="container-fluid" style=" background-size: cover; background-image: url('{% static 'imagenes/parte_fondo.jpg' %}'); ">
+<div class="container-fluid" style=" background-color:#f4f8f9; ">
+        
           
           <div class="col-md-4 col-xs-12 col-md-offset-7  col-xs-offset-0" >
 <br><br>
@@ -110,18 +140,131 @@
 		</div>
 
 
-<div>
-<br><br><br><br>
-<div class="col-md-4 col-xs-12 col-md-offset-1  col-xs-offset-0" >
+-----
+
+<div class="container-fluid" style=" background-size: cover; background-image: url('{% static 'imagenes/parte-tres.jpg' %}'); ">
+
+				
+			<div><H1 class="texto-medio-ind" align="center"> ¡RECIBE RECOMPENSAS!</H1></div>
+
+				<hr class="linea"> </hr>
+<div class=" col-md-8 col-md-push-2 col-sm-12 texto-par-dos" align="center" style="padding-bottom: 40px;">
+<p>Participa activamente de las actividades y discusiones de las comunidades que sigues para subir de rango y adquirir boniﬁcaciones redimibles en el mundo real.</p>
+<div class="imagen-computador" style="padding-top: 20px;"> 
+					<img  src='{% static 'imagenes/computador.png' %}''> 
+				</div>
+
+</div> </div>
+
+<!-- 
+<div class="col-md-5 col-xs-12 col-md-offset-1  col-xs-offset-0" >
 <div class="imagen-computador"> 
 					<img  src='{% static 'imagenes/computador.png' %}''> 
 				</div>
-</div>
-<H1 class="texto-amarillo" align="center">  <strong>¡RECIBE RECOMPENSAS POR TU ACTIVIDAD!</strong> </H1>
-<br>
-		<H1 class="titulo-contenido" align="center">  Participa activamente de las actividades y discusiones <br><br> de las comunidades que sigues para subir de rango y<br><br>  adquirir boniﬁcaciones redimibles en el mundo real.</H1>
-</div>
+</div> -->
 
-
+<div class="container-fluid" style=" background-color:black; ">
 		
+		
+			<!-- barra formulario -->
+			
+
+			<div class="content col-md-12" >
+
+				<div class=" col-md-1"  > </div>
+
+				<div class="camposTexto col-md-8"  >
+
+
+					<!-- texto introductorio -->
+					<div  class="row col-xs-20 col-s-12 col-md-12 texto-par-dosb" "img-responsive center-block" >   
+						<br><br><p align= "left" class= "row col-xs-60 col-s-50 col-md-50 texto-medio-indb"> COMUNÍCATE CON NOSOTROS <br>
+
+						<p align="left"  class= "row col-xs-80 col-s-50 col-md-50 texto-par-dosb" style="padding-bottom: 30px;"> Para cualquier tipo de inquietud no dudes en escribirnos.
+
+						</p> 
+					</div><!-- Fin texto introductorio -->
+
+
+
+
+
+
+
+
+
+					<!-- espacio nombre -->
+					<div class="row">
+
+						<div class="col-xs-5 col-md-5 col-xs-12 col-sm-12 ">
+
+							<div class="row campo texto-par-dosb">
+								<span ><b>Nombre: </b></span><br>
+								<span><input   class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" type="text" size="30" maxlength="30" name="nombre" placeholder="Nombre"></span>
+							</div><!-- fin espacio nombre -->
+							<!-- espacio email -->
+							<div class="row campo texto-par-dosb">
+								<span ><b>Email: </b></span><br>
+								<span><input type="text" class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" size="30" maxlength="30" name="email" placeholder="Email"></span>
+							</div><!-- fin espacio email -->
+
+							<!-- espacio asunto-->
+							<div class="row campo texto-par-dosb">
+								<span ><b>Asunto: </b></span><br>
+								<span><input class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" type="text" size="30" maxlength="30" name="asunto" placeholder="Asunto"></span>
+							</div><!-- fin espacio asunto -->
+						</div>
+
+
+
+						<div class="col-xs-1 col-md-1 col-xs-12 col-sm-12"> </div>
+						<div class="col-xs-6 col-md-6 col-xs-12 col-sm-12">
+
+							<!-- espacio mensaje -->
+							<div class="row campo texto-par-dosb">
+								<span  ><b>Mensaje: </b></span><br>
+								<span><textarea name="comentarios"  class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" rows="10" cols="32" placeholder="Mensaje"></textarea></span>
+							</div><!-- fin espacio mensaje -->
+
+							<!-- Boton enviar mensaje -->
+					
+
+
+
+
+
+<div class="sobre-boton-registro" >
+				<a href="" class="boton-registro " style = "margin-top: 100px;" align="center">
+			
+					ENVIAR
+
+				</a>
+			</div>	
+
+
+
+						<!-- fin espacio enviar mensaje -->
+
+						</div>
+						<!-- final formulario mensaje -->
+					</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</div>
+
+			</div>
+	</div>
+
+
 	</body>

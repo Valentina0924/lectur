@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+{% block base_body %}
+{% load crispy_forms_tags %}
+<!-- TOP BANNER DETAILS -->
+<div class="" style="padding:50px;">
+  <div class="row" >
+	<div class="col-lg-4 col-md-6 col-xs-12 col-lg-offset-4 col-md-offset-3 col-xs-offset-0">
+    {% csrf_token %}
+    {% crispy form %}
+    </div>
+
+  </div>
+</div>
+
+
+
+{% endblock base_body %}
+
+{% endblock content %}

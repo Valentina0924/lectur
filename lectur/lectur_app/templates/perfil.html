@@ -1,0 +1,111 @@
+
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block content %}
+
+
+<div class="col-md-6 col-md-offset-3 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 50px;">
+	
+	<div class="row">
+		<div class="col-md-4" align="center">
+		<div class="redondo" style= "height: 100%; padding-top: 100%; position: relative; background-position: center; background-size: cover; background-image: url('{{perfil.imagen.url}}');"></div>
+<spam> {{perfil.user.username}} </spam><br>
+<i class="fa fa-facebook"></i>
+<i class="fa fa-twitter"></i>
+
+	</div>
+		<div class="col-md-8 texto-par-dos">
+			<h1>{{perfil.user.first_name}} {{perfil.user.last_name}} </h1>
+			<p>{{perfil.descripcion}}</p>		
+		</div>
+	</div>
+
+<div class="row">
+	
+
+<div class="row">
+<div class="col-md-12"> <h3>Comunidades a las que pertenezco</h3>
+</div>	
+	
+</div>
+
+<div class="row">
+	
+
+{% for c in comunidades %}
+{% include "comunidad_vista_min.html" with comunidad=c %}
+
+{% empty %}
+<h1>¡Aún no has ingresado a ninguna comunidad!</h1>
+{% endfor %}
+
+
+	
+</div>
+
+</div>
+
+
+  
+	<br><br>
+	<p>ENVIA UN MENSAJE</p>
+
+	<!-- espacio nombre -->
+	<div class="row">
+
+		<div class="col-xs-5 col-md-5 col-xs-12 col-sm-12 ">
+
+			<div class="row campo texto-par-dos">
+				<span ><b>Nombre: </b></span><br>
+				<span><input   class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" type="text" size="30" maxlength="30" name="nombre" placeholder="Nombre"></span>
+			</div><!-- fin espacio nombre -->
+			<!-- espacio email -->
+			<div class="row campo texto-par-dos">
+				<span ><b>Email: </b></span><br>
+				<span><input type="text" class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" size="30" maxlength="30" name="email" placeholder="Email"></span>
+			</div><!-- fin espacio email -->
+
+			<!-- espacio asunto-->
+			<div class="row campo texto-par-dos">
+				<span ><b>Asunto: </b></span><br>
+				<span><input class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" type="text" size="30" maxlength="30" name="asunto" placeholder="Asunto" ></span>
+			</div><!-- fin espacio asunto -->
+		</div>
+
+
+
+
+		<div class="col-xs-6 col-md-6 col-xs-12 col-sm-12 col-xs-offset-1 col-md-offset-1 col-xs-offset-1 col-sm-offset-1">
+
+			<!-- espacio mensaje -->
+			<div class="row campo texto-par-dos">
+				<span  ><b>Mensaje: </b></span><br>
+				<span><textarea name="comentarios"  class="col-xs-12 col-md-12 col-xs-12 col-sm-12 caja" rows="8" cols="32" placeholder="Mensaje"></textarea></span>
+			</div><!-- fin espacio mensaje -->
+
+			<!-- Boton enviar mensaje -->
+<div class="" style="margin-top: 15px; margin-bottom: 30px;" align="right">
+					<a href="" class="boton-actividad" >
+						
+						Enviar
+
+					</a>
+				</div>
+
+			<!-- fin espacio enviar mensaje -->
+
+		</div>
+		<!-- final formulario mensaje -->
+	</div>
+
+
+
+
+
+
+
+
+</div>
+
+{% endblock content %}

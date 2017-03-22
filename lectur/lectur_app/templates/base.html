@@ -12,6 +12,9 @@
 	<link rel="stylesheet"  href="{% static "css/estilosContacto.css" %}" >
 	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto|Roboto+Mono|Roboto+Slab' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="{% static "font-awesome-4.7.0/css/font-awesome.min.css" %}">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Yantramanav:100" rel="stylesheet">
 
   <link href="{% static "css/style.css" %}" rel="stylesheet" />
 
@@ -36,7 +39,7 @@
 seccion-seleccionada
 {% endif %}
 " >
-<a href="#">
+<a href="/explora/">
 	Explora	
 </a>
 	</div>
@@ -54,19 +57,47 @@ Mis comunidades
 {%if seccion_header == 'Destacados' %}
 seccion-seleccionada
 {% endif %}" >	
-<a href="#">
+<a href="/destacados/">
 Destacados	
 </a>
 </div>
 		</div>
+
+
 		<div class="col-md-3" >
-			<ul class="navIndex">
-				<li><a href="#">Regístrate </a></li>
+
+
+{%if user and user.lector%}
+
+<div class="" style="display: inline-block; width: 70px;height: 60px; background-image: url('{{user.lector.imagen.url}}'); background-size: cover; background-position: center; border-left-style: solid; border-right-style: solid; border-color: green; border-width:5px;"></div>
+
+	<ul class="" style="display: inline-block;" >
+
+	<li>{{user.username}}</li>
+
+	<li><a href="/cerrar_sesion/">Cerrar Sesión </a></li>
+
+
+				</ul><!-- Fin registro -->	
+
+
+
+
+{%else%}
+	<ul class="navIndex">
+				<li><a href="/registrate/">Regístrate </a></li>
 				<li><a href="#">|</a></li>
-					<li><a href="#"> Ingresa </a></li>
-				</ul><!-- Fin registro -->				
+					<li><a href="/inicia_sesion/"> Ingresa </a></li>
+				</ul><!-- Fin registro -->	
+
+{%endif%}
+			
+		
+
 		<div style="clear: both;"></div>	
 			</div>
+
+
 		</div>
 	</div>
 
@@ -75,7 +106,7 @@ Destacados
 
 
 
-			<div class="row content" style=" background-color: white; min-height: 800px; margin-top: 40px;">
+			<div class="row content" style=" background-color: white; min-height: 700px; margin-top: 40px;">
 
 
 			{% block content %}

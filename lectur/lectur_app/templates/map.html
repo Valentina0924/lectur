@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Hello Map</title>
+    </head>
+    <body>
+
+
+<div id="googleMap" style="width:100%;min-height:700px;"></div>
+
+        <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+
+
+    </body>
+</html>

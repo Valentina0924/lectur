@@ -36,6 +36,15 @@ class Valoracion(models.Model):
     def __unicode__(self):
         return unicode(self.codigo+" "+self.user.username);
 
+class Espacio(models.Model):
+    tipo = models.IntegerField(default = 1); # 0:Biblioteca 1:sala, 2: casa, 3: parque, 4:cafeteria
+    direccion = models.CharField(max_length=40);
+    latitud = models.DecimalField(max_digits=20, decimal_places=10,default=0.0);
+    longitud = models.DecimalField(max_digits=20, decimal_places=10,default=0.0);
+    nombre = models.CharField(max_length=20);
+    descripcion = models.CharField(max_length=300);
+    def __unicode__(self):
+        return unicode(self.tipo+" "+self.nombre +" "+self.direccion);
 
 class Taller(models.Model):
     organizador = models.ForeignKey(Lector);
@@ -46,9 +55,11 @@ class Taller(models.Model):
     slug = models.SlugField(max_length=100, unique=True) # Nombre del taller sin carácteres espeiales
     cupos = models.IntegerField(default=0)
     participantes = models.ManyToManyField(Lector, related_name='participantes_taller');
-    
-    def __unicode__(self):
-        return unicode(self.nombre+" "+self.organizador.user.username);
+    ubicacion = models.ForeignKey(Espacio, null=True);
+
+    def __str__(self):
+        return str(self.nombre+" "+self.organizador.user.username);
+
 
 
 class Trabajo_Escrito(models.Model):
@@ -65,15 +76,7 @@ class Trabajo_Escrito(models.Model):
     def __unicode__(self):
         return unicode(self.titulo+" "+self.autor.user.username);
 
-class Espacio(models.Model):
-    tipo = models.IntegerField(default = 1); # 0:Biblioteca 1:sala, 2: casa, 3: parque, 4:cafeteria
-    direccion = models.CharField(max_length=40);
-    latitud = models.DecimalField(max_digits=20, decimal_places=10,default=0.0);
-    longitud = models.DecimalField(max_digits=20, decimal_places=10,default=0.0);
-    nombre = models.CharField(max_length=20);
-    descripcion = models.CharField(max_length=300);
-    def __unicode__(self):
-        return unicode(self.tipo+" "+self.nombre +" "+self.direccion);
+
 
 class Evento(models.Model):
     dias = models.CharField(max_length=22); # "LU MA MI JU VI SA DO"
@@ -94,27 +97,29 @@ class Respuesta(models.Model):
         return unicode(self.autor);
 
 class Tema(models.Model):
+    titulo = models.CharField(max_length=22,null=True);
+    mensaje = models.CharField(max_length=200,null=True);
     autor =  models.ForeignKey(Lector);
     fecha_publicacion =  models.DateTimeField(auto_now_add=True);
-    respuesta = models.ManyToManyField(Respuesta, related_name = 'respuesta_tema');
-    valoracion = models.ManyToManyField(Valoracion, related_name = 'valoracion_tema');
-    def __unicode__(self):
-        return unicode(self.autor+" "+self.fecha_publicacion);
-
+    respuesta = models.ManyToManyField(Respuesta, related_name = 'respuesta_tema',blank=True);
+    valoracion = models.ManyToManyField(Valoracion, related_name = 'valoracion_tema',blank=True);
+    def __str__(self):
+        return str(self.titulo);
 
 class Categoria(models.Model):
     titulo = models.CharField(max_length=22);
     tema = models.ManyToManyField(Tema, related_name='tema_foro');
     descripcion = models.CharField(max_length=52);
-    def __unicode__(self):
-        return unicode(self.autor+" "+self.fecha_publicacion);
+    def __str__(self):
+        return str(self.titulo+" "+self.descripcion);
 
 class Foro(models.Model):
     categoria = models.ManyToManyField(Categoria, related_name='categoria_foro');
     titulo = models.CharField(max_length=22);
     contenido = models.CharField(max_length=52);
-    def __unicode__(self):
-        return unicode(self.titulo);
+    slug = models.SlugField(max_length=20, null=True); #unique=True //slug de la comunidad ala que pertenece el foro
+    def __str__(self):
+        return str(self.titulo);
 
 
 

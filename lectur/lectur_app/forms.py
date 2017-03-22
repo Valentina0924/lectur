@@ -16,7 +16,7 @@ class UserForm(forms.ModelForm):
     username = forms.CharField(
         label = "Nombre de Usuario | minúsculas",
         required = True,
-         widget=forms.TextInput(attrs={'placeholder': 'pepito-perez','onchange':'nombreUsuario()'}),
+         widget=forms.TextInput(attrs={'placeholder': 'pepitoperez','onchange':'nombreUsuario()'}),
     )
     first_name = forms.CharField(
         label = "Nombre",
@@ -128,7 +128,7 @@ class LectorForm(forms.ModelForm):
         label = "Sobre tí",
         required = True,
         max_length = 140,
-        widget = forms.Textarea(attrs={'placeholder': 'cuentanos que te gusta.','onchange':'descripcionUsuario()','rows':'4'}),
+        widget = forms.Textarea(attrs={'placeholder': 'Cuéntanos sobre las actividades que realizas en tu tiempo libre.','onchange':'descripcionUsuario()','rows':'4'}),
     )
 
     imagen = forms.ImageField(
@@ -182,10 +182,9 @@ class LectorForm(forms.ModelForm):
               HTML("</div><div class='elemento_formulario red_social'>"),
               'twitter',
               HTML("</div>"),
-              ButtonHolder(Submit('submit', 'Guardar cambios', css_class='button radius btn_crearProyecto')),
+              ButtonHolder(Submit('submit', 'Guardar cambios', css_class='boton-formulario')),
               css_class='large-5 medium-5 columns',
                 ),
-
 
             )
         )

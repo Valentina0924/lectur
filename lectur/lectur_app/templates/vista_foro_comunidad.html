@@ -1,0 +1,20 @@
+{% load staticfiles %}
+
+<div class="row" style="background-color:{{color}} ;"> 
+
+<div class= "col-md-2"><i class="fa fa-comments-o comentario" style="font-size: 55px;"></i>
+</div>
+
+<div class ="col-md-8" >
+
+<p><strong>Titulo: {{tema.titulo}} </strong></p>
+<p><strong>Fecha y hora de publicación:</strong> {{tema.fecha_publicacion}} </p>
+<p><strong>Publicado por:</strong> {{tema.autor.user.first_name}} {{tema.autor.user.last_name}} </p>
+<p> 33 comentarios </p>
+</div>
+<div class= "col-md-2"><i class="fa fa-star estrella-icono" style="font-size: 55px;"></i>
+</div>
+
+</div>
+
+

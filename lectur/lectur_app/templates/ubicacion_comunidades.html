@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block content %}
+<br>
+<div class="row" style="background: white;">
+
+<div class="col-md-3 filtro-exploracion texto-medio ">
+<h1>
+Explora comunidades	
+</h1>
+
+<P class="texto-par-dos">
+Encuentra comunidades lectoras que se acoplen a tus gustos y preferencias.
+</P>
+</div>
+
+<div class="col-md-6"> 
+{% include "map.html" %}
+</div>
+
+
+
+<div class="col-md-3 filtro-exploracion texto-medio">
+
+<h1>
+Resultados:	
+</h1>
+</div>
+
+
+
+</div>
+
+{% endblock content %}

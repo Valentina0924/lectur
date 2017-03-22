@@ -9,10 +9,17 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout
+from django.utils.decorators import method_decorator
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.csrf import csrf_protect
+from django.utils.http import is_safe_url
+from django.views.decorators.cache import never_cache
+from django.contrib.auth.decorators import login_required
+
 
 from django.views.generic import View, FormView, UpdateView, CreateView, DetailView, ListView, TemplateView
-from lectur_app.forms import UserForm, LectorForm;
-from lectur_app.models import Lector, Comunidad
+from lectur_app.forms import UserForm, LectorForm, UserLoginForm;
+from lectur_app.models import Lector, Comunidad, Foro
 
 from django.conf import settings
 
@@ -47,6 +54,73 @@ class Register(CreateView):
             auth.login(request=self.request, user=u)
         return HttpResponseRedirect('/register/perfil/')
 
+
+
+class Inicio_sesion(FormView):
+    template_name = 'login.html'
+    form_class = UserLoginForm
+    success_url = '/'
+
+
+    redirect_field_name = REDIRECT_FIELD_NAME
+    @method_decorator(sensitive_post_parameters('password'))
+    @method_decorator(csrf_protect)
+    @method_decorator(never_cache)
+    def dispatch(self, request, *args, **kwargs):
+        # Sets a test cookie to make sure the user has cookies enabled
+        request.session.set_test_cookie()
+        return super(Inicio_sesion, self).dispatch(request, *args, **kwargs)
+
+
+    def form_valid(self, form):
+        auth_login(self.request, form.get_user())
+        if self.request.session.test_cookie_worked():
+        	self.request.session.delete_test_cookie()
+        return super(Inicio_sesion, self).form_valid(form)
+
+    def get_success_url(self):
+        redirect_to = self.success_url
+        return redirect_to
+
+@login_required
+def cerrar_sesion(request):
+	"""
+	Cierra la sesión activa.
+	args:
+		request.
+	return:
+		 HttpResponseRedirect: Redirecciona al iicio.
+	"""
+	# Since we know the user is logged in, we can now just log them out.
+	logout(request)
+	# Take the user back to the homepage.
+	return HttpResponseRedirect('/')
+
+
+class Perfil(TemplateView):
+    template_name = 'perfil.html'
+    def get_context_data(self, **kwargs):
+        context = super(Perfil, self).get_context_data(**kwargs)
+        context["seccion_header"]="Perfil";
+        nombreUsuario=self.kwargs["nombre"];
+        usuario = User.objects.all().get(username=nombreUsuario);
+        lec = Lector.objects.all().get(user=usuario);
+
+        context["perfil"]=lec;
+
+        comunidades= set([]);
+        for com in Comunidad.objects.all():
+            for adm in com.administradores.all():
+                if adm==lec:
+                    comunidades.add(com);
+            for par in com.participantes.all():
+                if par==lec:
+                    comunidades.add(com);
+
+        context["comunidades"] =comunidades;
+
+        return context;
+
 class Comunidades(TemplateView):
     template_name = 'explora_comunidades.html'
     def get_context_data(self, **kwargs):
@@ -72,10 +146,23 @@ class VistaComunidad(TemplateView):
             context["participantes"]=participantes;
             talleres=comunidad.talleres.all();
             context["talleres"]=talleres;
+            foro=Foro.objects.all().get(slug=comuNombre);
+            context["foro"]=foro;
         return context
 
+class Explora(TemplateView):
+    template_name = 'ubicacion_comunidades.html'
+    def get_context_data(self, **kwargs):
+        context = super(Explora, self).get_context_data(**kwargs)
+        context["seccion_header"]="Explora";
+        return context
 
-
+class Destacados(TemplateView):
+    template_name = 'vista_destacados_comunidad.html'
+    def get_context_data(self, **kwargs):
+        context = super(Destacados, self).get_context_data(**kwargs)
+        context["seccion_header"]="Destacados";
+        return context
 
 def get_codigo_nuevo_usuario():
     hoy = datetime.datetime.today();
