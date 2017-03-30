@@ -5,6 +5,12 @@ lecturvenv\Scripts\activate
 cd lectur
 python manage.py runserver
 
+// cambiar variables en la base de datos
+python manage.py makemigrations
+python manage.py migrate
+
+// agregar archivos a la carpeta static
+python manage.py collectstatic
 
 // actualizar git
 git status

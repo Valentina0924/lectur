@@ -11,8 +11,16 @@ Explora comunidades
 </h1>
 
 <P class="texto-par-dos">
-Encuentra comunidades lectoras que se acoplen a tus gustos y preferencias.
+Encuentra comunidades lectoras:
 </P>
+
+{% for comu in comunidades %}
+
+	<div id="comu_{{comu.slug}}" class="row" onclick="mostrarespacios('{{comu.slug}}')">
+		<div class="texto-par-dos" style="margin-left: 20px;">{{comu.nombre}}</div>
+	</div>
+{% endfor %}
+
 </div>
 
 <div class="col-md-6"> 
@@ -24,12 +32,54 @@ Encuentra comunidades lectoras que se acoplen a tus gustos y preferencias.
 <div class="col-md-3 filtro-exploracion texto-medio">
 
 <h1>
-Resultados:	
+Acerca de:	
 </h1>
+
+
+{% for comu in comunidades %}
+<div  id="esp_{{comu.slug}}" class="row hidden">
+
+<h3 class="texto-par-dos" >{{comu.nombre}}</h3>
+<h3 class="texto-par-dos" >{{comu.descripcion}}</h3>
+
+				<a href="/comunidades/{{comu.slug}}/informacion" class="boton-actividad" align="center" style="line-height: 50px;">
+			
+					Ver esta comunidad
+
+				</a>
+			
+
+
+
+{% for esp in comu.lugares_encuentro.all %}
+	<div class="row">
+
+	<div class="texto-par-dos" style="margin-left: 13px;">
+		{{esp.nombre}}</div>
+	</div>
+	{% empty %}
+
+	<div class="texto-par-dos" style="margin-left: 13px;">
+	La comunidad {{comu.nombre}} aún no ha registrado espacios. </div>
+
+{% endfor %}
+</div>
+{% endfor %}
+
+
 </div>
 
 
 
 </div>
 
+<script type="text/javascript">
+	var ant="";
+function mostrarespacios(id){
+	$("#esp_"+id).removeClass("hidden");
+	$("#esp_"+ant).addClass("hidden");
+	ant=id;
+}
+
+</script>
 {% endblock content %}

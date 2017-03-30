@@ -8,7 +8,7 @@
     <body>
 
 
-<div id="googleMap" style="width:100%;min-height:700px;"></div>
+<div id="googleMap" style="width:100%; {% if alto_mapa %} min-height:{{alto_mapa}}px; {%else%}  min-height:700px; {%endif%}"></div>
 
         <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
@@ -16,3 +16,4 @@
 
     </body>
 </html>
+

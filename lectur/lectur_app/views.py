@@ -18,12 +18,13 @@ from django.contrib.auth.decorators import login_required
 
 
 from django.views.generic import View, FormView, UpdateView, CreateView, DetailView, ListView, TemplateView
-from lectur_app.forms import UserForm, LectorForm, UserLoginForm;
-from lectur_app.models import Lector, Comunidad, Foro
+from lectur_app.forms import UserForm, LectorForm, UserLoginForm, ComunidadForm, TallerComunidadForm, EspacioForm, TemaForoForm;
+from lectur_app.models import Lector, Comunidad, Foro, Taller, Categoria, Espacio, Respuesta, Tema
 
 from django.conf import settings
 
-
+from django.template import defaultfilters;
+from django.template.defaultfilters import slugify;
 # Create your views here.
 
 # Create your views here.
@@ -60,8 +61,6 @@ class Inicio_sesion(FormView):
     template_name = 'login.html'
     form_class = UserLoginForm
     success_url = '/'
-
-
     redirect_field_name = REDIRECT_FIELD_NAME
     @method_decorator(sensitive_post_parameters('password'))
     @method_decorator(csrf_protect)
@@ -70,8 +69,6 @@ class Inicio_sesion(FormView):
         # Sets a test cookie to make sure the user has cookies enabled
         request.session.set_test_cookie()
         return super(Inicio_sesion, self).dispatch(request, *args, **kwargs)
-
-
     def form_valid(self, form):
         auth_login(self.request, form.get_user())
         if self.request.session.test_cookie_worked():
@@ -80,7 +77,7 @@ class Inicio_sesion(FormView):
 
     def get_success_url(self):
         redirect_to = self.success_url
-        return redirect_to
+        return "/comunidades/"
 
 @login_required
 def cerrar_sesion(request):
@@ -129,6 +126,7 @@ class Comunidades(TemplateView):
 
         comunidades = Comunidad.objects.all();
         context["comunidades"]=comunidades;
+
         return context
 
 class VistaComunidad(TemplateView):
@@ -137,17 +135,36 @@ class VistaComunidad(TemplateView):
         context = super(VistaComunidad, self).get_context_data(**kwargs)
         context["seccion_header"]="Comunidades";
         comuNombre=self.kwargs["comunidad"];
+
+        if "tipo" in self.kwargs and kwargs["tipo"]:
+            tipo=self.kwargs["tipo"];
+            context["tipo"]=tipo;
+        else:
+            tipo="actividades";
         comunidad = Comunidad.objects.all().get(slug=comuNombre);
         context["comunidad"]=comunidad;
         if comunidad:
-            admins=comunidad.administradores.all();
+            admins=comunidad.administradores.all().order_by('user__first_name');
             context["admins"]=admins;
-            participantes=comunidad.participantes.all();
+            participantes=comunidad.participantes.all().order_by('user__first_name');
             context["participantes"]=participantes;
             talleres=comunidad.talleres.all();
             context["talleres"]=talleres;
             foro=Foro.objects.all().get(slug=comuNombre);
             context["foro"]=foro;
+
+            pertenece=0;
+            if self.request.user and self.request.user.is_authenticated:
+                    lect=Lector.objects.get(user=self.request.user)
+                    if lect in admins:
+                        pertenece=2;
+                    if pertenece ==0:
+                        if lect in participantes:
+                            pertenece=1;
+            else:
+                pertenece=-1;
+            context["pertenece"]=pertenece;
+
         return context
 
 class Explora(TemplateView):
@@ -155,7 +172,132 @@ class Explora(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Explora, self).get_context_data(**kwargs)
         context["seccion_header"]="Explora";
+        comunidades=Comunidad.objects.all();
+        context["comunidades"]=comunidades;
+
         return context
+
+class VistaForo(TemplateView):
+    template_name = 'vista_foro.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VistaForo, self).get_context_data(**kwargs)
+        foroNombre=self.kwargs["foro"];
+        context["seccion_header"]="Foro";
+        foro=Foro.objects.all().get(slug=foroNombre);
+        context["foro"]=foro;
+
+        comunidad=Comunidad.objects.all().get(slug=foroNombre);
+        context["comunidad"]=comunidad;
+        return context
+
+class VistaCategoriaForo(TemplateView):
+    template_name = 'vista_categoria_foro.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VistaCategoriaForo, self).get_context_data(**kwargs)
+        foroNombre=self.kwargs["foro"];
+        foroCategoria=self.kwargs["categoria"];
+        context["seccion_header"]="Foro";
+        foro=Foro.objects.all().get(slug=foroNombre);
+        context["foro"]=foro;
+        categoria= foro.categoria.all().get(slug=foroCategoria);
+        context["categoria"]= categoria;
+        comunidad=Comunidad.objects.all().get(slug=foroNombre);
+        context["comunidad"]=comunidad;
+        return context
+
+class VistaTemaForo(TemplateView):
+    template_name = 'vista_tema_foro.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VistaTemaForo, self).get_context_data(**kwargs)
+        foroNombre=self.kwargs["foro"];
+        foroCategoria=self.kwargs["categoria"];
+        categoriaTema=self.kwargs["tema"];
+        context["seccion_header"]="Foro";
+        foro=Foro.objects.all().get(slug=foroNombre);
+        context["foro"]=foro;
+        categoria= foro.categoria.all().get(slug=foroCategoria);
+        context["categoria"]= categoria;
+        tema= categoria.tema.all().get(slug=categoriaTema);
+        context["tema"]=tema;
+        comunidad=Comunidad.objects.all().get(slug=foroNombre);
+        context["comunidad"]=comunidad;
+
+        respuestas= tema.respuesta.all().filter(tipo_respuesta=-1);
+        context["respuestas"]=respuestas;
+
+
+        return context
+
+
+@login_required
+def register_comment(request, username, pk):
+
+    usu = User.objects.get(username=username);
+    perfil = Lector.objects.get(user=usu);
+    mensaje=request.GET["mensaje"];
+    tipo=request.GET["tipo"];
+    s='/vista-comentario/';
+
+    if tipo=="respuesta":
+        tema=Tema.objects.get(pk=pk);
+        nueva_respuesta=Respuesta(perfil=perfil, mensaje=mensaje, tipo_respuesta=-1);
+        nueva_respuesta.save();
+        tema.respuesta.add(nueva_respuesta);
+        tema.save();
+        s+=str(nueva_respuesta.pk);
+    elif tipo=="comentario":
+        nueva_respuesta=Respuesta(perfil=perfil, mensaje=mensaje, tipo_respuesta=int(pk));
+        nueva_respuesta.save();
+        s+=str(nueva_respuesta.pk);
+    return  HttpResponseRedirect(s);
+
+
+@login_required
+def registrarUsuarioComunidad(request, username, comunidad):
+    usu = User.objects.get(username=username);
+    perfil = Lector.objects.get(user=usu);
+    comunidad = Comunidad.objects.get(slug=comunidad);
+    s="/respuestajax/";
+    tipo=request.GET["tipo"];
+    if tipo=="unir":
+        comunidad.participantes.add(perfil);
+        s+="Te has unido a "+comunidad.nombre;
+    elif tipo=="salir":
+        comunidad.participantes.remove(perfil);
+        s+="Has salido de "+comunidad.nombre;
+    elif tipo=="u_admin":
+        comunidad.participantes.remove(perfil);
+        comunidad.administradores.add(perfil);
+        s+=usu.first_name+" "+usu.last_name+" ha sido promovido a Administrador"
+    elif ripo=="s_admin":
+        comunidad.administradores.remove(perfil);
+        s+="Has salido de "+comunidad.nombre;
+    comunidad.save();
+    return  HttpResponseRedirect(s);
+
+class Vistajax(TemplateView):
+    template_name = 'vista_respuestaajax.html'
+    def get_context_data(self, **kwargs):
+        context = super(Vistajax, self).get_context_data(**kwargs)
+        context["respuesta"]=self.kwargs["respuesta"];
+        return context
+
+class VistaComentario(TemplateView):
+    template_name = 'respuesta_foro.html';
+    def get_context_data(self, **kwargs):
+        context = super(VistaComentario, self).get_context_data(**kwargs)
+        respuesta=Respuesta.objects.get(pk=self.kwargs["pk"]);
+        context["autor"]  =respuesta.perfil;
+        context["mensaje"]  =respuesta.mensaje;
+        context["fecha"]  =respuesta.fecha;
+        context["pk"]  =respuesta.pk;
+        context["isRespuesta"]  = respuesta.tipo_respuesta==-1;
+        context["principal"]=true =respuesta.tipo_respuesta==-1;
+        return context
+
 
 class Destacados(TemplateView):
     template_name = 'vista_destacados_comunidad.html'
@@ -213,6 +355,14 @@ class UpdateProfile(UpdateView):
     model = User
     state=False
 
+    def get_context_data(self, **kwargs):
+        context = super(UpdateProfile, self).get_context_data(**kwargs)
+        context["titulo1"]="Actualiza tu perfil";
+        #context["titulo2"]="";
+        #context["titulo3"]="";
+        return context;
+
+
     def get_state(self):
     	return state
 
@@ -226,7 +376,121 @@ class UpdateProfile(UpdateView):
         #dir='7perfil/'+lector.codigo
         return HttpResponseRedirect('/prueba');
 
+class CrearComunidad(CreateView):
+    """ Vista de la página de formulario donde se registra una nueva comunidad """
+    template_name = 'register.html'
+    form_class = ComunidadForm
+    model = User
 
+    def get_context_data(self, **kwargs):
+        context = super(CrearComunidad, self).get_context_data(**kwargs)
+        context["titulo1"]="Registra tu comunidad";
+        context["titulo2"]="¡Ya estás a un paso de crear tu comunidad!";
+
+        return context;
+
+    def form_valid(self, form):
+        comunidad = form.save(commit=False);
+        slugComu= defaultfilters.slugify(comunidad.nombre);
+        comunidad.slug =slugComu;
+        comunidad.save();
+
+
+        usuario = self.request.user;
+        administrador = Lector.objects.get(user=usuario);
+        comunidad.administradores.add(administrador);
+        comunidad.save();
+
+
+        tituloForo="Foro de "+comunidad.nombre
+        contenidoForo="Bienvenidos al foro de "+comunidad.nombre;
+        comuForo=Foro( titulo =tituloForo , contenido = contenidoForo , slug=slugComu );
+        comuForo.save();
+
+        tituloDiscusion = "Discusión";
+        descripcionDiscusion ="Discutimos temas de interés para la comunidad";
+        slugDiscusion ="discusion-"+slugComu;
+        cateDiscusion=Categoria(titulo=tituloDiscusion, descripcion=descripcionDiscusion, slug=slugDiscusion, tipo = 0);
+        cateDiscusion.save();
+
+        tituloCreacion = "Creación";
+        descripcionCreacion = "Compartimos ideas para la creación de nuestros textos";
+        slugCreacion = "creacion-"+slugComu;
+        cateCreacion = Categoria(titulo=tituloCreacion, descripcion=descripcionCreacion, slug=slugCreacion, tipo = 1);
+        cateCreacion.save();
+
+        tituloRecomendacion = "Recomendación";
+        descripcionRecomendacion = "Recomienda libros u autores que hayas leído";
+        slugRecomendacion = "recomendacion-"+slugComu;
+        cateRecomendacion = Categoria(titulo=tituloRecomendacion, descripcion=descripcionRecomendacion, slug=slugRecomendacion, tipo = 2);
+        cateRecomendacion.save();
+
+        comuForo.categoria.add(cateDiscusion);
+        comuForo.categoria.add(cateCreacion);
+        comuForo.categoria.add(cateRecomendacion);
+
+        comuForo.save();
+        form.save_m2m();
+        return HttpResponseRedirect('/comunidades');
+
+class CrearTaller(CreateView):
+    """ Vista de la página de formulario donde se registra un nuevo taller """
+    template_name = 'register.html'
+    form_class = TallerComunidadForm
+    model = Taller
+    url_retorno="/comunidades/"
+
+    def get_context_data(self, **kwargs):
+        context = super(CrearTaller, self).get_context_data(**kwargs)
+        context["titulo1"]="Crea una actividad para tu comunidad";
+        nombrecomunidad=self.kwargs["comunidad"];
+        url_retorno="/comunidades/"+nombrecomunidad;
+        comunidad=Comunidad.objects.get(slug=nombrecomunidad);
+        context["comunidad"]=comunidad;
+        return context;
+
+    def form_valid(self, form):
+        nombrecomunidad=self.kwargs["comunidad"];
+        url_retorno="/comunidades/"+nombrecomunidad;
+        taller = form.save(commit=False);
+        slugTaller= defaultfilters.slugify(taller.nombre);
+        taller.slug =slugTaller;
+        usuario = self.request.user;
+        organizador = Lector.objects.get(user=usuario);
+        taller.organizador = organizador;
+        taller.save();
+
+
+        comunidad=Comunidad.objects.get(slug=nombrecomunidad);
+        comunidad.talleres.add(taller);
+        comunidad.save();
+        form.save_m2m();
+        return HttpResponseRedirect(url_retorno);
+
+class RegistrarEspacio(CreateView):
+    """ Vista de la página de formulario donde se registra el espacio """
+    template_name = 'registrar_ubicacion.html'
+    form_class = EspacioForm
+    model = Espacio
+    url_retorno="/comunidades/"
+
+    def get_context_data(self, **kwargs):
+        context = super(RegistrarEspacio, self).get_context_data(**kwargs)
+        context["titulo1"]="Agrega el espacio de encuentro de tu comunidad";
+        nombrecomunidad=self.kwargs["comunidad"];
+        url_retorno="/comunidades/"+nombrecomunidad;
+        comunidad=Comunidad.objects.get(slug=nombrecomunidad);
+        context["comunidad"]=comunidad;
+        return context;
+
+    def form_valid(self, form):
+        nombrecomunidad=self.kwargs["comunidad"];
+        url_retorno="/comunidades/"+nombrecomunidad;
+        espacio = form.save(commit=True);
+        comunidad=Comunidad.objects.get(slug=nombrecomunidad);
+        comunidad.lugares_encuentro.add(espacio);
+        comunidad.save();
+        return HttpResponseRedirect(url_retorno);
 
 class Prueba(TemplateView):
     template_name = 'index.html'
@@ -239,3 +503,36 @@ class Prueba(TemplateView):
             context["aaa"]=info;
             context["img"]=userprofile.imagen;
         return context
+
+class CrearTema(CreateView):
+    """ Vista de la página de formulario donde se registra un nuevo tema """
+    template_name = 'register.html'
+    form_class = TemaForoForm
+    model = Tema
+    url_retorno="/comunidades/"
+
+    def get_context_data(self, **kwargs):
+        context = super(CrearTema, self).get_context_data(**kwargs)
+        context["titulo1"]="Crea una actividad para tu comunidad";
+        nombrecomunidad=self.kwargs["comunidad"];
+        url_retorno="/comunidades/"+nombrecomunidad;
+        comunidad=Comunidad.objects.get(slug=nombrecomunidad);
+        context["comunidad"]=comunidad;
+        return context;
+
+    def form_valid(self, form):
+        tema = form.save(commit=False);
+        slugTema= defaultfilters.slugify(tema.titulo);
+        tema.slug =slugTema;
+        usuario = self.request.user;
+        autor = Lector.objects.get(user=usuario);
+        tema.autor = autor;
+        tema.save();
+
+        nombrecomunidad=self.kwargs["comunidad"];
+        nombrecategoria=self.kwargs["categoria"];
+        categoria=Categoria.objects.get(slug=nombrecategoria);
+        categoria.tema.add(tema);
+        categoria.save();
+        url_retorno="/foro/"+nombrecomunidad+"/"+nombrecategoria+"/"+slugTema;
+        return HttpResponseRedirect(url_retorno);

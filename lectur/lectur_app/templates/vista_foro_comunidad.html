@@ -1,20 +1,35 @@
 {% load staticfiles %}
 
-<div class="row" style="background-color:{{color}} ;"> 
 
-<div class= "col-md-2"><i class="fa fa-comments-o comentario" style="font-size: 55px;"></i>
-</div>
 
-<div class ="col-md-8" >
+<a href="/foro/{{foro.slug}}/{{cate.slug}}/{{tema.slug}}" style="color: inherit;"> 
+	<div class="row " > 
 
-<p><strong>Titulo: {{tema.titulo}} </strong></p>
-<p><strong>Fecha y hora de publicación:</strong> {{tema.fecha_publicacion}} </p>
-<p><strong>Publicado por:</strong> {{tema.autor.user.first_name}} {{tema.autor.user.last_name}} </p>
-<p> 33 comentarios </p>
-</div>
-<div class= "col-md-2"><i class="fa fa-star estrella-icono" style="font-size: 55px;"></i>
-</div>
+		<div class= "col-md-2">
+		</div>
 
-</div>
+		<div class ="col-md-1" style="padding-top: 40px;" >
+<div class="redondo" style= "height: 100%; padding-top: 100%; position: relative; background-position: center; background-size: cover; background-image: url('{{tema.autor.imagen.url}}');"></div></div>
+
+
+	<div class ="col-md-5" style="padding-top: 48px; " >
+			<p style="color:#2d388a; font-size:19px;"><strong>{{tema.titulo}} </strong></p>
+			<p> {{tema.fecha_publicacion}} * {{tema.autor.user.first_name}} {{tema.autor.user.last_name}} </p>
+			
+			
+		</div>
+
+		<div class ="col-md-4"  style="padding-top: 44px; text-align: center;">
+			
+			<p style=" font-size:19px;"><strong>33</strong></p>
+			<p> comentarios </p>
+		</div>
+		
+
+	</div>
+</a>
+
+
+
 
 

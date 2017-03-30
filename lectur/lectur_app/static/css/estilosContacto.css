@@ -88,7 +88,7 @@ header {
     }
 
 .imagen-computador{
-  width:400px;
+  width:330px;
   margin: 20px auto;
 }
 
@@ -360,6 +360,25 @@ padding-top: 20px;
  .comentario{
   color:#8a91aa;
  }
+
+
+
+/******** boton-foro*******/
+.boton-foro{
+   text-decoration: none !important;
+  
+  font-family:"roboto";
+  font-size: 17px;
+  border-radius: 6px;
+  border: #b2b1b1 1px solid;
+  padding: 7px  7px;
+}
+
+
+.franja-foro{
+  background-color: #a4be32;
+  height: 60px;
+}
  /******************* Sección mis comunidades ********************/
  .submenu-comuni{
   color:white;
@@ -443,6 +462,30 @@ font-family:"Raleway";
 font-size: 26px;
 }
 
+/******************** Formulario para ubicación ********************/
+.boton-tipo{
+  font-family: "roboto" "san-serif";
+  font-size: 12px;
+  border-color: #5e5e5e;
+  border-width: 2px;
+  background-color: rgba(243,247,248,0.4);
+  border-radius: 6px;
+  border-style: solid;
+  color: #5e5e5e;
+  padding: 10px;
+}
+.boton-tipo:hover {
+background-color: rgba(223,227,228,1);
+}
+.boton-tipo-activo{  
+  background-color: #6d9acf;
+  color:white;
+}
+
+.boton-tipo i{
+  font-size: 25px;
+}
+
 /******************** Vista miembros de comunidades ********************/
 .circulo-perfil{
   width: 100%;
@@ -503,12 +546,34 @@ border-radius: 50%;
 	font-weight: 19em;
 	margin-bottom: 0;
 	margin-left: 15px;
-	padding-top: 20px
+	padding-top: 20px;
 }
 .navIndex li a{
 
   	color:white;
   	font-family: "roboto";
+   }
+
+   .menu-imagen-header{
+list-style: none;
+float: right;
+}
+.menu-imagen-header li{
+  display: inline-block;
+
+}
+.menu-imagen-header li a{
+
+    font-family: "roboto";
+   }
+
+.menu-imagen-header   .dropdown{
+    vertical-align: top;
+    margin-top: 25px;
+    padding-bottom: 25px;
+   }
+   .menu-imagen-header .caret{
+      border-width: 6px;
    }
 
    .imagen-medio{

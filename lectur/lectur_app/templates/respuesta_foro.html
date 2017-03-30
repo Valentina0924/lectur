@@ -1,0 +1,79 @@
+{% load staticfiles %}
+{% load respuestas_foro %}
+
+
+<!-- parte respuesta -->	
+
+<div class="row boton-foro" style="background-color: white; padding: 0px; overflow: hidden;  {%if principal %} 
+margin-bottom: 50px;
+{%else%} 
+margin-bottom: 10px;
+{%endif%} ">
+
+
+
+<div class="col-md-2" align="center" style="">
+	<div class="redondo" style= "width: 80%; padding-top: 80%; margin-top: 20px; position: relative; background-position: center; background-size: cover; background-image: url('{{autor.imagen.url}}');"></div>
+	<spam> {{autor.user.first_name}} {{autor.user.last_name}} </spam><br>
+
+
+</div>
+
+<div class="col-md-10 texto-par-dos" style="margin-top: 0px; padding-top: 20px; padding-bottom: 0px; background-color: white;">
+
+	<div class="row" style="min-height: 200px; padding-left: 15px; ">
+		<p><strong>Contenido:</strong> {{mensaje}} </p>
+
+	</div>
+	<div class="row" style=" padding-left: 15px; ">		
+		<p><strong>Publicado:</strong> {{fecha}} </p>
+
+	</div>
+</div>
+
+{%if isRespuesta%}
+{% if user and user.lector%}
+
+<div class ="row-fluid" style="clear: both; background-color: white; padding-bottom: 10px;" >
+	
+	<h3 style="margin-left: 20px;">Comentarios</h3>
+	
+	<div  class="col-md-12" style=" background-color: white;">
+	<div class="col-xs-10 col-md-11 col-sm-10"> 
+		<span>
+		<textarea id="{{pk}}_comen" name="comentarios"  class="caja" rows="2" cols="32"  style="width: 100%" placeholder="Escribe aquí tu comentario"></textarea>
+		</span>
+		</div>
+		<!-- Boton enviar mensaje -->
+		<div class="col-md-1 col-xs-2 col-sm-2"   style="padding: 10px; margin-top: 10px;">
+			<a href="#{{pk}}_respuestas"  class="boton-actividad"  id="{{pk}}_btn" onclick="enviarRespuesta({{pk}},'comentario')">
+
+				Enviar
+
+			</a>
+		</div><!-- fin espacio enviar mensaje -->
+
+	</div>
+
+</div>
+{% endif %}	
+
+<div class="row-fluid">
+	<div id="{{pk}}_respuestas" class ="col-md-11 col-md-offset-1" >
+		
+
+		{% for respuesta in pk|get_respuestas_foro %}
+
+		{% include "respuesta_foro.html" with autor=respuesta.perfil mensaje=respuesta.mensaje fecha=respuesta.fecha pk=respuesta.pk isRespuesta=True principal=False%}
+
+
+		{% endfor %}
+
+
+
+	</div>	
+</div>
+{% endif %}	
+</div>
+
+

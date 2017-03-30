@@ -1,19 +1,40 @@
 {% extends 'base.html' %}
-
 {% load staticfiles %}
+{% load respuestas_foro %}
 {% block content %}
 
 <div class="comunidad-fondo" style="position: relative; /*background-image: url('{{comunidad.imagen.url}}');*/background-color: #187774; ">
 	<div class="texto-medio" >
-		<h1>{{comunidad.nombre}}   </h1>
-		
-<div class="sobre-boton-registro"  style="padding-bottom: 120px;">
-				<a href="" class="boton-registro " align="center">
-			
-					UNIRME
+		<h1>{{comunidad.nombre}}  </h1>
 
+		{%if pertenece > 0%}
+<div class="sobre-boton-registro"  style="padding-bottom: 120px;">
+				
+				<a href="/comunidades/{{comunidad.slug}}/miembros" class="boton-registro " align="center" onclick="enviarRespuesta('{{user.username}}','{{comunidad.slug}}', {%if pertenece < 2%} 'salir' {%else%} 's_admin' {%endif%}  )" >
+				Salirme
 				</a>
 			</div>	
+
+
+		{%elif pertenece < 0 %}
+
+<div class="sobre-boton-registro"  style="padding-bottom: 120px;">
+				<a href="/inicia_sesion/" class="boton-registro " align="center">
+					inicia sesión
+				</a>
+			</div>
+
+		{%else%}
+
+<div class="sobre-boton-registro"  style="padding-bottom: 120px;">
+				<a href="/comunidades/{{comunidad.slug}}/miembros" class="boton-registro " align="center"  onclick="enviarRespuesta('{{user.username}}','{{comunidad.slug}}', 'unir')" >
+					Unirme
+				</a>
+			</div>	
+
+		{%endif%}
+
+
 
 	</div>
 	<div class="col-md-4 col-xs-12" style=" position: absolute; bottom: 0px; height: 40px;" >
@@ -42,9 +63,22 @@
 </div>
 
 <div id="actividades" class="">
-	<div class="franja-comunidad col-md-12 letra-submen"><h1>
+
+
+	<div class="franja-comunidad col-md-12 letra-submen">
+
+<a href="/crea/taller/{{comunidad.slug}}/">
+<div style="float: right; ">
+ <i class="fa fa-plus" style="color: white; font-size: 25px; padding-top: 15px;"> </i>
+	<spam style="color:white; font-size: 15px;  vertical-align: middle;">  
+	  Agrega una actividad </spam>
+</div>
+</a>
+	<h1>
 		Encuentros programados por esta comunidad	
-	</h1></div>
+	</h1>
+	</div>
+
 	<div class="container">
 	{% for taller in talleres%}
 				{% include "vista_actividades_comunidad.html" with taller=taller %}
@@ -57,6 +91,71 @@
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
 		{{foro.titulo}}	
 	</h1></div>
+
+	<div class= "col-md-2">
+		</div>
+
+	<div class="col-md-6 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 50px; ">
+	{% for categoria in foro.categoria.all %}
+
+	<a href="/foro/{{foro.slug}}/{{categoria.slug}}">
+<div class="row">
+<div class="col-md-2">
+
+
+
+					<img class="" src="{% static categoria.tipo|get_imagen_categoria  %}">
+				</div> 
+<div class="col-md-8" style="margin-top: 20px; color:black;">
+	{{categoria.titulo}} <br>
+	{{categoria.descripcion}} <br>
+	</div> 
+	<div class="col-md-2" style="text-align: center;">
+	<H3>{{categoria|cantidad_temas_categoria}}</H3>	Temas 
+</div>
+</div> 
+	</a>
+	<hr>
+	{% endfor %}
+
+
+</div>
+
+
+
+<!--
+
+
+<div class="franja-foro">
+<div class="row">
+<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos " style="padding-top: 27px; color: white;">
+	<p><strong> {{categoria.titulo}} </strong></p>					
+</div>
+</div>
+
+	
+<div class="row">
+	<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos " style="color: gray !important; font-size: 12px;">
+	<span> 
+	<a href="/comunidades/{{comunidad.slug}}">{{comunidad.nombre}}</a> 
+	>
+	<a href="/foro/{{foro.slug}}">foro</a> 
+	>
+	<a href="/foro/{{foro.slug}}/{{categoria.slug}}">{{categoria.titulo}}</a> 
+
+
+	</span>
+
+</div>
+</div>
+</div>
+
+
+	 parte nueva fin -->	
+
+
+
+<!-- 
 	<div class="container">
 
 <div class="col-md-12 ">
@@ -66,15 +165,17 @@
 </div> 
 	{% for cate in foro.categoria.all%}
 	{% for tema in cate.tema.all%}
-		<div class="hidden">
-				{% cycle 'rgba(243,247,248,1)' 'rgba(243,247,248,1)' 'rgba(243,247,248,1)' as color%}
-		</div>
-				{% include "vista_foro_comunidad.html" with categoria=cate tema=tema color=color %}
+				{% include "vista_foro_comunidad.html" with foro=foro categoria=cate tema=tema color=color %}
 			{%endfor%}
 	{%endfor%}		
 
 </div>
-	</div>
+	</div>parte nueva fin -->
+
+
+
+
+
 </div>
 
 <div id="informacion" class="hidden">
@@ -89,12 +190,10 @@
 </div>
 
 
-<script ">
+<script>
 var anterior="actividades"
 	function cambiar_pestana (id){
 	if(id!= anterior){
-
-		
 
 		$("#pestana_"+anterior).removeClass("submenu-comuni-selec");
 		$("#"+anterior).addClass("hidden");  
@@ -104,10 +203,39 @@ var anterior="actividades"
 
 		
 		anterior=id;
+
 	}
 }
 
+window.onload=function() {
+	if("{{tipo}}" != ""){
+		cambiar_pestana("{{tipo}}");}
+ }
 
 </script>
+
+
+
+<script type="text/javascript">
+function enviarRespuesta(username,slugComunidad, tipo) {
+//unir  salir  u_admin  s_admin
+		$.ajax({
+			url: "/registrar-usuario-comunidad/"+username+"/" + slugComunidad ,
+			data: {
+				'tipo':  tipo,
+			},
+			success: function(result) {
+				alert(result);	
+			}
+		});
+
+
+	}
+</script>
+
+
+
+
+
 
 {% endblock content %}

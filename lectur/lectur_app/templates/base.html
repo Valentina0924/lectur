@@ -49,8 +49,8 @@ seccion-seleccionada
 {%if seccion_header == 'Comunidades' %}
 seccion-seleccionada
 {% endif %}" > 
-<a href="/comunidades">
-Mis comunidades	
+<a href="/comunidades/">
+Mi tablero	
 </a>
 </div>
 <div class="col-md-4 seccion-header 
@@ -68,17 +68,32 @@ Destacados
 
 
 {%if user and user.lector%}
+<ul class="menu-imagen-header">
+<li>
+<div class="" style="display: inline-block; width: 70px;height: 60px; background-image: url('{{user.lector.imagen.url}}'); background-size: cover; background-position: center; border-left-style: solid; border-right-style: solid; border-color: #223072; border-width:5px;"></div>
+</li>
+<li class="dropdown  ">
+	<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color: white;">
 
-<div class="" style="display: inline-block; width: 70px;height: 60px; background-image: url('{{user.lector.imagen.url}}'); background-size: cover; background-position: center; border-left-style: solid; border-right-style: solid; border-color: green; border-width:5px;"></div>
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu dropdown-menu-right" style="color: black;">
+		<li><a href="/comunidades/"><!--{{user.username}}-->Mi tablero</a></li>
+		<li><a href="/update/perfil/">Editar perfil</a></li>
+		<li><a href="/crea/comunidad/">Crear comunidad</a></li>
+		<li><a href="/cerrar_sesion/">Cerrar sesión </a></li>
+	</ul>
+</li>
+</ul>
 
-	<ul class="" style="display: inline-block;" >
+	<!--<ul class="" style="display: inline-block;" >
 
 	<li>{{user.username}}</li>
 
 	<li><a href="/cerrar_sesion/">Cerrar Sesión </a></li>
 
 
-				</ul><!-- Fin registro -->	
+				</ul> Fin registro -->	
 
 
 
@@ -94,7 +109,7 @@ Destacados
 			
 		
 
-		<div style="clear: both;"></div>	
+		<div  style="clear: both;"></div>	
 			</div>
 
 

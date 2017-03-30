@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load respuestas_foro %}
+{% block content %}
+
+
+
+<div class="">
+<div class="row">
+<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos " style="padding-top: 27px; color: black; font-size: 22px;">
+	<p><strong> {{foro.titulo}} </strong></p>				
+</div>
+</div>
+<div class="row">
+	<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos " style="color: gray !important; font-size: 20px;">
+	<span> 
+	<a href="/comunidades/{{comunidad.slug}}">{{comunidad.nombre}}</a> 
+	/
+	<a href="/comunidades/{{comunidad.slug}}/foro">foro</a>
+
+	</span>
+
+</div>
+</div>
+</div>
+<!--
+<div class="col-md-10 col-md-offset-1">
+<p>{{foro.contenido}}</p>	
+</div>-->
+
+<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 20px; ">
+	{% for categoria in foro.categoria.all %}
+
+<a href="/foro/{{foro.slug}}/{{categoria.slug}}">
+	{{categoria.titulo}} <br>
+	{{categoria.descripcion}} <br>
+	Temas {{categoria|cantidad_temas_categoria}}
+	</a>
+	<hr>
+	{% endfor %}
+
+
+</div>
+
+
+
+{% endblock content %}
+

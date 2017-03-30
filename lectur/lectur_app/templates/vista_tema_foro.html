@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+<div class="">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos " style="padding-top: 27px; color: black; font-size: 22px;">
+			<p><strong> {{tema.titulo}} </strong></p>				
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos " style="color: gray !important; font-size: 20px;">
+			<span> 
+				<a href="/comunidades/{{comunidad.slug}}">{{comunidad.nombre}}</a> 
+				/
+				<a href="/comunidades/{{comunidad.slug}}/foro">foro</a> 
+				/
+				<a href="/foro/{{foro.slug}}/{{categoria.slug}}">{{categoria.titulo}}</a> 
+				/
+				<a href="/foro/{{foro.slug}}/{{categoria.slug}}/{{tema.slug}}">{{tema.titulo}}</a> 
+			</span>
+
+		</div>
+	</div>
+</div>
+
+<div id="respuestas" class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 20px; ">
+
+	
+	{% include "respuesta_foro.html" with autor=tema.autor  mensaje=tema.mensaje fecha=tema.fecha_publicacion pk=0 isRespuesta=False  principal=true %}
+
+
+	{% for respuesta in respuestas %}
+
+		{% include "respuesta_foro.html" with autor=respuesta.perfil mensaje=respuesta.mensaje fecha=respuesta.fecha pk=respuesta.pk isRespuesta=True principal=true %}
+
+
+
+	{% endfor %}
+
+</div>
+
+<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 20px; ">
+
+
+<div class="row-fluid"  style="clear: both; background-color: white; padding-bottom: 10px;">
+	<h3 style="margin-left: 20px;">Responde al tema:</h3>
+	
+	<div  class="col-md-12" style=" background-color: white;">
+	<div class="col-xs-10 col-md-11 col-sm-10"> 
+		<span>
+		<textarea id="comen" name="comentarios"  class="caja" rows="4" cols="32"  style="width: 100%" placeholder="Escribe aquí tu comentario"></textarea>
+		</span>
+		</div>
+		<!-- Boton enviar mensaje -->
+		<div class="col-md-1 col-xs-2 col-sm-2"   style="padding: 10px; margin-top: 10px;">
+			<a href="#btn"  class="boton-actividad"  id="btn" onclick="enviarRespuesta({{tema.pk}},'respuesta')">
+
+				Enviar
+
+			</a>
+		</div><!-- fin espacio enviar mensaje -->
+
+	</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+// tipo="respuesta" : respuesta al foro
+ // tipo="comentario" : respuesta a otra respuesta
+	function enviarRespuesta(pk, tipo) {
+
+if (tipo=="comentario") {
+
+		var com = $("#" + pk+"_comen");
+		$.ajax({
+			url: "/comentar/foro/{{user.username}}/" + pk ,
+			data: {
+				'tipo':  tipo,
+				'mensaje': com.val()
+			},
+			success: function(result) {
+				var respuestas = document.getElementById( pk+"_respuestas");
+				var ht =result;
+				respuestas.innerHTML += ht;
+				com.val("");
+				
+
+			}
+		});
+
+	}else{
+
+var com = $("#comen");
+		$.ajax({
+			url: "/comentar/foro/{{user.username}}/" + pk ,
+			data: {
+				'tipo':  tipo,
+				'mensaje': com.val()
+			},
+			success: function(result) {
+				var respuestas = document.getElementById( "respuestas");
+				var ht =result;
+				respuestas.innerHTML += ht;
+				com.val("");
+				
+
+			}
+		});
+
+
+	}
+	}
+</script>
+
+
+
+
+
+
+{% endblock content %}
+
+

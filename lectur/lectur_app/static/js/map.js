@@ -1,13 +1,20 @@
-
+var map;
+var tipo_funcion;
+var objetoE;
+var marker_f;
 function myMap(){
 
+// alert("llamado")
 var mapProp= {
-    center:new google.maps.LatLng(3.4391842,-76.5112785),
-    zoom:13,
+    center:new google.maps.LatLng(51.508742,-0.120850),
+    zoom:15,
 };
 
 
-var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+ map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+
+
 var retro= [
           {elementType: 'geometry', stylers: [{color: '#ebe3cd'}]},
           {elementType: 'labels.text.fill', stylers: [{color: '#523735'}]},
@@ -118,7 +125,14 @@ var retro= [
             stylers: [{color: '#92998d'}]
           }];
 map.setOptions({styles: retro});
+
+
+getPosition();
+google.maps.event.addListener(map, 'click', function(event) {
+   eventoClick(map, event.latLng);
+ });
 }
+
 
 function getPosition() {
 
@@ -131,23 +145,28 @@ function getPosition() {
 
    function onSuccess(position) {
 
-  //     alert('Latitude: '          + position.coords.latitude          + '\n' +
-  //        'Longitude: '         + position.coords.longitude         + '\n' +
-  //        'Altitude: '          + position.coords.altitude          + '\n' +
-  //        'Accuracy: '          + position.coords.accuracy          + '\n' +
-  //        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-  //        'Heading: '           + position.coords.heading           + '\n' +
-  //        'Speed: '             + position.coords.speed             + '\n' +
-  //        'Timestamp: '         + position.timestamp                + '\n');
-  //  };
+      // alert('Latitude: '          + position.coords.latitude          + '\n' +
+      //    'Longitude: '         + position.coords.longitude         + '\n' +
+      //    'Altitude: '          + position.coords.altitude          + '\n' +
+      //    'Accuracy: '          + position.coords.accuracy          + '\n' +
+      //    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+      //    'Heading: '           + position.coords.heading           + '\n' +
+      //    'Speed: '             + position.coords.speed             + '\n' +
+      //    'Timestamp: '         + position.timestamp                + '\n');
+         var lat =position.coords.latitude;
+        var lon=position.coords.longitude;
+        var c = new google.maps.LatLng(lat,lon);
+        map.setCenter(c);
+        addMarker(lat, lon);
 
-   var c = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-   map.setCenter(c);
+         };
+
+
 
    function onError(error) {
       alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
    }
-}}
+}
 
 function watchPosition() {
 
@@ -161,18 +180,24 @@ function watchPosition() {
 
    function onSuccess(position) {
 
-  //     alert('Latitude: '          + position.coords.latitude          + '\n' +
-  //        'Longitude: '         + position.coords.longitude         + '\n' +
-  //        'Altitude: '          + position.coords.altitude          + '\n' +
-  //        'Accuracy: '          + position.coords.accuracy          + '\n' +
-  //        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-  //        'Heading: '           + position.coords.heading           + '\n' +
-  //        'Speed: '             + position.coords.speed             + '\n' +
-  //        'Timestamp: '         + position.timestamp                + '\n');
-  //  };
+      // alert('Latitude: '          + position.coords.latitude          + '\n' +
+      //    'Longitude: '         + position.coords.longitude         + '\n' +
+      //    'Altitude: '          + position.coords.altitude          + '\n' +
+      //    'Accuracy: '          + position.coords.accuracy          + '\n' +
+      //    'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+      //    'Heading: '           + position.coords.heading           + '\n' +
+      //    'Speed: '             + position.coords.speed             + '\n' +
+      //    'Timestamp: '         + position.timestamp                + '\n');
 
-  var c = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-  map.setCenter(c);
+
+         var lat =position.coords.latitude;
+        var lon=position.coords.longitude;
+        var c = new google.maps.LatLng(lat,lon);
+        map.setCenter(c);
+
+   };
+
+
 
    function onError(error) {
       alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
@@ -180,7 +205,7 @@ function watchPosition() {
 
 }
 
-}
+
 
 
 
@@ -189,7 +214,60 @@ function addMarker(lat, lon) {
   var myCenter = new google.maps.LatLng(lat,lon);
   var marker = new google.maps.Marker({
     position: myCenter,
+    icon: "http://127.0.0.1:8000/static/imagenes/libro.png",
+    draggable: false,
     animation: google.maps.Animation.BOUNCE
   });
+
+  marker_f=marker;
   marker.setMap(map);
+}
+
+function placeMarker(map, location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    animation: google.maps.Animation.DROP,
+    draggable: false,    
+    icon: "http://127.0.0.1:8000/static/imagenes/libro.png",
+    map: map
+  });
+  marker_f=marker;
+
+  var infowindow = new google.maps.InfoWindow({
+    content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+  });
+  infowindow.open(map,marker);
+}
+
+function moveMarker(map, location) {
+  //alert(aaaa);
+}
+
+
+function eventoClick(map, location){
+switch(tipo_funcion){
+  case 1: // poner marcadores
+   placeMarker(map, location);
+ //   objetoE.actualizar_coordenadas(map, location);
+  break;
+
+  case 2: // poner marcadores
+    $("#id_latitud").val(location.lat());
+    $("#id_longitud").val(location.lng());
+    var latlng = new google.maps.LatLng(location.lat(),location.lng());
+    marker_f.setPosition(latlng);
+  //  marker_f.setPosition();
+  break;
+}
+
+}
+
+
+
+function agregarMarkeralClick()
+{
+  tipo_funcion=2;
+    $("#id_latitud").val(marker_f.getPosition().lat());
+    $("#id_longitud").val(marker_f.getPosition().lng());
+
 }
