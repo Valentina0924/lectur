@@ -25,7 +25,8 @@
 	</div>
 </div>
 
-<div id="respuestas" class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 20px; ">
+<div class="col-md-2"></div>
+<div id="respuestas" class="col-md-6 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos"  style="margin-top: 20px;">
 
 	
 	{% include "respuesta_foro.html" with autor=tema.autor  mensaje=tema.mensaje fecha=tema.fecha_publicacion pk=0 isRespuesta=False  principal=true %}
@@ -38,8 +39,8 @@
 
 
 	{% endfor %}
-
 </div>
+
 
 <div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 20px; ">
 

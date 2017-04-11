@@ -53,6 +53,8 @@ urlpatterns = [
     url(r'^vista-comentario/(?P<pk>[0-9]+)/$', VistaComentario.as_view(), name='ver_comentario'),
     url(r'^respuestajax/(?P<respuesta>[ -_\w]+)/$', Vistajax.as_view(), name='vista_ajax'),
     url(r'^registrar-usuario-comunidad/(?P<username>[-_\w]+)/(?P<comunidad>[-_\w]+)/$',  login_required(views.registrarUsuarioComunidad), name='registrar_usuario_comunidad'),
+    url(r'^ver-notificaciones/(?P<username>[-_\w]+)/$',  login_required(views.ver_notificaciones), name='ver_notificaciones'),
+    url(r'^asistir-actividad/(?P<username>[-_\w]+)/(?P<taller>[-_\w]+)/$',  login_required(views.unirActividad), name='unir_actividad'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

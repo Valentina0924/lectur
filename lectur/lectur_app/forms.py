@@ -14,7 +14,7 @@ class UserForm(forms.ModelForm):
     helper = FormHelper()
     helper.form_tag = False
     username = forms.CharField(
-        label = "Nombre de Usuario | minúsculas",
+        label = "Seudónimo",
         required = True,
          widget=forms.TextInput(attrs={'placeholder': 'pepitoperez','onchange':'nombreUsuario()'}),
     )
@@ -167,7 +167,7 @@ class LectorForm(forms.ModelForm):
               HTML("<h3 class='header-formulario'>{{titulo3}}</h3>"),
               HTML("<div class='elemento_formulario'>"),
 
-              HTML("<img class='' src= {% if user.lector %}'{{ user.lector.imagen.url }}' {% else %} {% load staticfiles %} '{% static 'imagenes/imagen_defecto.png' %}'{% endif %} > <div class='img_oculto'>"),
+              HTML("<img class='' src= {% if user.lector %}'{{ user.lector.imagen.url }}' {% else %} {% endif %} > <div class='img_oculto'>"),
               'imagen',
               HTML("</div></div>"),
               Fieldset(
@@ -425,7 +425,7 @@ class TemaForoForm(forms.ModelForm):
             Fieldset(
                 HTML("<div></div>"),
                 HTML("<h3 class='header-formulario'>{{titulo1}}</h3>"),
-                HTML("<div class='elemento_formulario'> sasdadasdasdasd"),
+                HTML("<div class='elemento_formulario'>"),
                 'titulo',
                 HTML("</div><div class='elemento_formulario'>"),
                 'mensaje',

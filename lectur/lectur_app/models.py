@@ -9,6 +9,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Notificacion(models.Model):
+    imagen = models.ImageField(upload_to = 'notificaciones_images/');
+    contenido = models.CharField(max_length=200);
+    estado = models.IntegerField(default=1);
+    usuario = models.ForeignKey(User);
+    def __str__(self):
+            return str(self.usuario)
 
 class Genero(models.Model):
     titulo = models.CharField(max_length=128)
@@ -140,15 +147,17 @@ class Comunidad(models.Model):
 
 class Reto(models.Model):
     titulo = models.CharField(max_length=30);
+    slug = models.SlugField(max_length=20, unique=True);
     descripcion = models.CharField(max_length=200);
     nivel = models.IntegerField(default=0);
     def __str__(self):
-        return unicode(self.titulo);
+        return str(self.titulo);
 
 class Premio(models.Model):
     reto = models.ForeignKey(Reto);
     titulo = models.CharField(max_length=30);
-    lista_ganadores = models.ManyToManyField(Lector, related_name ='ganadores_premio');
+    lista_ganadores = models.ManyToManyField(Lector, related_name ='ganadores_premio', blank = True);
     imagen = models.ImageField(upload_to='premio_images/');
-    def __unicode__(self):
-        return unicode(self.titulo+" ("+self.reto);
+    cantidad_minima = models.IntegerField(default=1);
+    def __str__(self):
+        return str(self.titulo+" ("+str(self.reto)+")");

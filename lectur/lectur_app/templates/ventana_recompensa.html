@@ -1,36 +1,48 @@
 
 {% load staticfiles %}
 
-<div class="col-md-3" style=" overflow: hidden;"  data-toggle="modal" data-target="#modal_titulo_reto"> 
-  <img src='{% static 'imagenes/icono_mision1.png' %}' style="margin: 10px auto; width: 100%;height: auto;">
+<div class="col-md-3" style=" overflow: hidden;"  data-toggle="modal" data-target="#modal_{{id}}"> 
+
+  {% with premio|last as premi %}
+
+  <img src='{{premi.imagen.url}}' style="margin: 10px auto; width: 100%;height: auto;" title="{{premi.titulo}}">
 </div>
-
-
 <div class="modal fade" id="modal_{{id}}" role="dialog">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Medalla</h4>
+        <h4 class="modal-title">{{reto.titulo}}</h4>
       </div>
       <div class="modal-body" style="">
+
+        <div class="row">
+          {% for p in premio %}
+          <div class="col-md-2">
+            <img src='{{p.imagen.url}}' style="margin: 10px auto; width: 100%;height: auto;" title="{{p.titulo}}"> 
+          </div>
+          {% endfor %}
+        </div>
+
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
-            <img src='{% static 'imagenes/icono_mision1.png' %}' style="margin: 10px auto; width: 100%;height: auto;">
+            <img src='{{premi.imagen.url}}' style="margin: 10px auto; width: 100%;height: auto;">
           </div>
         </div>
+
         <div class="row">
-
           <div class="col-md-12" align="center" style="font-family: 'Yantramanav'; color: black; font-size: 14px;">
-            <b style="font-family: 'roboto'; font-size:18px;">0/1</b>
+            <b style="font-family: 'roboto'; font-size:18px;"> {{premi.titulo}}</b> <br> ({{premi.cantidad_minima}} veces)  
             <br>
-            <b>Esta medalla se gana cuando te unes a una comunidad lectora de Tulia.</b>
-            </div>
+            <b>{{reto.descripcion}}</b>
           </div>
         </div>
-
 
       </div>
+
+
     </div>
   </div>
+  {% endwith %}
+</div>
 

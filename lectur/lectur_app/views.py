@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 from django.shortcuts import render
-import datetime
 from django.template.defaultfilters import slugify
 
 from django.http import HttpResponseRedirect, HttpResponse
@@ -15,16 +14,94 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, timedelta, time
 
 
 from django.views.generic import View, FormView, UpdateView, CreateView, DetailView, ListView, TemplateView
 from lectur_app.forms import UserForm, LectorForm, UserLoginForm, ComunidadForm, TallerComunidadForm, EspacioForm, TemaForoForm;
-from lectur_app.models import Lector, Comunidad, Foro, Taller, Categoria, Espacio, Respuesta, Tema
+from lectur_app.models import Lector, Comunidad, Foro, Taller, Categoria, Espacio, Respuesta, Tema, Premio, Reto, Notificacion
 
 from django.conf import settings
 
 from django.template import defaultfilters;
 from django.template.defaultfilters import slugify;
+
+
+def cantComunidadesMiembro(lector):
+    comunidades= set([]);
+    for com in Comunidad.objects.all():
+        if lector in com.administradores.all():
+            comunidades.add(com);
+        if lector in com.participantes.all():
+            comunidades.add(com);
+    return len(comunidades);
+
+def ingresarComunidadPremio (lector):
+    retos=Reto.objects.filter(slug="miembro");
+    for re in retos:
+        premios =Premio.objects.filter(reto=re).order_by('cantidad_minima');
+        for pre in premios:
+            if not lector in pre.lista_ganadores.all():
+                if pre.cantidad_minima <= cantComunidadesMiembro(lector)  :
+                    pre.lista_ganadores.add(lector);
+                    pre.save();
+
+                    noti=Notificacion(imagen=pre.imagen , contenido="Logro completado: "+pre.titulo, usuario=lector.user)
+                    noti.save();
+                    print ("unido");
+                    return True;
+    return False;
+
+
+def cantTemasMiembro(lector):
+    temas= set(Tema.objects.filter(autor = lector));
+    return len(temas);
+
+def crearTemaPremio (lector):
+    retos = Reto.objects.filter(slug="anfitrion");
+    for re in retos:
+        premios = Premio.objects.filter(reto=re).order_by('cantidad_minima');
+        for pre in premios:
+            if not lector in pre.lista_ganadores.all():
+                if pre.cantidad_minima <= cantTemasMiembro(lector):
+                    pre.lista_ganadores.add(lector);
+                    pre.save();
+                    noti=Notificacion(imagen=pre.imagen , contenido="Logro completado: "+pre.titulo, usuario=lector.user)
+                    noti.save();
+                    print ("creado");
+                    return True;
+    return False;
+
+def cantComentariosMiembro(lector):
+    comentarios = set(Respuesta.objects.filter(perfil = lector));
+    return len(comentarios);
+
+def comentaPorPremio (lector):
+        retos = Reto.objects.filter(slug="participante");
+        for re in retos:
+            premios = Premio.objects.filter(reto=re).order_by('cantidad_minima');
+            for pre in premios:
+                if not lector in pre.lista_ganadores.all():
+                    if pre.cantidad_minima <= cantComentariosMiembro(lector):
+                        pre.lista_ganadores.add(lector);
+                        pre.save();
+                        noti=Notificacion(imagen=pre.imagen , contenido="Logro completado: "+pre.titulo, usuario=lector.user)
+                        noti.save();
+                        print ("creado");
+                        return True;
+        return False;
+
+@login_required
+def ver_notificaciones(request,username):
+    s="/respuestajax/Notificaciones eliminadas";
+    usu = User.objects.get(username=username);
+    notificaciones = Notificacion.objects.filter(usuario=usu);
+    for notificacion in notificaciones:
+        notificacion.estado = 0;
+        notificacion.save();
+
+    return  HttpResponseRedirect(s);
+
 # Create your views here.
 
 # Create your views here.
@@ -118,16 +195,74 @@ class Perfil(TemplateView):
 
         return context;
 
+@login_required
+def unirActividad(request, username, taller):
+    usu = User.objects.get(username=username);
+    perfil = Lector.objects.get(user=usu);
+    taller = Taller.objects.get(slug=taller);
+    s="/respuestajax/";
+    tipo=request.GET["tipo"];
+    mensaje="";
+    if tipo=="unir":
+        taller.participantes.add(perfil);
+        mensaje="Te has registrado al taller: "+taller.nombre;
+    elif tipo=="salir":
+        taller.participantes.remove(perfil);
+        mensaje="Has salido del taller "+taller.nombre;
+
+    s+=mensaje;
+    noti=Notificacion(imagen=taller.imagen , contenido=mensaje, usuario=perfil.user)
+    noti.save();
+    taller.save();
+    return  HttpResponseRedirect(s);
+
 class Comunidades(TemplateView):
     template_name = 'explora_comunidades.html'
     def get_context_data(self, **kwargs):
         context = super(Comunidades, self).get_context_data(**kwargs)
         context["seccion_header"]="Comunidades";
 
-        comunidades = Comunidad.objects.all();
-        context["comunidades"]=comunidades;
+        lec = Lector.objects.all().get(user=self.request.user);
 
-        return context
+        comunidades= set([]);
+        for com in Comunidad.objects.all():
+            for adm in com.administradores.all():
+                if adm==lec:
+                    comunidades.add(com);
+            for par in com.participantes.all():
+                if par==lec:
+                    comunidades.add(com);
+
+        context["comunidades"] =comunidades;
+
+
+        # user = self.request.user;
+        # lector = Lector.objects.get(user=user);
+        context["premios"]=getPremiosUsuario(lec);
+
+        talleres=set([]);
+        for act in Taller.objects.all().filter(fecha__gte = datetime.now()).order_by('fecha'):
+            for par in act.participantes.all():
+                if par ==lec:
+                    talleres.add(act);
+        context["talleres"] =talleres;
+
+
+
+        return context;
+
+def getPremiosUsuario(lector):
+    premios={};
+    pre=Premio.objects.all();
+    for p in pre:
+        if lector in p.lista_ganadores.all():
+            if premios.get(p.reto):
+                premios[p.reto].append(p);
+            else:
+                premios[p.reto]=[p];
+
+    return premios;
+
 
 class VistaComunidad(TemplateView):
     template_name = 'vista_comunidad.html'
@@ -241,6 +376,8 @@ def register_comment(request, username, pk):
     tipo=request.GET["tipo"];
     s='/vista-comentario/';
 
+    comentaPorPremio(perfil);
+
     if tipo=="respuesta":
         tema=Tema.objects.get(pk=pk);
         nueva_respuesta=Respuesta(perfil=perfil, mensaje=mensaje, tipo_respuesta=-1);
@@ -255,6 +392,8 @@ def register_comment(request, username, pk):
     return  HttpResponseRedirect(s);
 
 
+
+
 @login_required
 def registrarUsuarioComunidad(request, username, comunidad):
     usu = User.objects.get(username=username);
@@ -264,6 +403,7 @@ def registrarUsuarioComunidad(request, username, comunidad):
     tipo=request.GET["tipo"];
     if tipo=="unir":
         comunidad.participantes.add(perfil);
+        ingresarComunidadPremio(perfil);
         s+="Te has unido a "+comunidad.nombre;
     elif tipo=="salir":
         comunidad.participantes.remove(perfil);
@@ -307,7 +447,7 @@ class Destacados(TemplateView):
         return context
 
 def get_codigo_nuevo_usuario():
-    hoy = datetime.datetime.today();
+    hoy = datetime.today();
     an=hoy.year-2000;
     mes=hoy.month;
     if(mes<10):
@@ -346,7 +486,7 @@ class RegisterProfile(CreateView):
             lector.codigo=get_codigo_nuevo_usuario();
         lector.save();
         form.save_m2m();
-        return HttpResponseRedirect('/prueba');
+        return HttpResponseRedirect('/comunidades');
 
 class UpdateProfile(UpdateView):
     """ Vista de la página de formulario donde se registra un nuevo usuario """
@@ -513,7 +653,7 @@ class CrearTema(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CrearTema, self).get_context_data(**kwargs)
-        context["titulo1"]="Crea una actividad para tu comunidad";
+        context["titulo1"]="Genera discusión creando un nuevo tema";
         nombrecomunidad=self.kwargs["comunidad"];
         url_retorno="/comunidades/"+nombrecomunidad;
         comunidad=Comunidad.objects.get(slug=nombrecomunidad);
@@ -534,5 +674,9 @@ class CrearTema(CreateView):
         categoria=Categoria.objects.get(slug=nombrecategoria);
         categoria.tema.add(tema);
         categoria.save();
+
+        crearTemaPremio(autor);
+
+
         url_retorno="/foro/"+nombrecomunidad+"/"+nombrecategoria+"/"+slugTema;
         return HttpResponseRedirect(url_retorno);

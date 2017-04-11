@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load tulia_tags %}
 
 <html>
 <head>
@@ -20,11 +21,76 @@
 
 </head>
 
+
+
+
+<div class="modal fade" id="modal_ventana" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificaciones</h4>
+      </div>
+      <div  id="modal_ventana_contenido" class="modal-body" style="">
+
+
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+{% with user|get_notificaciones as notis %}
+
+
+<div class="modal fade" id="modal_alerta" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificaciones</h4>
+      </div>
+      <div class="modal-body" style="">
+
+
+{% if notis%}        
+        {% for n in notis%}
+        <div class="row">
+        
+        <div class="col-md-4">
+        	
+<div class="" style="display: inline-block; width: 100%;height: auto;padding-top: 100%; background-image: url('{{n.imagen.url}}'); background-size: cover; background-position: center;"></div>
+        </div>
+
+        <div class="col-md-8">
+        	<span> {{n.contenido}}</span>
+        </div>
+
+</div>
+{% if not forloop.last%}
+<hr>        
+{%endif%}
+        {%endfor%}
+        {%endif%}
+      </div>
+<div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="limpiarNotificaciones('{{user.username}}')">Aceptar</button>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
 <body>
   <div class="container-fluid fijo" >
 		<div class="row verde">
 		<div class="col-md-2">
-		<a href="/">
+		<a href="/comunidades/">
 				<div class=" logo-header">
 					<img class="img-responsive center-block" src="{% static "imagenes/marca.png"%}" align="left" alt="">
 				</div>
@@ -63,8 +129,25 @@ Destacados
 </div>
 		</div>
 
+		<div class="col-md-3" align="right" >
+			{%if notis%}
+			<i class="fa fa-bell" style="color: white; font-size: 25px; margin-top: 15px;" data-toggle="modal" data-target="#modal_alerta" onclick="limpiarNotificaciones('{{user.username}}')" ></i>
 
-		<div class="col-md-3" >
+			<script type="text/javascript">
+				function limpiarNotificaciones(username) {
+						$.ajax({
+							url: "/ver-notificaciones/"+username ,
+							success: function(result) {
+								// alert(result);	
+							}
+						});
+
+
+					}
+				</script>
+
+
+			{%endif%}
 
 
 {%if user and user.lector%}
@@ -95,9 +178,6 @@ Destacados
 
 				</ul> Fin registro -->	
 
-
-
-
 {%else%}
 	<ul class="navIndex">
 				<li><a href="/registrate/">Regístrate </a></li>
@@ -123,7 +203,6 @@ Destacados
 
 			<div class="row content" style=" background-color: white; min-height: 700px; margin-top: 40px;">
 
-
 			{% block content %}
 			{% endblock %}
 
@@ -135,7 +214,6 @@ Destacados
 				<p><center>Copyright V. Hoyos • Cali, Colombia • Tel: 310 8491453 </center>
 				</p>
 			</div><!-- Fin footer -->
-
 		</div>
 	</div>
 
@@ -144,6 +222,15 @@ Destacados
   <script src="{% static "js/jquery-1.12.2.min.js" %}"></script>
   <script src="{% static "js/bootstrap.min.js" %}"></script>
   <script src="{% static "js/app.js" %}"></script>
-</body>
 
+{% if notis %}
+  <script>
+$(document).ready(function(){
+        $("#modal_alerta").modal();
+		
+});
+</script>
+{%endif%}
+</body>
+{% endwith %}
 </html>

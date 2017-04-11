@@ -5,30 +5,72 @@
 <br>
 <div class="row" style="background: white;">
 
-<div class="col-md-3 filtro-exploracion texto-medio ">
-<h1>
-Explora comunidades	
-</h1>
+	<div class="col-md-3 filtro-exploracion texto-medio ">
+		<h1 style ="font-family:'Yantramanav'; color: black;">
+			Explora comunidades	
+		</h1>
 
-<P class="texto-par-dos">
-Encuentra comunidades lectoras:
-</P>
+		<P class="texto-par-dos">
+			Encuentra comunidades lectoras:
+		</P>
 
-{% for comu in comunidades %}
+		{% for comu in comunidades %}
 
-	<div id="comu_{{comu.slug}}" class="row" onclick="mostrarespacios('{{comu.slug}}')">
-		<div class="texto-par-dos" style="margin-left: 20px;">{{comu.nombre}}</div>
+		<div id="comu_{{comu.slug}}" class="row">
+			<div class="texto-par-dos" style="margin-left: 20px; color:green;" data-toggle="collapse" data-target="#esp-{{comu.slug}}">{{comu.nombre}}</div>
+			<div id ="esp-{{comu.slug}}" class="collapse">
+
+
+				<div  class="row col-md-3"></div>
+
+				<div  class="row col-md-11">
+
+				
+					<!--<h3 class="texto-par-dos" >{{comu.nombre}}</h3>-->
+					<h3 class="texto-par-dos" style="font-size: 15px;" >{{comu.descripcion}}</h3>
+
+					<a href="/comunidades/{{comu.slug}}/informacion" class="boton-actividad" align="center" style="line-height: 50px;">
+
+						Ver más
+
+					</a>
+
+
+
+
+					{% for esp in comu.lugares_encuentro.all %}
+					<div class="row">
+
+						<div class="texto-par-dos" style="margin-left: 13px; font-size: 15px;">
+							{{esp.nombre}}
+						</div>
+					</div>
+						{% empty %}
+
+						<div class="texto-par-dos" style="margin-left: 13px; font-size: 15px;">
+							La comunidad {{comu.nombre}} aún no ha registrado espacios. 
+						</div>
+
+							{% endfor %}
+					</div>
+
+				</div>
+			</div>
+		{% endfor %}
+
 	</div>
-{% endfor %}
 
-</div>
-
-<div class="col-md-6"> 
-{% include "map.html" %}
-</div>
+			<div class="col-md-9"> 
+				{% include "map.html" %}
+			</div>
 
 
 
+
+
+
+
+<!--
 <div class="col-md-3 filtro-exploracion texto-medio">
 
 <h1>
@@ -67,7 +109,7 @@ Acerca de:
 {% endfor %}
 
 
-</div>
+</div> -->
 
 
 
@@ -75,11 +117,11 @@ Acerca de:
 
 <script type="text/javascript">
 	var ant="";
-function mostrarespacios(id){
-	$("#esp_"+id).removeClass("hidden");
-	$("#esp_"+ant).addClass("hidden");
-	ant=id;
-}
+	function mostrarespacios(id){
+		$("#esp_"+id).removeClass("hidden");
+		$("#esp_"+ant).addClass("hidden");
+		ant=id;
+	}
 
 </script>
 {% endblock content %}

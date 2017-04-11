@@ -47,9 +47,19 @@
         </div>
         <div class="modal-footer">
 {%if user and user.lector%}
-        <a href="/asistir/{{user.username}}/{{taller.slug}}" class="boton-actividad"   >
+
+{%if  user.lector in taller.participantes.all %}
+
+        <a href="" class="boton-actividad"    onclick="unirActividad('{{user.username}}','{{taller.slug}}', 'salir')" >
+          Salir
+        </a>
+  {%else%}
+        <a href="" class="boton-actividad"   onclick="unirActividad('{{user.username}}','{{taller.slug}}', 'unir')" >
           Asistir
         </a>
+    {%endif%} 
+  
+
 {%else%}
          <button type="button" class="boton-actividad" data-dismiss="modal">Cerrar</button>
       {%endif%} 
@@ -58,3 +68,21 @@
     </div>
   </div>
 
+
+
+<script type="text/javascript">
+function unirActividad(username,slugTaller, tipo) {
+//unir  salir  
+    $.ajax({
+      url: "/asistir-actividad/"+username+"/" + slugTaller ,
+      data: {
+        'tipo':  tipo,
+      },
+      success: function(result) {
+        //alert(result);  
+      }
+    });
+
+
+  }
+</script>
