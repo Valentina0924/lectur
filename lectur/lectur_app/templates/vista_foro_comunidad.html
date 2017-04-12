@@ -1,5 +1,5 @@
 {% load staticfiles %}
-
+{%load respuestas_foro%}
 
 
 <a href="/foro/{{foro.slug}}/{{cate.slug}}/{{tema.slug}}" style="color: inherit;"> 
@@ -21,7 +21,7 @@
 
 		<div class ="col-md-4"  style="padding-top: 44px; text-align: center;">
 			
-			<p style=" font-size:19px;"><strong>33</strong></p>
+			<p style=" font-size:19px;"><strong> {{tema|cantidad_respuestas_tema}} </strong></p>
 			<p> comentarios </p>
 		</div>
 		

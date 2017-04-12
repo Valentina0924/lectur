@@ -90,7 +90,8 @@
   <div class="container-fluid fijo" >
 		<div class="row verde">
 		<div class="col-md-2">
-		<a href="/comunidades/">
+
+		<a href="{%if user and user.lector %}/comunidades/{%else%}/{%endif%}" >
 				<div class=" logo-header">
 					<img class="img-responsive center-block" src="{% static "imagenes/marca.png"%}" align="left" alt="">
 				</div>
@@ -115,7 +116,7 @@ seccion-seleccionada
 {%if seccion_header == 'Comunidades' %}
 seccion-seleccionada
 {% endif %}" > 
-<a href="/comunidades/">
+<a href="{%if user and user.lector %}/comunidades/{%else%}/inicia_sesion/{%endif%}">
 Mi tablero	
 </a>
 </div>

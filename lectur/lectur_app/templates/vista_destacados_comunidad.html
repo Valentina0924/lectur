@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load staticfiles %}
+{% load respuestas_foro %}
 {% block content %}
 
 
@@ -8,9 +9,51 @@
 <div class="col-md-12 texto-medio">
 <br>
 <h1>
-Destacados	
+Destacados
 </h1></div>
 </div>
+
+
+
+
+<div class="col-md-10 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 20px; ">
+<!--
+	<p>
+		{{categoria.descripcion}}
+	</p>-->
+
+
+	{% for tema in temas.all %}
+    {% with tema|get_categoria_tema as categoria%}
+    {% with categoria|get_foro_categoria as foro %}
+    {% with foro|get_comunidad_foro as comunidad %}
+    <div class="row">
+      <div class="col-md-1">
+        <div class="redondo" style= "height: 100%; padding-top: 100%; position: relative; background-position: center; background-size: cover; background-image: url('{{comunidad.imagen.url}}');"></div>
+        {{categoria.titulo}}
+      </div>
+      <div class="col-md-11">
+        {% include "vista_foro_comunidad.html" with foro=foro cate=categoria tema=tema %}
+      </div>
+
+    </div>
+          <hr>
+
+{%endwith%}
+{%endwith%}
+{%endwith%}
+  {% endfor %}
+
+
+</div>
+
+
+
+
+
+
+
+
 
 
 

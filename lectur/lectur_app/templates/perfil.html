@@ -15,7 +15,20 @@
 	</div>
 		<div class="col-md-8 texto-par-dos">
 			<h1>{{perfil.user.first_name}} {{perfil.user.last_name}} </h1>
-			<p>{{perfil.descripcion}}</p>		
+			<p>{{perfil.descripcion}}</p>	
+
+			<hr>
+			<div class="container-fluid" style="padding-top: 50px; ">
+
+
+			{% for reto, premio in premios.items %}
+			{% include "ventana_recompensa.html" with id=reto.slug reto=reto premios=premios %}
+			{%empty%}
+			¡¡¡Deja de ser un perdedor y unete a una comunidad!!!
+			{%endfor%}
+
+		</div>    
+	
 		</div>
 	</div>
 
@@ -41,6 +54,8 @@
 
 	
 </div>
+
+
 
 </div>
 

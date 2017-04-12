@@ -15,7 +15,7 @@ from django.utils.http import is_safe_url
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta, time
-
+from django.db.models import Count
 
 from django.views.generic import View, FormView, UpdateView, CreateView, DetailView, ListView, TemplateView
 from lectur_app.forms import UserForm, LectorForm, UserLoginForm, ComunidadForm, TallerComunidadForm, EspacioForm, TemaForoForm;
@@ -192,7 +192,7 @@ class Perfil(TemplateView):
                     comunidades.add(com);
 
         context["comunidades"] =comunidades;
-
+        context["premios"]=getPremiosUsuario(lec);
         return context;
 
 @login_required
@@ -215,6 +215,7 @@ def unirActividad(request, username, taller):
     noti.save();
     taller.save();
     return  HttpResponseRedirect(s);
+
 
 class Comunidades(TemplateView):
     template_name = 'explora_comunidades.html'
@@ -444,6 +445,12 @@ class Destacados(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Destacados, self).get_context_data(**kwargs)
         context["seccion_header"]="Destacados";
+        top_temas = Tema.objects.annotate(q_count=Count('respuesta')) \
+                                 .order_by('-q_count');#[:10]
+
+
+        context["temas"]=top_temas;
+
         return context
 
 def get_codigo_nuevo_usuario():
