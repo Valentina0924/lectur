@@ -7,7 +7,7 @@ function myMap(){
 // alert("llamado")
 var mapProp= {
     center:new google.maps.LatLng(51.508742,-0.120850),
-    zoom:15,
+    zoom:13,
 };
 
 
@@ -223,6 +223,8 @@ function addMarker(lat, lon) {
   marker.setMap(map);
 }
 
+
+
 function placeMarker(map, location) {
   var marker = new google.maps.Marker({
     position: location,
@@ -271,3 +273,51 @@ function agregarMarkeralClick()
     $("#id_longitud").val(marker_f.getPosition().lng());
 
 }
+
+
+
+
+function createMarker(lat, lon,nom) {
+
+  var myCenter = new google.maps.LatLng(lat,lon);
+
+  var marker = new google.maps.Marker({
+    position: myCenter,
+    icon: "http://127.0.0.1:8000/static/imagenes/libro.png",
+    draggable: false,
+  });
+  marker.setMap(map);
+  var infowindow = new google.maps.InfoWindow({
+    content: nom
+  });
+  infowindow.open(map,marker);
+  //alert(lat+" ___ "+lon+" ___ "+nom)
+    return marker;
+}
+
+function changeVisibilityMarker(marker, visible){
+  //alert(marker.map+" _ "+visible)
+  if(marker!=null){
+    if(visible){
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+       marker.setIcon("http://127.0.0.1:8000/static/imagenes/libro-2.png");     
+      if(marker.map==null){
+              marker.setMap(map);
+            }
+    }else{
+      if(marker.map!=null){
+        marker.setAnimation(null);
+        marker.setIcon("http://127.0.0.1:8000/static/imagenes/libro.png");
+          //    marker.setMap(null);
+            }
+    }
+  }
+}
+
+function ocultarMarker_f(){
+  marker_f.setMap(null);
+}
+
+
+
+

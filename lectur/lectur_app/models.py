@@ -17,12 +17,19 @@ class Notificacion(models.Model):
     def __str__(self):
             return str(self.usuario)
 
+class Felicitacion(models.Model):
+    imagen = models.ImageField(upload_to = 'felicitaciones_images/');
+    contenido = models.CharField(max_length=200);
+    estado = models.IntegerField(default=1);
+    usuario = models.ForeignKey(User);
+    def __str__(self):
+            return str(self.usuario)
+
 class Genero(models.Model):
     titulo = models.CharField(max_length=128)
     slug = models.SlugField(max_length=100, unique=True)
     def __unicode__(self):
             return self.title
-
 
 class Lector(models.Model):
     user = models.OneToOneField(User);
@@ -161,3 +168,10 @@ class Premio(models.Model):
     cantidad_minima = models.IntegerField(default=1);
     def __str__(self):
         return str(self.titulo+" ("+str(self.reto)+")");
+
+class Genero_literario(models.Model):
+    nombre = models.CharField(max_length=50);
+    slug  = models.SlugField(max_length=50, unique=True);
+    descripcion = models.CharField(max_length=250);
+    comunidades = models.ManyToManyField(Comunidad, related_name='genero_comunidades', blank=True);
+    temas = models.ManyToManyField(Tema, related_name='genero_tema_foro', blank=True);

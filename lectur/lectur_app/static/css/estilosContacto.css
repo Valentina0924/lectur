@@ -321,7 +321,7 @@ color: white;
 
 .imagen-actividad{
   width: 100%;
-  padding-top: 100%;
+  padding-top: 90%;
   background-color: white;
   background-position: center; background-size: cover; 
 
@@ -362,6 +362,24 @@ padding-top: 20px;
  }
 
 
+/******** Sección-ubicación com-filtros*******/
+.filtro-boton{
+  font-family:"roboto"; 
+  font-size: 17px;
+  border-radius: 20px;
+  border: #99be16 2px solid;
+  padding: 4px  9px;
+  margin-right: 5px;
+}
+
+.filtro-boton:hover{
+  color: #99be16;
+}
+
+.filtro-boton-color{
+background-color: #99be16;
+color: white !important;
+}
 
 /******** boton-foro*******/
 .boton-foro{
@@ -461,6 +479,23 @@ color: white;
 font-family:"Raleway";
 font-size: 26px;
 }
+
+
+.boton-com-fil{
+  text-decoration: none !important;
+  color: #5e5e5e !important;
+  font-family:"roboto";
+  font-size: 17px;
+  
+}
+
+.boton-com-fil:hover{
+color: #a4be32 !important;
+  font-family:"roboto";
+  font-size: 17px;
+ 
+}
+
 
 /******************** Formulario para ubicación ********************/
 .boton-tipo{

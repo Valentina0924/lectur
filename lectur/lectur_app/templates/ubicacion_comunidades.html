@@ -11,13 +11,30 @@
 		</h1>
 
 		<P class="texto-par-dos">
-			Encuentra comunidades lectoras:
+			Encuentra comunidades lectoras que se acoplen a tus gustos y preferencias:
 		</P>
+
+<div id="contenedor_filtro" class="row" style="padding: 5px 25px">
+		
+
+		<spam id="filtro_todos" class="filtro-boton" onclick="mostrarComunidadesCategoria('todos')"  >  Todos  </spam>
+
+		{% for cate in categorias %}
+
+		<spam id="filtro_{{cate.slug}}" class="filtro-boton" onclick="mostrarComunidadesCategoria('{{cate.slug}}')"  >  {{cate.nombre}} </spam>
+
+		{% endfor %}
+
+
+
+</div>
+
+
 
 		{% for comu in comunidades %}
 
-		<div id="comu_{{comu.slug}}" class="row">
-			<div class="texto-par-dos" style="margin-left: 20px; color:green;" data-toggle="collapse" data-target="#esp-{{comu.slug}}">{{comu.nombre}}</div>
+		<div id="comu_{{comu.slug}}" class="row" onclick="mostrarespacios('{{comu.slug}}')">
+			<div class="texto-par-dos boton-com-fil" style="margin-left: 20px; color:#2d388a;" data-toggle="collapse" data-target="#esp-{{comu.slug}}">{{comu.nombre}}</div>
 			<div id ="esp-{{comu.slug}}" class="collapse">
 
 
@@ -29,7 +46,7 @@
 					<!--<h3 class="texto-par-dos" >{{comu.nombre}}</h3>-->
 					<h3 class="texto-par-dos" style="font-size: 15px;" >{{comu.descripcion}}</h3>
 
-					<a href="/comunidades/{{comu.slug}}/informacion" class="boton-actividad" align="center" style="line-height: 50px;">
+					<a href="/comunidades/{{comu.slug}}/informacion" class="boton-actividad" align="center" style="line-height: 50px; font-size: 13px; ">
 
 						Ver más
 
@@ -40,16 +57,17 @@
 
 					{% for esp in comu.lugares_encuentro.all %}
 					<div class="row">
-
+<!--
 						<div class="texto-par-dos" style="margin-left: 13px; font-size: 15px;">
 							{{esp.nombre}}
-						</div>
+						</div>-->
 					</div>
 						{% empty %}
-
+						<!--
 						<div class="texto-par-dos" style="margin-left: 13px; font-size: 15px;">
 							La comunidad {{comu.nombre}} aún no ha registrado espacios. 
-						</div>
+						</div>-->
+
 
 							{% endfor %}
 					</div>
@@ -117,10 +135,118 @@ Acerca de:
 
 <script type="text/javascript">
 	var ant="";
+	var listaDireccionesComunidades={};
+	var listaComunidadesFiltro={};
+
 	function mostrarespacios(id){
-		$("#esp_"+id).removeClass("hidden");
-		$("#esp_"+ant).addClass("hidden");
-		ant=id;
+		//$("#esp_"+id).removeClass("hidden");
+		//$("#esp_"+ant).addClass("hidden");
+		for(key in listaDireccionesComunidades){
+			
+			if(id=='todos' || key==id ){
+				mostrarEspaciosMapa(key, true);
+			}else{
+
+				mostrarEspaciosMapa(key, false);
+			}
+
+		}
+	//	ant=id;
+	}
+
+
+window.onload=function() {
+ 
+crearEspaciosMapa();	
+ocultarMarker_f();
+
+crearFiltrosComunidades();
+	}
+
+
+function crearEspaciosMapa(){
+{% for comu in comunidades %}
+//alert("{{comu.nombre}}")
+	
+	var listaDirecciones=[];
+	{% for esp in comu.lugares_encuentro.all %}
+		lat=parseFloat("{{esp.latitud}}".replace(",","."));
+		lon=parseFloat("{{esp.longitud}}".replace(",","."));
+		nom="{{esp.nombre}}"+" ("+"{{comu.nombre}}"+")";
+		var direccion=createMarker(lat, lon,nom);
+
+		//alert("{{esp.latitud}}, {{esp.longitud}}"+"{{esp.nombre}}"+" ("+"{{comu.nombre}}"+")"+"__\n__"+lat+" ___ "+lon+" ___ "+nom)
+		
+		listaDirecciones.push(direccion);
+		
+	{% endfor %}
+	listaDireccionesComunidades["{{comu.slug}}"]=listaDirecciones;
+	
+	//mostrarEspaciosMapa("{{comu.slug}}", false);	
+{%endfor%}
+
+	}
+
+	function mostrarEspaciosMapa(id, visible){
+		var list=listaDireccionesComunidades[id];
+		for(var i=0; i < list.length; i++){
+			dir = list[i];
+			changeVisibilityMarker(dir,visible);
+		}
+	}
+
+
+	function crearFiltrosComunidades(){
+		{%for cate in categorias%}
+				var listaComunidades=[];
+			{%for comu in cate.comunidades.all%}
+				listaComunidades.push("{{comu.slug}}");
+			{%endfor%}
+			listaComunidadesFiltro["{{cate.slug}}"]=listaComunidades;
+		{%endfor%}
+	}
+
+	function mostrarComunidades(idCategoria, visible){
+		var list= listaComunidadesFiltro[idCategoria];
+		//alert(list+"_"+ idCategoria)
+		if (list){
+			for(var i=0; i < list.length; i++){
+				com = list[i];
+				mostrarEspaciosMapa(com,visible);
+				
+				if (visible){
+					$("#comu_"+com).removeClass("hidden");
+				}else{
+					$("#comu_"+com).addClass("hidden");
+						}
+
+			}	
+		}else{
+			mostrarespacios('ninguno')
+		}
+		
+		
+	}
+
+	function mostrarComunidadesCategoria(idCategoria){
+		var keysSeleccionada=[];
+
+		for(key in listaComunidadesFiltro){
+			if(idCategoria=='todos' || key==idCategoria){
+				//mostrarComunidades(key, true);
+				keysSeleccionada.push(key);
+			}else{
+				mostrarComunidades(key, false);
+				$("#filtro_"+key).removeClass("filtro-boton-color");
+				
+			}
+		}
+		//alert(keysSeleccionada)
+		for (key in keysSeleccionada){
+			var k=keysSeleccionada[key];
+			$("#filtro_"+k).addClass("filtro-boton-color");
+			mostrarComunidades(k, true);	
+		}
 	}
 
 </script>

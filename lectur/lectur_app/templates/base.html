@@ -24,16 +24,30 @@
 
 
 
-<div class="modal fade" id="modal_ventana" role="dialog">
+
+
+{% with user|get_notificaciones as notis and user|get_felicitacion as feli %}
+
+
+
+<div class="modal fade" id="modal_felicitaciones" role="dialog">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #99be16;">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Notificaciones</h4>
+        <h4 align="Center" class="modal-title" style="font-family: 'roboto'; color:white; font-weight: bolder;">¡Enhorabuena!</h4>
       </div>
-      <div  id="modal_ventana_contenido" class="modal-body" style="">
+      <div  id="modal_felicitaciones_contenido" class="modal-body" >
+      <div class="row">
+      	<div class="col-md-6 col-md-offset-3">
+<div class="" style="border-color: #99be16; border-width: 4px; border-style: solid;    display: inline-block; width: 100%;height: auto;padding-top: 100%; background-image: url('{{feli.imagen.url}}'); background-size: cover; background-position: center;"></div>
+ </div>
+      </div>
 
+      <div align="center" class="row" style="color:black; font-family: 'roboto'; margin-top: 15px; font-size: 17px;">
+      	<span > {{feli.contenido}}</span>
 
+      </div>
 
       </div>
 
@@ -44,7 +58,6 @@
 
 
 
-{% with user|get_notificaciones as notis %}
 
 
 <div class="modal fade" id="modal_alerta" role="dialog">
@@ -117,7 +130,7 @@ seccion-seleccionada
 seccion-seleccionada
 {% endif %}" > 
 <a href="{%if user and user.lector %}/comunidades/{%else%}/inicia_sesion/{%endif%}">
-Mi tablero	
+Mi perfil	
 </a>
 </div>
 <div class="col-md-4 seccion-header 
@@ -224,10 +237,10 @@ Destacados
   <script src="{% static "js/bootstrap.min.js" %}"></script>
   <script src="{% static "js/app.js" %}"></script>
 
-{% if notis %}
+{% if feli %}
   <script>
 $(document).ready(function(){
-        $("#modal_alerta").modal();
+        $("#modal_felicitaciones").modal();
 		
 });
 </script>

@@ -19,7 +19,7 @@ from django.db.models import Count
 
 from django.views.generic import View, FormView, UpdateView, CreateView, DetailView, ListView, TemplateView
 from lectur_app.forms import UserForm, LectorForm, UserLoginForm, ComunidadForm, TallerComunidadForm, EspacioForm, TemaForoForm;
-from lectur_app.models import Lector, Comunidad, Foro, Taller, Categoria, Espacio, Respuesta, Tema, Premio, Reto, Notificacion
+from lectur_app.models import Lector, Comunidad, Foro, Taller, Categoria, Espacio, Respuesta, Tema, Premio, Reto, Notificacion, Genero_literario, Felicitacion
 
 from django.conf import settings
 
@@ -48,6 +48,8 @@ def ingresarComunidadPremio (lector):
 
                     noti=Notificacion(imagen=pre.imagen , contenido="Logro completado: "+pre.titulo, usuario=lector.user)
                     noti.save();
+                    feli=Felicitacion(imagen=pre.imagen , contenido="Felicidades has completado el logro "+pre.titulo, usuario=lector.user)
+                    feli.save();
                     print ("unido");
                     return True;
     return False;
@@ -68,6 +70,8 @@ def crearTemaPremio (lector):
                     pre.save();
                     noti=Notificacion(imagen=pre.imagen , contenido="Logro completado: "+pre.titulo, usuario=lector.user)
                     noti.save();
+                    feli=Felicitacion(imagen=pre.imagen , contenido="Felicidades has completado el logro "+pre.titulo, usuario=lector.user)
+                    feli.save();
                     print ("creado");
                     return True;
     return False;
@@ -87,6 +91,8 @@ def comentaPorPremio (lector):
                         pre.save();
                         noti=Notificacion(imagen=pre.imagen , contenido="Logro completado: "+pre.titulo, usuario=lector.user)
                         noti.save();
+                        feli=Felicitacion(imagen=pre.imagen , contenido="Felicidades has completado el logro "+pre.titulo, usuario=lector.user)
+                        feli.save();
                         print ("creado");
                         return True;
         return False;
@@ -132,8 +138,6 @@ class Register(CreateView):
             auth.login(request=self.request, user=u)
         return HttpResponseRedirect('/register/perfil/')
 
-
-
 class Inicio_sesion(FormView):
     template_name = 'login.html'
     form_class = UserLoginForm
@@ -169,7 +173,6 @@ def cerrar_sesion(request):
 	logout(request)
 	# Take the user back to the homepage.
 	return HttpResponseRedirect('/')
-
 
 class Perfil(TemplateView):
     template_name = 'perfil.html'
@@ -224,7 +227,6 @@ class Comunidades(TemplateView):
         context["seccion_header"]="Comunidades";
 
         lec = Lector.objects.all().get(user=self.request.user);
-
         comunidades= set([]);
         for com in Comunidad.objects.all():
             for adm in com.administradores.all():
@@ -241,15 +243,13 @@ class Comunidades(TemplateView):
         # lector = Lector.objects.get(user=user);
         context["premios"]=getPremiosUsuario(lec);
 
+
         talleres=set([]);
         for act in Taller.objects.all().filter(fecha__gte = datetime.now()).order_by('fecha'):
             for par in act.participantes.all():
                 if par ==lec:
                     talleres.add(act);
         context["talleres"] =talleres;
-
-
-
         return context;
 
 def getPremiosUsuario(lector):
@@ -263,7 +263,6 @@ def getPremiosUsuario(lector):
                 premios[p.reto]=[p];
 
     return premios;
-
 
 class VistaComunidad(TemplateView):
     template_name = 'vista_comunidad.html'
@@ -310,6 +309,8 @@ class Explora(TemplateView):
         context["seccion_header"]="Explora";
         comunidades=Comunidad.objects.all();
         context["comunidades"]=comunidades;
+        context["categorias"]=Genero_literario.objects.all();
+
 
         return context
 
@@ -364,9 +365,7 @@ class VistaTemaForo(TemplateView):
         respuestas= tema.respuesta.all().filter(tipo_respuesta=-1);
         context["respuestas"]=respuestas;
 
-
         return context
-
 
 @login_required
 def register_comment(request, username, pk):
@@ -391,9 +390,6 @@ def register_comment(request, username, pk):
         nueva_respuesta.save();
         s+=str(nueva_respuesta.pk);
     return  HttpResponseRedirect(s);
-
-
-
 
 @login_required
 def registrarUsuarioComunidad(request, username, comunidad):
@@ -493,6 +489,9 @@ class RegisterProfile(CreateView):
             lector.codigo=get_codigo_nuevo_usuario();
         lector.save();
         form.save_m2m();
+
+        feli=Felicitacion(imagen=lector.imagen , contenido="Felicidades ya eres parte de Tulia ", usuario=lector.user)
+        feli.save();
         return HttpResponseRedirect('/comunidades');
 
 class UpdateProfile(UpdateView):
