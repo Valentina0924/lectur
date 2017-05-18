@@ -1,5 +1,5 @@
 from django.contrib import admin
-from lectur_app.models import Lector, Taller, Trabajo_Escrito, Espacio, Evento,  Comunidad, Valoracion, Respuesta, Tema, Categoria, Foro, Reto, Premio, Notificacion, Genero_literario
+from lectur_app.models import Lector, Taller, Trabajo_Escrito, Espacio, Evento,  Comunidad, Valoracion, Respuesta, Tema, Categoria, Foro, Reto, Premio, Notificacion, Genero_literario, Foto
 
 # Register your models here.
 admin.site.register(Lector)
@@ -18,3 +18,4 @@ admin.site.register(Reto)
 admin.site.register(Premio)
 admin.site.register(Notificacion)
 admin.site.register(Genero_literario)
+admin.site.register(Foto)

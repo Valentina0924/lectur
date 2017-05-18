@@ -125,7 +125,7 @@ class Register(CreateView):
     model = User
     def get_context_data(self, **kwargs):
         context = super(Register, self).get_context_data(**kwargs)
-        context["seccion_header"]="Destacados";
+        context["seccion_header"]="Perfil";
         return context;
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -362,9 +362,25 @@ class VistaTemaForo(TemplateView):
         comunidad=Comunidad.objects.all().get(slug=foroNombre);
         context["comunidad"]=comunidad;
 
+
+
         respuestas= tema.respuesta.all().filter(tipo_respuesta=-1);
         context["respuestas"]=respuestas;
 
+        admins=comunidad.administradores.all().order_by('user__first_name');
+        participantes=comunidad.participantes.all().order_by('user__first_name');
+
+        pertenece=0;
+        if self.request.user and self.request.user.is_authenticated:
+                lect=Lector.objects.get(user=self.request.user)
+                if lect in admins:
+                    pertenece=2;
+                if pertenece ==0:
+                    if lect in participantes:
+                        pertenece=1;
+        else:
+            pertenece=-1;
+        context["pertenece"]=pertenece;
         return context
 
 @login_required
@@ -480,6 +496,7 @@ class RegisterProfile(CreateView):
         context["titulo1"]="Regístrate en Tulia";
         context["titulo2"]="¡Ya estás a un paso de pertenecer a nuestra comunidad!";
         context["titulo3"]="Paso 2: Acerca de tí ";
+        context["seccion_header"]="Perfil";
         return context;
 
     def form_valid(self, form):
@@ -487,6 +504,9 @@ class RegisterProfile(CreateView):
         lector.user = self.request.user;
         if not lector.codigo:
             lector.codigo=get_codigo_nuevo_usuario();
+        if not lector.imagen:
+            usuDef=User.objects.get(username="administrador");
+            lector.imagen=Lector.objects.get(user=usuDef).imagen;
         lector.save();
         form.save_m2m();
 

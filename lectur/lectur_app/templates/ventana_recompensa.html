@@ -1,7 +1,7 @@
 
 {% load staticfiles %}
 
-<div class="col-md-3" style=" overflow: hidden;"  data-toggle="modal" data-target="#modal_{{id}}"> 
+<div class="col-md-4 col-xs-4 " style=" overflow: hidden;"  data-toggle="modal" data-target="#modal_{{id}}"> 
 
   {% with premio|last as premi %}
 
@@ -17,6 +17,7 @@
       <div class="modal-body" style="">
 
         <div class="row">
+
           {% for p in premio %}
           <div class="col-md-2">
             <img src='{{p.imagen.url}}' style="margin: 10px auto; width: 100%;height: auto;" title="{{p.titulo}}"> 

@@ -295,6 +295,30 @@ function createMarker(lat, lon,nom) {
     return marker;
 }
 
+function createMarkerComunidad(lat, lon,nom, contenido, urlimagen, urlcomunidad) {
+
+  var myCenter = new google.maps.LatLng(lat,lon);
+
+  var marker = new google.maps.Marker({
+    position: myCenter,
+    icon: "http://127.0.0.1:8000/static/imagenes/libro.png",
+    draggable: false,
+  });
+  marker.setMap(map);
+  var infowindow = new google.maps.InfoWindow({
+    content: nom
+  });
+  infowindow.open(map,marker);
+
+   google.maps.event.addListener(marker, 'click', function(event) {
+        mostrarVentanaMarcador(nom, contenido, urlimagen, urlcomunidad);
+   });
+
+  //alert(lat+" ___ "+lon+" ___ "+nom)
+    return marker;
+}
+
+
 function changeVisibilityMarker(marker, visible){
   //alert(marker.map+" _ "+visible)
   if(marker!=null){

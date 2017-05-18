@@ -28,7 +28,7 @@ Destacados
     {% with categoria|get_foro_categoria as foro %}
     {% with foro|get_comunidad_foro as comunidad %}
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-md-1 col-md-offset-0 col-xs-6 col-xs-offset-3">
         <div class="redondo" style= "height: 100%; padding-top: 100%; position: relative; background-position: center; background-size: cover; background-image: url('{{comunidad.imagen.url}}');"></div>
         {{categoria.titulo}}
       </div>

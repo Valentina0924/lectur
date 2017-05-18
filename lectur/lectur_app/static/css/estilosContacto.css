@@ -18,12 +18,14 @@ header {
 	background: #CCCCCC;
 	color:#808080;
 }
+
+
 /*************** Contenedor verde ***************/
 .verde {
  background: #2d388a;
  height: 60px;
  line-height: 13px;
- padding-right: 1em;
+ /*padding-right: 1em;*/
  color: white;
 
 
@@ -176,6 +178,14 @@ list-style-type: none;
   width: 15%;
 }
 
+.sobre-boton-registro{
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: -15px;
+
+}
+
 .boton-registro{
   text-decoration: none !important;
   color: white !important;
@@ -186,16 +196,23 @@ list-style-type: none;
   padding: 16px  20px;
 }
 
-.sobre-boton-registro{
-  text-align: center;
-  width: 100%;
-  position: absolute;
-  bottom: -15px;
-
-}
-
 .boton-registro:hover{
   background-color: #8ca015;
+ }
+
+ .boton-registro-salir{
+  text-decoration: none !important;
+  color: white !important;
+  font-family:"roboto";
+  font-size: 17px;
+  border-radius: 50px;
+  background-color: #e17537;
+  padding: 16px  20px;
+}
+
+ .boton-registro-salir:hover{
+  
+  background-color: #d15517;
  }
 
 
@@ -213,7 +230,17 @@ list-style-type: none;
   font-size: 17px;
   border-radius: 6px;
   border: #5e5e5e 2px solid;
-  padding: 7px  7px;
+  
+}
+
+.boton-new{
+  text-decoration: none !important;
+  color: #5e5e5e !important;
+  font-family:"roboto";
+  font-size: 17px;
+  border-radius: 6px;
+  border: #5e5e5e 1px solid;
+  padding: 2px  2px;
 }
 
 .boton-actividad:hover{
@@ -225,10 +252,22 @@ color: #a4be32 !important;
   padding: 7px  7px;
 }
 
+.medalla-indica{
+padding-top: 5px;
+ text-align: center;
+   font-size: 20px;
+    font-family: 'roboto'; 
+    color: #e17537;
+ }
+
+.medalla-indica:hover{
+   
+  color: rgba(249,142,25,0.8) ;
+ }
 
 /***** cierra boton-actividad ******/
  .comunidades:hover{
-  background-color: #8ca015;
+  background-color: rgba(164,190,50,0.8) ;
  }
 
  .texto-medio-ind{
@@ -295,12 +334,13 @@ color: white;
 .sobre-imagen{
  position: absolute; 
  bottom: 0px; 
-  background-color: rgba(45,56,138,0.6);
+  background-color: rgba(45,56,138,0.8);
  color: white;width: 94%; 
  font-family: "roboto";
  height: 100px; 
  padding: 125px 8px; 
  text-align:center;
+ border-radius: 8px; 
   }
 
 /******************* Seccion actividades ********************/
@@ -456,6 +496,7 @@ color: white !important;
 .franja-comunidad{
   background-color: #2d388a;
   height: 60px;
+  padding: 1px;
 }
 
 .franja-index{

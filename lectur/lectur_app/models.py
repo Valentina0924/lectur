@@ -9,6 +9,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Foto(models.Model):
+    titulo = models.CharField(max_length=50, default='Sin título')
+    foto = models.ImageField(upload_to='fotos/')
+    fecha_publicacion = models.DateField(auto_now_add=True)
+    def __str__(self):
+            return str(self.titulo)
+
 class Notificacion(models.Model):
     imagen = models.ImageField(upload_to = 'notificaciones_images/');
     contenido = models.CharField(max_length=200);
@@ -147,6 +154,7 @@ class Comunidad(models.Model):
     #libros = models.ManyToManyField(Info_Libro, related_name = 'libros_comunidad');
     #bibliotecas_amigas = models.ManyToManyField(Biblioteca, related_name = 'biblioteca_amiga');
     talleres = models.ManyToManyField(Taller, related_name = 'talleres_comunidad',blank=True);
+    album_fotos = models.ManyToManyField(Foto, related_name = 'fotos_comunidad',blank=True);
     descripcion = models.CharField(max_length=200);
     imagen = models.ImageField(upload_to='comunidades_images/', null=True);
     def __str__(self):

@@ -100,88 +100,97 @@
 
 
 <body>
-  <div class="container-fluid fijo" >
-		<div class="row verde">
-		<div class="col-md-2">
 
-		<a href="{%if user and user.lector %}/comunidades/{%else%}/{%endif%}" >
-				<div class=" logo-header">
-					<img class="img-responsive center-block" src="{% static "imagenes/marca.png"%}" align="left" alt="">
-				</div>
+
+
+
+
+
+
+	<div class="container-fluid fijo" >
+		
+
+		<div class="row verde hidden-sm hidden-xs">
+			<div class="col-md-2">
+
+				<a href="{%if user and user.lector %}/comunidades/{%else%}/{%endif%}" >
+					<div class=" logo-header">
+						<img class="img-responsive center-block" src="{% static "imagenes/marca.png"%}" align="left" alt="">
+					</div>
+				</a>
+			</div>
+
+			<div class="col-md-7" >
+
+
+				<div class="col-md-4 seccion-header 
+				{%if seccion_header == 'Explora' %}
+				seccion-seleccionada
+				{% endif %}
+				" >
+				<a href="/explora/">
+					Explora	
+				</a>
+			</div>
+
+
+			<div class="col-md-4 seccion-header 
+			{%if seccion_header == 'Comunidades' %}
+			seccion-seleccionada
+			{% endif %}" > 
+			<a href="{%if user and user.lector %}/comunidades/{%else%}/inicia_sesion/{%endif%}">
+				Mi perfil	
+			</a>
+		</div>
+		<div class="col-md-4 seccion-header 
+		{%if seccion_header == 'Destacados' %}
+		seccion-seleccionada
+		{% endif %}" >	
+		<a href="/destacados/">
+			Destacados	
 		</a>
-		</div>
-
-		<div class="col-md-7" >
-
-
-<div class="col-md-4 seccion-header 
-{%if seccion_header == 'Explora' %}
-seccion-seleccionada
-{% endif %}
-" >
-<a href="/explora/">
-	Explora	
-</a>
 	</div>
-
-
-<div class="col-md-4 seccion-header 
-{%if seccion_header == 'Comunidades' %}
-seccion-seleccionada
-{% endif %}" > 
-<a href="{%if user and user.lector %}/comunidades/{%else%}/inicia_sesion/{%endif%}">
-Mi perfil	
-</a>
 </div>
-<div class="col-md-4 seccion-header 
-{%if seccion_header == 'Destacados' %}
-seccion-seleccionada
-{% endif %}" >	
-<a href="/destacados/">
-Destacados	
-</a>
-</div>
-		</div>
 
-		<div class="col-md-3" align="right" >
-			{%if notis%}
-			<i class="fa fa-bell" style="color: white; font-size: 25px; margin-top: 15px;" data-toggle="modal" data-target="#modal_alerta" onclick="limpiarNotificaciones('{{user.username}}')" ></i>
+<div class="col-md-3" align="right" >
+	{%if notis%}
+	<i class="fa fa-bell" style="color: white; font-size: 25px; margin-top: 15px;" data-toggle="modal" data-target="#modal_alerta" onclick="limpiarNotificaciones('{{user.username}}')" ></i>
 
-			<script type="text/javascript">
-				function limpiarNotificaciones(username) {
-						$.ajax({
-							url: "/ver-notificaciones/"+username ,
-							success: function(result) {
+	<script type="text/javascript">
+		function limpiarNotificaciones(username) {
+			$.ajax({
+				url: "/ver-notificaciones/"+username ,
+				success: function(result) {
 								// alert(result);	
 							}
 						});
 
 
-					}
-				</script>
+		}
+	</script>
 
 
-			{%endif%}
+	{%endif%}
 
 
-{%if user and user.lector%}
-<ul class="menu-imagen-header">
-<li>
-<div class="" style="display: inline-block; width: 70px;height: 60px; background-image: url('{{user.lector.imagen.url}}'); background-size: cover; background-position: center; border-left-style: solid; border-right-style: solid; border-color: #223072; border-width:5px;"></div>
-</li>
-<li class="dropdown  ">
-	<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color: white;">
+	{%if user and user.lector%}
+	<ul class="menu-imagen-header">
+		<li>
+			<div class="" style="display: inline-block; width: 70px;height: 60px; background-image: url('{{user.lector.imagen.url}}'); background-size: cover; background-position: center; border-left-style: solid; border-right-style: solid; border-color: #223072; border-width:5px;"></div>
+		</li>
+		<li class="dropdown  ">
+			<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color: white;">
 
-		<span class="caret"></span>
-	</a>
-	<ul class="dropdown-menu dropdown-menu-right" style="color: black;">
-		<li><a href="/comunidades/"><!--{{user.username}}-->Mi tablero</a></li>
-		<li><a href="/update/perfil/">Editar perfil</a></li>
-		<li><a href="/crea/comunidad/">Crear comunidad</a></li>
-		<li><a href="/cerrar_sesion/">Cerrar sesión </a></li>
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right" style="color: black;">
+				<li><a href="/comunidades/"><!--{{user.username}}-->Mi tablero</a></li>
+				<li><a href="/update/perfil/">Editar perfil</a></li>
+				<li><a href="/crea/comunidad/">Crear comunidad</a></li>
+				<li><a href="/cerrar_sesion/">Cerrar sesión </a></li>
+			</ul>
+		</li>
 	</ul>
-</li>
-</ul>
 
 	<!--<ul class="" style="display: inline-block;" >
 
@@ -190,25 +199,151 @@ Destacados
 	<li><a href="/cerrar_sesion/">Cerrar Sesión </a></li>
 
 
-				</ul> Fin registro -->	
+</ul> Fin registro -->	
 
 {%else%}
-	<ul class="navIndex">
-				<li><a href="/registrate/">Regístrate </a></li>
-				<li><a href="#">|</a></li>
-					<li><a href="/inicia_sesion/"> Ingresa </a></li>
-				</ul><!-- Fin registro -->	
+<ul class="navIndex">
+	<li><a href="/registrate/">Regístrate </a></li>
+	<li><a href="#">|</a></li>
+	<li><a href="/inicia_sesion/"> Ingresa </a></li>
+</ul><!-- Fin registro -->	
 
 {%endif%}
-			
-		
 
-		<div  style="clear: both;"></div>	
+
+
+<div  style="clear: both;"></div>	
+</div>
+
+
+</div>
+
+<!-- fin men+u pantalla larga -->
+<!-- inicio menú pamtalla pequeña -->
+
+<div class="row verde hidden-md hidden-lg hidden-xl">
+			
+		<div class="row" data-toggle="collapse" data-target="#menu_principal_min"> 
+			<div class="col-xs-6 {%if user and user.lector%}
+	 col-xs-6 {%else%} col-xs-offset-3 {%endif%}">
+					<div class=" logo-header">
+						<img class="img-responsive center-block" src="{% static "imagenes/marca.png"%}" align="left" alt="">
+					</div>
+			</div>
+
+	<div class=" {%if user and user.lector%}
+	 col-xs-6 {%else%} col-xs-12 {%endif%}">
+
+					{%if notis%}
+	<i class="fa fa-bell" style="color: white; font-size: 25px; margin-top: 15px;" data-toggle="modal" data-target="#modal_alerta" onclick="limpiarNotificaciones('{{user.username}}')" ></i>
+	{%endif%}
+
+	{%if user and user.lector%}
+	<ul class="menu-imagen-header">
+		<li>
+			<div class="" style="display: inline-block; width: 70px;height: 60px; background-image: url('{{user.lector.imagen.url}}'); background-size: cover; background-position: center; border-left-style: solid; border-right-style: solid; border-color: #223072; border-width:5px;"></div>
+		</li>
+		<li class="dropdown  ">
+			<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" style="color: white;">
+
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right" style="color: black;">
+				<li><a href="/comunidades/"><!--{{user.username}}-->Mi tablero</a></li>
+				<li><a href="/update/perfil/">Editar perfil</a></li>
+				<li><a href="/crea/comunidad/">Crear comunidad</a></li>
+				<li><a href="/cerrar_sesion/">Cerrar sesión </a></li>
+			</ul>
+		</li>
+	</ul>
+
+{%else%}
+<ul class="navIndex" style="float: none; clear: both; text-align: center;">
+	<li><a href="/registrate/">Regístrate </a></li>
+	<li><a href="/inicia_sesion/"> Ingresa </a></li>
+</ul>
+
+{%endif%}
+<div  style="clear: both;"></div>	
+
+
+			</div>
+		</div>
+
+			<div id="menu_principal_min" class="row collapse" style="margin:-12px 0px; width: 100%; z-index: 10; background-color: #2d388a;" >
+
+
+			{%if user and user.lector %}
+			{%else%}
+
+				<div class="col-xs-12 seccion-header" >
+			<a href="/" >	
+			Inicio	
+				</a>
+			</div>
+			{%endif%}
+
+
+			<div class="col-xs-12 seccion-header 
+			{%if seccion_header == 'Comunidades' %}
+			seccion-seleccionada
+			{% endif %}" > 
+			<a href="{%if user and user.lector %}/comunidades/{%else%}/inicia_sesion/{%endif%}">
+				Mi perfil	
+			</a>
+		</div>
+
+				<div class="col-xs-12 seccion-header 
+				{%if seccion_header == 'Explora' %}
+				seccion-seleccionada
+				{% endif %}
+				" >
+				<a href="/explora/">
+					Explora	
+				</a>
 			</div>
 
 
-		</div>
+		<div class="col-xs-12 seccion-header 
+		{%if seccion_header == 'Destacados' %}
+		seccion-seleccionada
+		{% endif %}" >	
+		<a href="/destacados/">
+			Destacados	
+		</a>
 	</div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+<!-- fin menu pantalla pequeña -->
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<!-- Fin menú -->
+
+
+
+
+
 
 
 	<div class="container-fluid" >

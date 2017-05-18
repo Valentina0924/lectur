@@ -5,21 +5,19 @@
 <a href="/foro/{{foro.slug}}/{{cate.slug}}/{{tema.slug}}" style="color: inherit;"> 
 	<div class="row " > 
 
-		<div class= "col-md-2">
-		</div>
 
-		<div class ="col-md-1" style="padding-top: 40px;" >
+		<div class ="col-md-1 col-md-offset-2 col-xs-4" style="padding-top: 40px;" >
 <div class="redondo" style= "height: 100%; padding-top: 100%; position: relative; background-position: center; background-size: cover; background-image: url('{{tema.autor.imagen.url}}');"></div></div>
 
 
-	<div class ="col-md-5" style="padding-top: 48px; " >
+	<div class ="col-md-5 col-xs-8" style="padding-top: 48px; " >
 			<p style="color:#2d388a; font-size:19px;"><strong>{{tema.titulo}} </strong></p>
 			<p> {{tema.fecha_publicacion}} * {{tema.autor.user.first_name}} {{tema.autor.user.last_name}} </p>
 			
 			
 		</div>
 
-		<div class ="col-md-4"  style="padding-top: 44px; text-align: center;">
+		<div class ="col-md-4 hidden-xs"  style="padding-top: 44px; text-align: center;">
 			
 			<p style=" font-size:19px; color:#5865bf;"><strong> {{tema|cantidad_respuestas_tema}} </strong></p>
 			<p style=" color:#5865bf; "> comentarios </p>

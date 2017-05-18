@@ -3,14 +3,17 @@
 {% load respuestas_foro %}
 {% block content %}
 
-<div class="comunidad-fondo" style="position: relative; /*background-image: url('{{comunidad.imagen.url}}');*/background-color: #187774; ">
-	<div class="texto-medio" >
-		<h1>{{comunidad.nombre}}  </h1>
+<div class="comunidad-fondo" style="z-index: 0; position: relative; background-image: url('{{comunidad.imagen.url}}'); /*background-image: url('{{comunidad.imagen.url}}');*/ ">
+
+<div style="position: absolute; width: 100%; height: 100%; top:0px; background-color: rgba(0,0,0,0.7); z-index: -1;" >   
+</div>
+	<div class="texto-medio">
+		<h1 style="z-index: 2">{{comunidad.nombre}}  </h1>
 
 		{%if pertenece > 0%}
-<div class="sobre-boton-registro"  style="padding-bottom: 120px;">
+			<div class="sobre-boton-registro"  style="padding-bottom: 120px;">
 				
-				<a href="/comunidades/{{comunidad.slug}}/miembros" class="boton-registro " align="center" onclick="enviarRespuesta('{{user.username}}','{{comunidad.slug}}', {%if pertenece < 2%} 'salir' {%else%} 's_admin' {%endif%}  )" >
+				<a href="/comunidades/{{comunidad.slug}}/miembros" class="boton-registro-salir" align="center" onclick="enviarRespuesta('{{user.username}}','{{comunidad.slug}}', {%if pertenece < 2%} 'salir' {%else%} 's_admin' {%endif%}  )" >
 				Salirme
 				</a>
 			</div>	
@@ -45,7 +48,6 @@
 			<div id="pestana_foro" class="col-md-3 col-xs-3 submenu-comuni " onclick="cambiar_pestana('foro')"> Foro	</div>
 		</div>
 	</div>
-	
 </div>
 
 <div id="miembros" class="hidden">
@@ -68,11 +70,11 @@
 	<div class="franja-comunidad col-md-12 letra-submen">
 
 <a href="/crea/taller/{{comunidad.slug}}/">
-<div style="float: right; ">
+<!--<div style="float: right; ">
  <i class="fa fa-plus" style="color: white; font-size: 25px; padding-top: 15px;"> </i>
 	<spam style="color:white; font-size: 15px;  vertical-align: middle;">  
 	  Agrega una actividad </spam>
-</div>
+</div>-->
 </a>
 	<h1>
 		Encuentros programados por esta comunidad	
@@ -100,17 +102,14 @@
 
 	<a href="/foro/{{foro.slug}}/{{categoria.slug}}">
 <div class="row">
-<div class="col-md-2">
-
-
-
+<div class="col-md-2 col-md-offset-0 col-xs-6 col-xs-offset-3">
 					<img class="" src="{% static categoria.tipo|get_imagen_categoria  %}">
-				</div> 
-<div class="col-md-8" style="margin-top: 20px; color:black;">
+					</div> 
+<div class="col-md-8  col-xs-8" style="margin-top: 20px; color:black;">
 	{{categoria.titulo}} <br>
 	{{categoria.descripcion}} <br>
-	</div> 
-	<div class="col-md-2" style="text-align: center;">
+</div> 
+<div class="col-md-2 col-xs-4" style="text-align: center;">
 	<H3>{{categoria|cantidad_temas_categoria}}</H3>	Temas 
 </div>
 </div> 
@@ -225,7 +224,7 @@ function enviarRespuesta(username,slugComunidad, tipo) {
 				'tipo':  tipo,
 			},
 			success: function(result) {
-				alert(result);	
+				//alert(result);	
 			}
 		});
 
