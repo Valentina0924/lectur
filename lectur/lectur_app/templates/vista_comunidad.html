@@ -54,6 +54,15 @@
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
 		Participantes de esta comunidad	
 	</h1></div>
+
+		<div class="container">
+<div class="col-md-12 texto-medio">
+<br>
+<h1 style ="font-family:'Yantramanav'; color: black;">
+Conoce otros miembros
+</h1></div>
+</div>
+
 	<div class="container">
 			{% for admin in admins%}
 				{% include "lector_vista_min.html" with lector=admin isAdmin=True %}
@@ -81,6 +90,20 @@
 	</h1>
 	</div>
 
+
+
+
+	<div class="container">
+<div class="col-md-12 texto-medio">
+<br>
+<h1 style ="font-family:'Yantramanav'; color: black;">
+Selecciona la actividad de interés
+</h1></div>
+</div>
+
+
+
+
 	<div class="container">
 	{% for taller in talleres%}
 				{% include "vista_actividades_comunidad.html" with taller=taller %}
@@ -90,13 +113,29 @@
 </div>
 
 <div id="foro" class="hidden">
+
+
+
+
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
 		{{foro.titulo}}	
 	</h1></div>
 
-	<div class= "col-md-2">
-		</div>
+	
 
+
+		<div class="container">
+<div class="col-md-12 texto-medio">
+<br>
+<h1 style ="font-family:'Yantramanav'; color: black;">
+Selecciona la categoría de interés
+</h1></div>
+
+
+
+</div>
+<div class= "col-md-2">
+		</div>
 	<div class="col-md-6 col-md-offset-1 col-xs-12 col-xs-offset-0 texto-par-dos "  style="margin-top: 50px; ">
 	{% for categoria in foro.categoria.all %}
 
@@ -181,6 +220,16 @@
 	<div class="franja-comunidad col-md-12 letra-submen"><h1>
 		Acerca de esta comunidad	
 	</h1></div>
+
+	<div class="container">
+<div class="col-md-12 texto-medio">
+<br>
+<h1 style ="font-family:'Yantramanav'; color: black;">
+Sobre nosotros
+</h1></div>
+</div>
+
+
 	<div class="container">
 	
 				{% include "vista_informacion_comunidad.html" %}

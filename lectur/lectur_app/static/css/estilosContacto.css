@@ -228,9 +228,15 @@ list-style-type: none;
   color: #5e5e5e !important;
   font-family:"roboto";
   font-size: 17px;
-  border-radius: 6px;
+  border-radius: 6px ;
   border: #5e5e5e 2px solid;
-  
+    padding: 7px  7px;
+}
+
+.texto-descripcion{
+  color:#2f3848;
+  font-family: "roboto";
+  font-size: 20px;
 }
 
 .boton-new{

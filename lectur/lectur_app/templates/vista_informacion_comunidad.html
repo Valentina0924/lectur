@@ -1,18 +1,15 @@
 {% load staticfiles %}
 
-<div class="col-md-8 col-md-offset-2 col-xs-12 col-xs-offset-0 texto-par-dos ">
+<div class="col-md-8 col-md-offset-2 col-xs-12 col-xs-offset-0 texto-par-dos " style="padding-top: 50px;">
 <!--
 	<div class="row">
 		<div class="comunidad-fondo" style="position: relative; /*background-image: url('{{comunidad.imagen.url}}');*/"></div>
 	</div>-->
 
-	<div class="row">
-		<div class="col-md-12">
-			<h1 >Sobre nosotros</h1>
-			<p>{{comunidad.descripcion}} </p>
-		</div>
-	</div>
 
+
+
+	
 	 <div id="rev_slider_1_1" class="rev_slider fullscreenbanner revslider-initialised tp-simpleresponsive" style="max-height: none; margin-top: 0px; margin-bottom: 0px; height: 100%;" data-version="5.2.6" data-slideactive="rs-2">
       
 {% if comunidad.album_fotos %}
@@ -63,26 +60,43 @@
 
    
   </div>
-  
+
+
+
+
+
+<div class="container">
+<div class="col-md-7 texto-descripcion"  align="center" style="padding-top:40px; ">
+<p>{{comunidad.descripcion}} </p>
+
+ </div></div>
+
+
+
+
+
+
+
+ <div class="col-md-12 texto-medio" style="padding-top:60px; padding-bottom: 30px;">
+<p >Encuéntranos fácilemente</p>
+
+ </div>
 
 	<div class="row">
-		<div class="col-md-12">
-
-			<p>ESCRÍBENOS</p>
-		</div>
+		
 
 		<div class="row">
 			<div class="col-md-4 col-xs-12">
-				<span>Teléfono: <br> 3108491453 </span>
+				<span><b>Teléfono:</b> <br> 3108491453 </span>
 			</div>
 
 			<div class="col-md-4 col-xs-12">
-				<span>Correo electrónico: <br> comun_lec@hotmail.com</span>
+				<span><b >Correo electrónico: </b><br> comun_lec@hotmail.com</span>
 
 			</div>
 
 			<div class="col-md-4 col-xs-12">
-				<span>REDES SOCIALES <br>
+				<span><b>Redes sociales: </b><br>
 					<i class="fa fa-facebook"></i> 
 					<i class="fa fa-twitter"></i> 
 					<i class="fa fa-skype"></i> 
@@ -98,7 +112,10 @@
 
 
 	<br><br>
-	<p>ENVIA UN MENSAJE</p>
+	  <div class="col-md-12 texto-medio" style="padding-top:40px; padding-bottom: 30px;">
+<p>Envía un mensaje </p>
+
+ </div>
 
 	<!-- espacio nombre -->
 	<div class="row">
